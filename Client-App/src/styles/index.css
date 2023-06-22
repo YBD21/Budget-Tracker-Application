@@ -21,6 +21,10 @@ body {
   min-height: 100vh;
 }
 
-button:hover {
-  cursor: pointer;
+.svg-icons {
+  transform: scale(1.75);
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
