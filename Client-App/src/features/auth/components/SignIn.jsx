@@ -1,23 +1,36 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault(); // prevent page refresh
+    console.log(email);
+    console.log(password);
+  };
+
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-      <div className="w-full p-6 mb-auto mx-auto mt-24 bg-white rounded-md md:max-w-lg">
+      <div className="w-full p-6 mb-auto mx-auto mt-24 rounded-md md:max-w-lg">
         <h1 className="text-3xl font-semibold text-center text-black">Login</h1>
-        <form className="mt-3">
-          <div className="mb-2">
+        {/* login submit */}
+        <form className="mt-3" onSubmit={handleLoginSubmit}>
+          <div className="pb-5">
             <label className="block text-sm font-semibold text-gray-800 py-2">
-              Email address
+              Email
             </label>
             <input
               type="email"
               autoComplete="email"
-              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
             />
           </div>
 
-          <div className="mb-2">
+          <div className="pb-3">
             <label className="block text-sm font-semibold text-gray-800">
               Password
             </label>
@@ -26,7 +39,9 @@ const SignIn = () => {
               <input
                 type="password"
                 autoComplete="current-password"
-                className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
               />
             </div>
           </div>
@@ -52,7 +67,7 @@ const SignIn = () => {
             </div>
           </div>
 
-          <div className="mt-5">
+          <div className="pt-8">
             <button
               className="w-full px-5 py-2 tracking-wide
             text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2

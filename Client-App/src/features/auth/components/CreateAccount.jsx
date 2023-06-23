@@ -7,6 +7,8 @@ const CreateAccount = () => {
         <h1 className="text-3xl font-semibold text-center text-black py-5">
           Create a New Account
         </h1>
+        {/* Logo here */}
+
         {/* Signup Form */}
         <form className="mt-3">
           {/* First Name  Input Box */}
