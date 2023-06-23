@@ -42,9 +42,41 @@ const CreateAccount = () => {
             </label>
             <input
               type="email"
-              autoComplete="email"
+              autoComplete="e-mail"
               className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
             />
+          </div>
+
+          {/* Create password */}
+          <div className="mb-2">
+            <label className="block text-sm font-semibold text-gray-800">
+              Create Password
+            </label>
+
+            <div className="flex flex-row cursor-pointer">
+              <input
+                type="password"
+                autoComplete="true"
+                required={true}
+                className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
+              />
+            </div>
+          </div>
+
+          {/* Confirm password */}
+          <div className="mb-2">
+            <label className="block text-sm font-semibold text-gray-800">
+              Confirm Password
+            </label>
+
+            <div className="flex flex-row cursor-pointer">
+              <input
+                type="password"
+                autoComplete="true"
+                required={true}
+                className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
+              />
+            </div>
           </div>
 
           <div className="mt-5">
