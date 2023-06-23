@@ -5,6 +5,8 @@ import Cookies from "js-cookie";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
+import ErrorMessageBoxSignin from "../error/ErrorMessageBoxSignin";
+
 const SignIn = () => {
   const Email = "E-Mail";
   const Password = "Password";
@@ -14,10 +16,14 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(true);
 
+  const [error, setError] = useState(null); // capture error with this state
+
   const handleLoginSubmit = (e) => {
     e.preventDefault(); // prevent page refresh
-    console.log(email);
-    console.log(password);
+    setError(null); // reset previous error_message
+    // console.log(email);
+    // console.log(password);
+    setError("Network Error");
   };
 
   // handle toggle to show or hide password
@@ -127,7 +133,12 @@ const SignIn = () => {
             </div>
           </div>
 
-          <div className="pt-8">
+          {/* Display Error Message  */}
+          {error && (
+            <ErrorMessageBoxSignin Error_message={error} status={true} />
+          )}
+
+          <div className="pt-5">
             <button
               className="w-full px-5 py-2 tracking-wide
             text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
