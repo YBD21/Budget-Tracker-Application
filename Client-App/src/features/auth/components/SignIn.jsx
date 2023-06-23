@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
 import Cookies from "js-cookie";
+
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 const SignIn = () => {
   const Email = "E-Mail";
   const Password = "Password";
 
+  const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(true);
@@ -17,8 +20,13 @@ const SignIn = () => {
     console.log(password);
   };
 
-  // remember me function here
+  // handle toggle to show or hide password
+  const toggle = () => {
+    setOpen(!open);
+    // console.log(open);
+  };
 
+  // remember me function here
   const setCookies = () => {
     if (email.length != 0 && password.length != 0 && isChecked === true) {
       console.log("saved cookies");
@@ -81,12 +89,20 @@ const SignIn = () => {
 
             <div className="flex flex-row cursor-pointer">
               <input
-                type="password"
+                type={open === false ? "password" : "text"}
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
               />
+              {/* hide/unhide password */}
+              <div className="text-2xl ml-[-2.5rem] mt-2.5">
+                {open === false ? (
+                  <VisibilityIcon onClick={toggle} />
+                ) : (
+                  <VisibilityOffIcon onClick={toggle} />
+                )}
+              </div>
             </div>
           </div>
 
