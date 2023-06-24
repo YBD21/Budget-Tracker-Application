@@ -364,7 +364,7 @@ const CreateAccount = () => {
           <p className="text-center text-sm text-gray-800">
             Already a member ? &nbsp;
             <Link
-              to="/login"
+              to="/"
               className="font-semibold leading-6 text-[#300] hover:underline"
             >
               Login
