@@ -4,8 +4,12 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
 import ErrorMessageText from "../error/ErrorMessageText";
+import { useSignUpStateValue } from "../context/SignupStateProvider";
 
 const CreateAccount = () => {
+  const [{ firstname, lastname, Email, password, showVerifyPage }, dispatch] =
+    useSignUpStateValue();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
@@ -207,6 +211,23 @@ const CreateAccount = () => {
     setOpen(!open);
   };
 
+  const sendDataToStateProvider = () => {
+    // set stateProvider with signup form data
+    dispatch({
+      type: "SET_SIGNUP_DATA",
+      firstname: firstName,
+      lastname: lastName,
+      Email: email,
+      password: password,
+    });
+
+    // load verify Email
+    dispatch({
+      type: "SET_VERIFY_PAGE",
+      showVerifyPage: true,
+    });
+  };
+
   const handelCreateAccountSubmit = (e) => {
     e.preventDefault(); // prevent page refresh
 
@@ -221,6 +242,8 @@ const CreateAccount = () => {
     // console.log(sumTotal);
     if (sumTotal === 0) {
       console.log("Create Account ");
+      // send data to signUpContextProvider
+      sendDataToStateProvider();
     }
   };
 
