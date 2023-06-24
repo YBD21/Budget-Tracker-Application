@@ -3,7 +3,7 @@ import KeyboardBackspaceIcon from "@mui/icons-material/KeyboardBackspace";
 const VerifyEmail = () => {
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className="w-full mb-auto mt-[15%] p-6 bg-white rounded-md lg:max-w-lg">
+      <div className="w-full mb-auto mt-[10%] p-6 bg-white rounded-md md:max-w-2xl">
         <h2 className="text-3xl font-semibold text-center text-black">
           Validate E-Mail
         </h2>
