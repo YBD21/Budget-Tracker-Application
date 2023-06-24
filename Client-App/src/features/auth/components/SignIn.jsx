@@ -8,8 +8,8 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ErrorMessageBoxSignin from "../error/ErrorMessageBoxSignin";
 
 const SignIn = () => {
-  const Email = "E-Mail";
-  const Password = "Password";
+  const Email = "email";
+  const Password = "password";
 
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
@@ -35,8 +35,8 @@ const SignIn = () => {
   // remember me function here
   const setCookies = () => {
     if (email.length != 0 && password.length != 0 && isChecked === true) {
-      console.log("saved cookies");
-      // set cookies expire date on 7th day.
+      // console.log("saved cookies");
+      // cookies expire date on 7th day.
       Cookies.set(Email, email, { expires: 7 });
       Cookies.set(Password, password, { expires: 7 });
     }
@@ -95,7 +95,7 @@ const SignIn = () => {
 
             <div className="flex flex-row cursor-pointer">
               <input
-                type={open === false ? "password" : "text"}
+                type={open === false ? Password : "text"}
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
