@@ -7,8 +7,7 @@ import ErrorMessageText from "../error/ErrorMessageText";
 import { useSignUpStateValue } from "../context/SignupStateProvider";
 
 const CreateAccount = () => {
-  const [{ firstname, lastname, Email, password, showVerifyPage }, dispatch] =
-    useSignUpStateValue();
+  const [{ showVerifyPage }, dispatch] = useSignUpStateValue();
 
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
@@ -23,6 +22,23 @@ const CreateAccount = () => {
   const [erroremail, setErrorEmail] = useState({});
   const [errorcreatepassword, setErrorCreatePassword] = useState({});
   const [errorconfirmpassword, setErrorConfirmPassword] = useState({});
+
+  const handelFirstNameChange = (e) => {
+    const trimmedFirstName = e.target.value.trim();
+    const capitalizedValue =
+      trimmedFirstName.charAt(0).toUpperCase() + trimmedFirstName.slice(1);
+
+    setFirstName(capitalizedValue);
+  };
+
+  const handelLastNameChange = (e) => {
+    const trimmedLastName = e.target.value.trim();
+    // uppercase first char and remove prev first char and concate it
+    const capitalizedValue =
+      trimmedLastName.charAt(0).toUpperCase() + trimmedLastName.slice(1);
+
+    setLastName(capitalizedValue);
+  };
 
   const checkEmptyField = () => {
     let count = 0;
@@ -218,7 +234,7 @@ const CreateAccount = () => {
       firstname: firstName,
       lastname: lastName,
       Email: email,
-      password: password,
+      password: confirmPassword,
     });
 
     // load verify Email
@@ -241,7 +257,6 @@ const CreateAccount = () => {
     const sumTotal = reCheck + checkPass + checkEmpty + checkEmail + checkName;
     // console.log(sumTotal);
     if (sumTotal === 0) {
-      console.log("Create Account ");
       // send data to signUpContextProvider
       sendDataToStateProvider();
     }
@@ -266,7 +281,7 @@ const CreateAccount = () => {
               <input
                 type="text"
                 value={firstName}
-                onChange={(e) => setFirstName(e.target.value.trim())}
+                onChange={handelFirstNameChange}
                 placeholder={"What is your First Name ?"}
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black 
                 focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
@@ -287,7 +302,7 @@ const CreateAccount = () => {
               <input
                 type="text"
                 value={lastName}
-                onChange={(e) => setLastName(e.target.value.trim())}
+                onChange={handelLastNameChange}
                 placeholder={"What is your Last Name ?"}
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
               />
