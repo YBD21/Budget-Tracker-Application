@@ -4,10 +4,11 @@ import { useSignUpStateValue } from "../features/auth/context/SignupStateProvide
 
 const SignUpPage = () => {
   const [{ showVerifyPage }] = useSignUpStateValue();
-  return (
-    // <CreateAccount />
-    <VerifyEmail />
-  );
+
+  if (showVerifyPage === true) {
+    return <VerifyEmail />;
+  }
+  return <CreateAccount />;
 };
 
 export default SignUpPage;

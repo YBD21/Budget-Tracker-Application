@@ -7,13 +7,14 @@ import ErrorMessageText from "../error/ErrorMessageText";
 import { useSignUpStateValue } from "../context/SignupStateProvider";
 
 const CreateAccount = () => {
-  const [{ showVerifyPage }, dispatch] = useSignUpStateValue();
+  const [{ firstname, lastname, Email, password }, dispatch] =
+    useSignUpStateValue();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [createPassword, setCreatePassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [firstName, setFirstName] = useState(firstname);
+  const [lastName, setLastName] = useState(lastname);
+  const [email, setEmail] = useState(Email);
+  const [createPassword, setCreatePassword] = useState(password);
+  const [confirmPassword, setConfirmPassword] = useState(password);
 
   const [open, setOpen] = useState(false);
 
