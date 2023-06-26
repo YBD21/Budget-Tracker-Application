@@ -11,7 +11,7 @@ function App() {
   // call backend to set UserData from http-Only Cookies
   const fetchUser = () => {
     axiosWithBaseURL
-      .get("/login-system/user-data", {
+      .get("/auth-system/user-data", {
         withCredentials: true, // enable sending and receiving cookies
       })
       .then(function (respond) {
