@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import axiosWithURL from "../../../constants/axiosRoute";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
@@ -10,20 +11,60 @@ import ErrorMessageBoxSignin from "../error/ErrorMessageBoxSignin";
 const SignIn = () => {
   const Email = "email";
   const Password = "password";
+  const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isChecked, setIsChecked] = useState(true);
 
+  const [loggingIn, setLoggingIn] = useState(false);
+
   const [error, setError] = useState(null); // capture error with this state
+
+  const requestBackendForLogin = () => {
+    // disable to prevent button spam
+    setLoggingIn(true);
+    axiosWithURL
+      .post("/auth-system/login", {
+        email,
+        password,
+      })
+      .then(function (respond) {
+        // reset disable button
+        setLoggingIn(false);
+
+        if (respond.data.Message === false) {
+          return setError("Incorrect Data");
+        }
+
+        if (respond.data.Message === true) {
+          // redirect to Main_Page
+          return navigate("/Home", { replace: true });
+        }
+
+        if (respond.data.Error !== undefined) {
+          return setError(respond.data.Error);
+        }
+      })
+      .catch(function (error) {
+        // throw error message
+
+        // reset disable button
+        setLoggingIn(false);
+        // console.log(error.response.statusText);
+        if (error.response && error.response.statusText) {
+          setError(error.response.statusText);
+        } else {
+          setError(error.message);
+        }
+      });
+  };
 
   const handleLoginSubmit = (e) => {
     e.preventDefault(); // prevent page refresh
     setError(null); // reset previous error_message
-    // console.log(email);
-    // console.log(password);
-    setError("Network Error");
+    requestBackendForLogin();
   };
 
   // handle toggle to show or hide password
@@ -59,8 +100,8 @@ const SignIn = () => {
     // load saved email and password from cookie
     try {
       const outPutCookies = getCookies();
-      const userEmail = outPutCookies.emailFromCookie;
-      const userPassword = outPutCookies.passwordFromCookie;
+      const userEmail = outPutCookies.emailFromCookie || "";
+      const userPassword = outPutCookies.passwordFromCookie || "";
 
       setEmail(userEmail);
       setPassword(userPassword);
@@ -95,7 +136,7 @@ const SignIn = () => {
 
             <div className="flex flex-row cursor-pointer">
               <input
-                type={open === false ? Password : "text"}
+                type={open === false ? "password" : "text"}
                 autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value.trim())}
@@ -144,6 +185,7 @@ const SignIn = () => {
             text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
             "
+              disabled={loggingIn}
             >
               Login
             </button>
