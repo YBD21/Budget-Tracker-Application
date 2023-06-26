@@ -43,10 +43,11 @@ const sendVerificationEmail = async (userEmail, otp) => {
 `;
 
   const mailOptions = {
-    from: `"BudgetTracker"<${Email}>`, // sender address
+    from: `"BudgetTracker"<noreply@BudgetTracker.com>`, // sender address
     to: `${userEmail}`, // list of receivers
     subject: "Email Verification", // Subject line
     html: html, // html body
+    disableReply: true,
   };
 
   try {

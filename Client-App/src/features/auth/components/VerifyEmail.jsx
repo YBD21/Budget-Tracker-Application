@@ -8,8 +8,7 @@ const VerifyEmail = () => {
   const [otpcode, setOtpCode] = useState("");
   const [encOtp, setEncOtp] = useState("");
 
-  const sendEmail = (e) => {
-    e.preventDefault(); // prevent page refresh
+  const sendEmail = () => {
     axios
       .post("http://localhost:5000/auth-system/verify-email", {
         email: Email,
@@ -23,6 +22,11 @@ const VerifyEmail = () => {
       });
   };
 
+  const reSendEmail = (e) => {
+    e.preventDefault(); // prevent page refresh
+    sendEmail();
+  };
+
   const cancelVerify = (e) => {
     e.preventDefault(); // prevent page refresh
     // load CreateAccount
@@ -34,8 +38,8 @@ const VerifyEmail = () => {
 
   const verifyOTP = (e) => {
     e.preventDefault(); // prevent page refresh
+
     // if encOtp === code then create account
-    
   };
 
   useEffect(() => {
@@ -69,7 +73,7 @@ const VerifyEmail = () => {
             <div className="flex flex-row justify-between px-2.5 pt-3 pb-2">
               <button
                 className="text-sm text-[#300]  cursor-pointer hover:underline"
-                onClick={sendEmail}
+                onClick={reSendEmail}
               >
                 Resend Code
               </button>
