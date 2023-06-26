@@ -46,19 +46,6 @@ const verifyToken = (token) => {
   return sendData;
 };
 
-const verifyTokenAndDecodeToken = async (token) => {
-  let sendData = {};
-  jwt.verify(token, secretKey, function (err, decoded) {
-    if (err) {
-      console.log(err.message);
-      sendData = { error: `${err.message}` };
-    } else {
-      sendData = { ...decoded };
-    }
-  });
-  return sendData;
-};
-
 const login = async (email, password) => {
   let sendData = { Message: "", Error: "" };
 

@@ -9,7 +9,19 @@ const {
   verifyHash,
 } = require("../Systems/authSystem/emailVerification");
 const { createAccount } = require("../Systems/authSystem/createAccount");
-const { login } = require("../Systems/authSystem/login");
+const { login, verifyToken } = require("../Systems/authSystem/login");
+
+// read http only cookie
+authSystemRouter.get("/user-data", (req, res) => {
+  const accessToken = req.cookies.userData;
+
+  if (!accessToken || !verifyToken(accessToken)) {
+    res.status(401).send("Unauthorized");
+  } else {
+    res.json(accessToken);
+  }
+  console.log("User Requested AccessToken !");
+});
 
 //  Verify Email
 authSystemRouter.post("/verify-email", async (req, res) => {
