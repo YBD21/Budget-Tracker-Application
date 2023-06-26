@@ -33,7 +33,7 @@ const generateHashFromOTP = (otp) => {
 
 // Send verification email
 
-const sendVerificationEmail = async (userEmail, otp) => {
+const sendVerificationEmail = (userEmail, otp) => {
   // HTML email template
   const html = `
  <h1>Verify Your Email</h1>
@@ -47,11 +47,11 @@ const sendVerificationEmail = async (userEmail, otp) => {
     to: `${userEmail}`, // list of receivers
     subject: "Email Verification", // Subject line
     html: html, // html body
-    disableReply: true,
+    replyTo: null,
   };
 
   try {
-    const info = await transporter.sendMail(mailOptions);
+    const info = transporter.sendMail(mailOptions);
     console.log("Verification email sent:", info.response);
     return true;
   } catch (error) {

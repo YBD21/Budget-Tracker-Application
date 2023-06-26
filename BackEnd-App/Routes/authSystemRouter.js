@@ -14,7 +14,7 @@ authSystemRouter.post("/verify-email", async (req, res) => {
 
   const otp = generateOTP();
 
-  const respond = await sendVerificationEmail(userEmail, otp);
+  const respond = sendVerificationEmail(userEmail, otp);
 
   if (respond) {
     const hashOfOTP = generateHashFromOTP(otp);
