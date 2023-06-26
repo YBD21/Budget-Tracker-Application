@@ -5,6 +5,7 @@ const authSystemRouter = require("./Routes/authSystemRouter.js");
 
 const app = express();
 
+require("dotenv").config();
 const port = process.env.PORT || 5000;
 const url = process.env.URL || "http://localhost:3000";
 

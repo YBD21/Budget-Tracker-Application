@@ -9,6 +9,7 @@ const {
   verifyHash,
 } = require("../Systems/authSystem/emailVerification");
 const { createAccount } = require("../Systems/authSystem/createAccount");
+const { login } = require("../Systems/authSystem/login");
 
 //  Verify Email
 authSystemRouter.post("/verify-email", async (req, res) => {
@@ -45,22 +46,23 @@ authSystemRouter.post("/create-account", async (req, res) => {
 });
 
 // Login
-authSystemRouter.post("login", async (req, res) => {
+authSystemRouter.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   console.log(`User : ${email} Trying To Logged In !`);
 
-  const { Message, accessToken } = await login(email, password);
+  const respond = await login(email, password);
 
-  if (Message === true) {
+  if (respond.Message === true) {
     // set HTTP Only Cookie
-    res.cookie("userData", accessToken, {
+    res.cookie("userData", respond.accessToken, {
       secure: true, // set to true to enable sending the cookie only over HTTPS
       httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
       sameSite: "strict", // change to none for render hosting
     });
     console.log(`User : ${email} is Logged In ! `);
   }
+  res.json(respond);
 });
 
 module.exports = authSystemRouter;

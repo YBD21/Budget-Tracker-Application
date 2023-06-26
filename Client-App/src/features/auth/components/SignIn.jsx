@@ -26,10 +26,16 @@ const SignIn = () => {
     // disable to prevent button spam
     setLoggingIn(true);
     axiosWithURL
-      .post("/auth-system/login", {
-        email,
-        password,
-      })
+      .post(
+        "/auth-system/login",
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true, // enable sending and receiving cookies
+        }
+      )
       .then(function (respond) {
         // reset disable button
         setLoggingIn(false);

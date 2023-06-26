@@ -25,7 +25,7 @@ const VerifyEmail = () => {
         email: Email,
       })
       .then(function (respond) {
-        console.log(respond.data);
+        // console.log(respond.data);
         setEncOtp(respond.data);
       })
       .catch(function (error) {
@@ -78,7 +78,7 @@ const VerifyEmail = () => {
       .then(function (respond) {
         // console.log(respond.data);
         if (respond.data.Message === true) {
-          redirectToLoginPage();
+          return redirectToLoginPage();
         }
       })
       .catch(function (error) {
@@ -94,10 +94,10 @@ const VerifyEmail = () => {
         hash: encOtp,
       })
       .then(function (respond) {
-        console.log(respond.data);
+        // console.log(respond.data);
         // if true Create Account else wrong Otp
         if (respond.data === true) {
-          createAccount();
+          return createAccount();
         }
       })
       .catch(function (error) {

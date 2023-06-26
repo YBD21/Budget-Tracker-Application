@@ -65,6 +65,7 @@ const createAccount = async (firstName, lastName, email, password) => {
       }
     );
   }
+  return sendData;
 };
 
-module.exports = { createAccount };
+module.exports = { createAccount, getEmailUniqueId };
