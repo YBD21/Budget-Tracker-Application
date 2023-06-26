@@ -1,15 +1,23 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSignUpStateValue } from "../context/SignupStateProvider";
 import ErrorMessageText from "../error/ErrorMessageText";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
 
 const VerifyEmail = () => {
   // on mount send request to backend to send email with verification code.
-  const [{ showVerifyPage, Email }, dispatch] = useSignUpStateValue();
+  const [{ showVerifyPage, Email, firstname, lastname, password }, dispatch] =
+    useSignUpStateValue();
+
+  const navigate = useNavigate();
   const [otpcode, setOtpCode] = useState("");
   const [encOtp, setEncOtp] = useState("");
 
   const [errorOtp, setErrorOtp] = useState({});
+
+  const redirectToLoginPage = () => {
+    navigate("/", { replace: true });
+  };
 
   const sendEmail = () => {
     axiosWithBaseURL
@@ -59,10 +67,42 @@ const VerifyEmail = () => {
     return true;
   };
 
+  const createAccount = () => {
+    axiosWithBaseURL
+      .post("/auth-system/create-account", {
+        FirstName: firstname,
+        LastName: lastname,
+        Email,
+        Password: password,
+      })
+      .then(function (respond) {
+        // console.log(respond.data);
+        if (respond.data.Message === true) {
+          redirectToLoginPage();
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   const sendOtpToBackend = () => {
-    // send entered Otp and encOtp check hash in backend
-    // if true Create Account else wrong Otp
-    axios.post("");
+    // send entered Otp and encOtp if match to backend
+    axiosWithBaseURL
+      .post("/auth-system/verify-otp", {
+        otp: otpcode,
+        hash: encOtp,
+      })
+      .then(function (respond) {
+        console.log(respond.data);
+        // if true Create Account else wrong Otp
+        if (respond.data === true) {
+          createAccount();
+        }
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   const verifyOTP = (e) => {

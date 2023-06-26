@@ -26,14 +26,14 @@ const generateOTP = () => {
 
 // Generate a hash from OTP
 const generateHashFromOTP = (otp) => {
-  const salt = bcrypt.genSaltSync(10);
+  const salt = bcrypt.genSaltSync(7);
   const hashOfOTP = bcrypt.hashSync(otp, salt);
   return hashOfOTP;
 };
 
 // Send verification email
 
-const sendVerificationEmail = (userEmail, otp) => {
+const sendVerificationEmail = async (userEmail, otp) => {
   // HTML email template
   const html = `
  <h1>Verify Your Email</h1>
@@ -43,15 +43,15 @@ const sendVerificationEmail = (userEmail, otp) => {
 `;
 
   const mailOptions = {
-    from: `"BudgetTracker"<noreply@BudgetTracker.com>`, // sender address
+    from: `"BudgetTracker"<santosh.deuja2000@gmail.com>`, // sender address
     to: `${userEmail}`, // list of receivers
     subject: "Email Verification", // Subject line
     html: html, // html body
-    replyTo: null,
+    replyTo: false,
   };
 
   try {
-    const info = transporter.sendMail(mailOptions);
+    const info = await transporter.sendMail(mailOptions);
     console.log("Verification email sent:", info.response);
     return true;
   } catch (error) {
@@ -60,4 +60,15 @@ const sendVerificationEmail = (userEmail, otp) => {
   }
 };
 
-module.exports = { generateOTP, generateHashFromOTP, sendVerificationEmail };
+// verify One Time Password
+const verifyHash = (otp, hash) => {
+  const check = bcrypt.compareSync(otp, hash);
+  return check;
+};
+
+module.exports = {
+  generateOTP,
+  generateHashFromOTP,
+  sendVerificationEmail,
+  verifyHash,
+};
