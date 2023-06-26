@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppRoutes from "./routes/ AppRoutes";
 import { useStateValue } from "./features/main/context/StateProvider";
+import jwt_decode from "jwt-decode";
 import axiosWithBaseURL from "./constants/axiosRoute";
 import Loading from "./features/main/components/Loading";
 
@@ -15,7 +16,7 @@ function App() {
         withCredentials: true, // enable sending and receiving cookies
       })
       .then(function (respond) {
-        const data = decodeToken(respond.data);
+        const data = jwt_decode(respond.data);
         // const data = respond.data;
         // console.log(data);
         if (data?.id) {
