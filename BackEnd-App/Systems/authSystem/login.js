@@ -97,5 +97,4 @@ module.exports = {
   checkPassword,
   generateToken,
   verifyToken,
-  verifyTokenAndDecodeToken,
 };
