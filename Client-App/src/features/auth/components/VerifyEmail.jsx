@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useSignUpStateValue } from "../context/SignupStateProvider";
+import ErrorMessageText from "../error/ErrorMessageText";
+import axiosWithBaseURL from "../../../constants/axiosRoute";
 
 const VerifyEmail = () => {
   // on mount send request to backend to send email with verification code.
@@ -8,9 +9,11 @@ const VerifyEmail = () => {
   const [otpcode, setOtpCode] = useState("");
   const [encOtp, setEncOtp] = useState("");
 
+  const [errorOtp, setErrorOtp] = useState({});
+
   const sendEmail = () => {
-    axios
-      .post("http://localhost:5000/auth-system/verify-email", {
+    axiosWithBaseURL
+      .post("/auth-system/verify-email", {
         email: Email,
       })
       .then(function (respond) {
@@ -36,15 +39,50 @@ const VerifyEmail = () => {
     });
   };
 
+  const isValidCode = () => {
+    if (otpcode.length === 0) {
+      setErrorOtp({
+        OtpError: true,
+        Message: "This Field Cannot Be Empty !",
+      });
+      return false;
+    }
+
+    if (otpcode.length <= 5 || otpcode.length > 6) {
+      setErrorOtp({
+        OtpError: true,
+        Message: "Code Must Be 6 Digits Long !",
+      });
+      return false;
+    }
+
+    return true;
+  };
+
+  const sendOtpToBackend = () => {
+    // send entered Otp and encOtp check hash in backend
+    // if true Create Account else wrong Otp
+    axios.post("");
+  };
+
   const verifyOTP = (e) => {
     e.preventDefault(); // prevent page refresh
 
-    // if encOtp === code then create account
+    const isValidStatus = isValidCode();
+
+    if (isValidStatus) {
+      sendOtpToBackend();
+    }
   };
 
   useEffect(() => {
     sendEmail();
   }, [Email]);
+
+  // clear error while typing
+  useEffect(() => {
+    setErrorOtp({});
+  }, [otpcode]);
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -70,7 +108,14 @@ const VerifyEmail = () => {
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 text-center"
               />
             </div>
-            <div className="flex flex-row justify-between px-2.5 pt-3 pb-2">
+            {/* Error Message */}
+            <div className="px-24">
+              {errorOtp.OtpError && (
+                <ErrorMessageText props={errorOtp.Message} />
+              )}
+            </div>
+
+            <div className="flex flex-row justify-between px-2.5 pt-2 pb-2">
               <button
                 className="text-sm text-[#300]  cursor-pointer hover:underline"
                 onClick={reSendEmail}
