@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppRoutes from "./routes/ AppRoutes";
 import { useStateValue } from "./features/main/context/StateProvider";
 import axiosWithBaseURL from "./constants/axiosRoute";
-import Loading from "./features/main/context/components/Loading";
+import Loading from "./features/main/components/Loading";
 
 function App() {
   const [{ userData }, dispatch] = useStateValue();
