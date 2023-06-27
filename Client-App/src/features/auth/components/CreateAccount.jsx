@@ -265,7 +265,7 @@ const CreateAccount = () => {
 
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-      <div className="w-full p-6 mb-auto mx-auto mt-12 bg-white rounded-md md:max-w-lg">
+      <div className="w-full p-6 mb-auto mx-auto mt-12 bg-white rounded-md sm:max-w-lg">
         <h1 className="text-3xl font-semibold text-center text-black py-5">
           Create a New Account
         </h1>
