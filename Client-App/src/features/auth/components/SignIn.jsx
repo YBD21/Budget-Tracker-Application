@@ -2,15 +2,16 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import axiosWithURL from "../../../constants/axiosRoute";
-
+import jwt_decode from "jwt-decode";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-
 import ErrorMessageBoxSignin from "../error/ErrorMessageBoxSignin";
+import { useStateValue } from "../../main/context/StateProvider";
 
 const SignIn = () => {
   const Email = "email";
   const Password = "password";
+  const [{ userData }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
@@ -21,6 +22,14 @@ const SignIn = () => {
   const [loggingIn, setLoggingIn] = useState(false);
 
   const [error, setError] = useState(null); // capture error with this state
+
+  const setUser = (token) => {
+    const data = jwt_decode(token);
+    dispatch({
+      type: "SET_USER",
+      userData: data,
+    });
+  };
 
   const requestBackendForLogin = () => {
     // disable to prevent button spam
@@ -45,8 +54,10 @@ const SignIn = () => {
         }
 
         if (respond.data.Message === true) {
-          // redirect to Main_Page
-          return navigate("/Home", { replace: true });
+          // setUser
+          setUser(respond.data.accessToken);
+          // redirect to Home Page
+          navigate("/", { replace: true });
         }
 
         if (respond.data.Error !== undefined) {
