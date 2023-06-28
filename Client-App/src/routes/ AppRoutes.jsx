@@ -5,7 +5,8 @@ import ClientRoute from "./ClientRoute";
 const AppRoutes = () => {
   // import userData from contexProvider or dataLayer
   const [{ userData }] = useStateValue();
-  const role = userData?.role;
+  // const role = userData?.role;
+  const role = "Client"; // --  testing
 
   switch (role) {
     case "Client":
