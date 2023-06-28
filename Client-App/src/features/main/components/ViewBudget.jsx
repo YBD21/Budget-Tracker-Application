@@ -1,5 +1,8 @@
+import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import WestIcon from "@mui/icons-material/West";
+import EastIcon from "@mui/icons-material/East";
 
 const ViewBudget = () => {
   const dateRangeOptions = ["Latest", "Oldest"];
@@ -8,8 +11,47 @@ const ViewBudget = () => {
 
   const reoccurringOption = ["Monthly", "One time"];
 
+  const [page, setPage] = useState(1);
+  const itemsPerPage = 5;
+
+  const handleClick = (event) => {
+    setPage(Number(event.target.id));
+  };
+
+  const tableRows = [];
+
+  for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
+    tableRows.push(
+      <tr key={i}>
+        <td className="border px-4 py-2.5">Santosh Deuja</td>
+        <td className="border px-4 py-2.5">2023/06/28</td>
+        <td className="border px-4 py-2.5 text-green-700 font-bold">Income</td>
+        <td className="border px-4 py-2 font-bold">Monthly</td>
+      </tr>
+    );
+  }
+
+  const pageNumbers = [];
+  for (let i = 1; i <= Math.ceil(45 / itemsPerPage); i++) {
+    pageNumbers.push(
+      <li key={i}>
+        <button
+          id={i}
+          onClick={handleClick}
+          className={`${
+            i === page ? "bg-gray-400 text-white" : "bg-white text-black"
+          } hover:bg-gray-500 hover:text-white py-2 px-4 border-2
+           border-black rounded ml-2`}
+        >
+          {i}
+        </button>
+      </li>
+    );
+  }
+
   return (
     <>
+      {/* Search Bar */}
       <div className="relative flex flex-1 items-center mb-10">
         <input
           type="text"
@@ -71,8 +113,51 @@ const ViewBudget = () => {
         </div>
       </div>
       {/* Table Details here */}
-      <div className="flex flex-row justify-between rounded-md mt-5 border-black border-2 border-dashed items-center text-center">
-        {/*  */}
+      <div className="flex justify-between rounded-md mt-6 border-black border-2 border-dashed items-center text-center overflow-x-auto">
+        <table className="table-auto w-full">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
+                Name
+              </th>
+              <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
+                Date
+              </th>
+              <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
+                Type
+              </th>
+              <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
+                Reoccuring
+              </th>
+            </tr>
+          </thead>
+
+          <tbody className="text-center"> {tableRows}</tbody>
+        </table>
+
+        {/* <ul className="flex pl-1 list-none my-5">
+          {pageNumbers.map((number) => (
+            <>{number}</>
+          ))}
+        </ul> */}
+      </div>
+      {/* Pagination */}
+      <div className="flex flex-row justify-between mt-5">
+        <button
+          className="px-10 py-2 tracking-wide
+            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
+            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
+        >
+          <WestIcon className="scale-150" />
+        </button>
+
+        <button
+          className="px-10 py-2 tracking-wide
+            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
+            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
+        >
+          <EastIcon className="scale-150" />
+        </button>
       </div>
     </>
   );
