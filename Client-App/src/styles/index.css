@@ -1,4 +1,6 @@
 :root {
+  --primary: rgba(234, 232, 236, 0.205);
+  --secondary: rgba(61, 62, 65, 0.425);
   font-family: "Inter", sans-serif;
   background-color: white;
 
@@ -7,6 +9,28 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 0.75rem;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--primary);
+  border-radius: 5px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--secondary);
+  border-radius: 14px;
+  border: 2px solid var(--primary);
 }
 
 body {
@@ -25,10 +49,6 @@ input::-webkit-inner-spin-button {
   margin: 0;
 }
 
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
 
 @tailwind base;
 @tailwind components;
