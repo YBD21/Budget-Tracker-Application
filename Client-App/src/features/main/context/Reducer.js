@@ -1,5 +1,6 @@
 export const initialState = {
   userData: [],
+  isViewPage: true,
 };
 
 const reducer = (state, action) => {
@@ -9,6 +10,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         userData: { ...action.userData },
+      };
+
+    case "SET_VIEW_PAGE":
+      return {
+        ...state,
+        isViewPage: action.isViewPage,
       };
 
     default:
