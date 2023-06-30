@@ -70,7 +70,7 @@ const DataEntry = () => {
         {/* Type -- Select Box */}
         <div className="relative">
           <select
-            className="w-full px-1 py-2.5 text-black bg-white rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black max-sm:text-xs"
+            className="w-full px-1 py-2.5 text-black bg-white rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black max-sm:text-sm"
             onChange={(e) => setType(e.target.value)}
             value={type}
           >
@@ -83,7 +83,7 @@ const DataEntry = () => {
               </option>
             ))}
           </select>
-          <ExpandMoreIcon className="absolute right-8 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black  max-sm:top-1/2 max-sm:scale-150" />
+          <ExpandMoreIcon className="absolute right-6 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black max-sm:scale-150" />
         </div>
 
         {/* Reoccurring -- Select Box*/}
@@ -103,20 +103,20 @@ const DataEntry = () => {
               </option>
             ))}
           </select>
-          <ExpandMoreIcon className="absolute right-8 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black max-sm:top-1/2 max-sm:scale-150" />
+          <ExpandMoreIcon className="absolute right-6 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black max-sm:top-1/2 max-sm:scale-150" />
         </div>
       </div>
       {/* Submit Button */}
-      <div className="flex justify-between mt-10">
+      <div className="flex justify-between mt-10 gap-2">
         <button
-          className="px-14 py-2 tracking-wide
+          className="px-10 py-2 tracking-wide
             text-white bg-black font-semibold rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
         >
           Submit
         </button>
         <button
-          className="px-14 py-2 tracking-wide border-2 border-black
+          className="px-10 py-2 tracking-wide border-2 border-black
             text-black bg-white font-semibold rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
           onClick={cancel}

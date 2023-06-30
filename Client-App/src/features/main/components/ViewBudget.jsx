@@ -143,7 +143,7 @@ const ViewBudget = () => {
               </tr>
             </thead>
 
-            <tbody className="text-center"> {tableRows}</tbody>
+            <tbody className="text-center">{tableRows}</tbody>
           </table>
         </div>
         {/* Pagination */}
