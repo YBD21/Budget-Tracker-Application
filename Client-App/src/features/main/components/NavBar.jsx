@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-// import UserDropDown from "./UserProfile/UserDropDown";
+import UserDropDown from "../../UserProfile/components/UserDropDown";
 
 const NavBar = () => {
   const location = useLocation();
@@ -33,7 +33,7 @@ const NavBar = () => {
             isHome ? `border-b-4 border-black` : false
           } group`}
         >
-          <Link to="/Store" className="block px-2 py-4">
+          <Link to="/Home" className="block px-2 py-4">
             <HomeIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
           </Link>
           <div className="absolute top-5 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
@@ -41,20 +41,20 @@ const NavBar = () => {
           </div>
         </li>
 
-        <li className="relative m-auto group">
-          <button onClick={showUserMenu} className="block px-2 py-4">
-            <AccountCircleIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
-          </button>
-          <div
-            className="absolute top-0 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md
-          max-sm:left-0"
-          >
+        <li
+          className="relative m-auto group cursor-pointer"
+          onClick={showUserMenu}
+        >
+          <div className="block px-2 py-4">
+            <AccountCircleIcon className="svg-icons transition duration-300 transform active:scale-105 pointer-events-none" />
+          </div>
+          <div className="absolute top-0 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md max-sm:left-0">
             <span className="text-white font-semibold "> User Profile </span>
           </div>
           {/* UserDropDown */}
-          {isUserclicked &&
-            // <UserDropDown status={isUserclicked} className="translate-y-0" />
-            "Hello"}
+          {isUserclicked && (
+            <UserDropDown status={isUserclicked} className="translate-y-0" />
+          )}
         </li>
       </ul>
     </header>
