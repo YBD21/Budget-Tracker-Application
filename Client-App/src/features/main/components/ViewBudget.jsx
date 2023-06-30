@@ -72,7 +72,7 @@ const ViewBudget = () => {
       </div>
 
       {/* Select DropDown Group */}
-      <div className="flex flex-row justify-betwee gap-6 max-sm:gap-2">
+      <div className="flex flex-row justify-between gap-6 max-sm:gap-2">
         {/* Select Dropdown Date Range */}
         <div className="relative inline-block w-1/3">
           <select
@@ -131,13 +131,13 @@ const ViewBudget = () => {
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
                   Name
                 </th>
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
+                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
                   Date
                 </th>
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
+                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
                   Type
                 </th>
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
+                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
                   Reoccuring
                 </th>
               </tr>
@@ -150,16 +150,16 @@ const ViewBudget = () => {
         <div className="flex flex-row justify-between mt-5 mx-6">
           <button
             className="px-10 py-2 tracking-wide
-            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
-            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
+            text-white bg-gray-500 font-medium rounded-lg  text-center mr-2 mb-2
+            focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-gray-400 active:ring-opacity-50"
           >
             <WestIcon className="scale-150" />
           </button>
 
           <button
             className="px-10 py-2 tracking-wide
-            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
-            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
+            text-white bg-gray-500 font-medium rounded-lg  text-center mr-2 mb-2
+            focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-gray-400 active:ring-opacity-50"
           >
             <EastIcon className="scale-150" />
           </button>
@@ -169,8 +169,8 @@ const ViewBudget = () => {
       <div className="flex justify-center mt-10">
         <button
           className="px-14 py-2 tracking-wide
-            text-white bg-green-700 font-medium rounded-lg  text-center mr-2 mb-2
-            focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-50 active:ring-4 active:ring-green-400 active:ring-opacity-50"
+            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
+            focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
           onClick={handleAdd}
         >
           Add

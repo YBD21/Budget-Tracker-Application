@@ -1,7 +1,7 @@
 :root {
   --primary: rgba(234, 232, 236, 0.205);
   --secondary: rgba(61, 62, 65, 0.425);
-  font-family: "Inter", sans-serif;
+  font-family: "Hanken Grotesk", "Segoe UI", Tahoma, Verdana, sans-serif;
   background-color: white;
 
   font-synthesis: none;
@@ -48,7 +48,6 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-
 
 @tailwind base;
 @tailwind components;

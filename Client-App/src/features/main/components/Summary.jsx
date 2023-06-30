@@ -1,8 +1,15 @@
 import React from "react";
+import { useStateValue } from "../context/StateProvider";
 
 const Summary = () => {
+  const [{ isViewPage }] = useStateValue();
+  // change mb-6 to when form is DataEntry
   return (
-    <div className="w-full h-20 flex flex-row justify-between rounded-md my-10 border-black border-2 items-center text-center">
+    <div
+      className={`w-full h-20 flex flex-row justify-between rounded-md mt-10 border-black border-2 items-center text-center ${
+        isViewPage ? "mb-10" : "mb-6"
+      }`}
+    >
       {/* Total Income */}
       <div className="w-1/3 flex flex-col border-r-2 border-black">
         <p className="text-base font-semibold px-4 max-sm:text-sm">
@@ -10,7 +17,7 @@ const Summary = () => {
           Total Income{" "}
         </p>
         <p className="text-lg text-blue-900 font-bold px-4 max-sm:text-base">
-          NRS {2400}
+          Rs.{2400}
         </p>
       </div>
       {/* Total Expense */}
@@ -20,14 +27,14 @@ const Summary = () => {
           Total Expense{" "}
         </p>
         <p className="text-lg text-red-800 font-bold px-4 max-sm:text-base">
-          NRS {2200}
+          Rs.{2200}
         </p>
       </div>
       {/* Balance */}
       <div className="w-1/3 flex flex-col">
         <p className="text-base font-semibold px-4 max-sm:text-sm"> Balance </p>
         <p className="text-lg text-green-700 font-bold px-4 max-sm:text-base">
-          NRS {200}
+          Rs.{200}
         </p>
       </div>
     </div>
