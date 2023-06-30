@@ -149,7 +149,7 @@ const ViewBudget = () => {
         {/* Pagination */}
         <div className="flex flex-row justify-between mt-5 mx-6">
           <button
-            className="px-10 py-2 tracking-wide border-2 border-gray-600
+            className="px-10 py-2 tracking-wide border-2 border-black
             text-black bg-white font-medium rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-gray-400 active:ring-opacity-50"
           >
@@ -157,7 +157,7 @@ const ViewBudget = () => {
           </button>
 
           <button
-            className="px-10 py-2 tracking-wide border-2 border-gray-600
+            className="px-10 py-2 tracking-wide border-2 border-black
             text-black bg-white font-medium rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-gray-400 active:ring-opacity-50"
           >

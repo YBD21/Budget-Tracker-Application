@@ -39,7 +39,7 @@ body {
 }
 
 .svg-icons {
-  transform: scale(1.75);
+  transform: scale(1.75) !important;
 }
 
 /* Chrome, Safari, Edge, Opera */
