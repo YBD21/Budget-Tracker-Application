@@ -123,7 +123,7 @@ const ViewBudget = () => {
         </div>
       </div>
       {/* Table Details here */}
-      <div className="border-black border-2 rounded-md mt-6">
+      <div className="border-grey-400 border rounded-md mt-6">
         <div className="flex justify-between  rounded-md items-center text-center overflow-x-auto">
           <table className="table-auto w-full">
             <thead>
@@ -149,16 +149,16 @@ const ViewBudget = () => {
         {/* Pagination */}
         <div className="flex flex-row justify-between mt-5 mx-6">
           <button
-            className="px-10 py-2 tracking-wide
-            text-white bg-gray-500 font-medium rounded-lg  text-center mr-2 mb-2
+            className="px-10 py-2 tracking-wide border-2 border-gray-600
+            text-black bg-white font-medium rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-gray-400 active:ring-opacity-50"
           >
             <WestIcon className="scale-150" />
           </button>
 
           <button
-            className="px-10 py-2 tracking-wide
-            text-white bg-gray-500 font-medium rounded-lg  text-center mr-2 mb-2
+            className="px-10 py-2 tracking-wide border-2 border-gray-600
+            text-black bg-white font-medium rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-gray-400 active:ring-opacity-50"
           >
             <EastIcon className="scale-150" />
@@ -169,7 +169,7 @@ const ViewBudget = () => {
       <div className="flex justify-center mt-10">
         <button
           className="px-14 py-2 tracking-wide
-            text-white bg-black font-medium rounded-lg  text-center mr-2 mb-2
+            text-white bg-black font-semibold rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
           onClick={handleAdd}
         >
