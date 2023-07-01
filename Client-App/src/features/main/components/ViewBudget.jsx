@@ -33,8 +33,8 @@ const ViewBudget = () => {
   for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
     tableRows.push(
       <tr key={i}>
-        <td className="border px-4 py-2.5">Santosh Deuja</td>
         <td className="border px-4 py-2.5">2023/06/28</td>
+        <td className="border px-4 py-2.5">Santosh Deuja</td>
         <td className="border px-4 py-2.5 text-green-700 font-bold">Income</td>
         <td className="border px-4 py-2 font-bold">Monthly</td>
       </tr>
@@ -129,10 +129,10 @@ const ViewBudget = () => {
             <thead>
               <tr className="bg-gray-100">
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
-                  Name
+                  Date
                 </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
-                  Date
+                  Name
                 </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
                   Type
