@@ -13,6 +13,10 @@ const NavBar = () => {
     setIsUserClicked(!isUserclicked);
   };
 
+  const handelStatusFromChild = (status) => {
+    setIsUserClicked(status);
+  };
+
   useEffect(() => {
     setIsHome(location.pathname === "/Home");
   }, [location]);
@@ -53,7 +57,11 @@ const NavBar = () => {
           </div>
           {/* UserDropDown */}
           {isUserclicked && (
-            <UserDropDown status={isUserclicked} className="translate-y-0" />
+            <UserDropDown
+              status={isUserclicked}
+              onStatusChange={handelStatusFromChild}
+              className="translate-y-0"
+            />
           )}
         </li>
       </ul>

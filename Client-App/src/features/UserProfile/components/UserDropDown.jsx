@@ -3,7 +3,7 @@ import { useStateValue } from "../../main/context/StateProvider";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import Profile from "./Profile";
 
-const UserDropDown = ({ status }) => {
+const UserDropDown = ({ status, onStatusChange }) => {
   const [isOpen, setIsOpen] = useState(status);
   const [{ userData }, dispatch] = useStateValue();
   const dropdownRef = useRef(null);
@@ -29,6 +29,7 @@ const UserDropDown = ({ status }) => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsOpen(false);
+        onStatusChange(false);
       }
     }
 
@@ -53,8 +54,7 @@ const UserDropDown = ({ status }) => {
         </div>
         <ul className="divide-y divide-gray-600">
           <li
-            className="flex items-center px-4 py-5 text-gray-700  hover:bg-gray-100 hover:text-black
-           "
+            className="flex items-center px-4 py-5 text-gray-700 hover:bg-gray-100 hover:text-black"
             onClick={logOut}
           >
             <ExitToAppIcon className="svg-icons ml-3 mr-10" />
