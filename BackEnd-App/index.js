@@ -2,6 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const authSystemRouter = require("./Routes/authSystemRouter.js");
+const budgetSystemRouter = require("./Routes/budgetSystemRouter.js");
 
 const app = express();
 
@@ -25,6 +26,9 @@ app.use(cookieParser());
 
 // Mount userRouter middleware at "/auth-System" path
 app.use("/auth-system", authSystemRouter);
+
+// Mount userRouter middleware at "/budget-system" path
+app.use("/budget-system", budgetSystemRouter);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

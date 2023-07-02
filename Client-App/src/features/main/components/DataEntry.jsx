@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useStateValue } from "../context/StateProvider";
 import ErrorMainMessage from "../error/ErrorMainMessage";
+import axiosWithBaseURL from "../../../constants/axiosRoute";
 
 const DataEntry = () => {
   const [{ isViewPage }, dispatch] = useStateValue();
@@ -164,12 +165,37 @@ const DataEntry = () => {
     return validStatus;
   };
 
+  const requestToCreateNewBudget = () => {
+    axiosWithBaseURL
+      .post(
+        "/budget-system/create-budget",
+        {
+          Name: name,
+          Amount: amount,
+          Date: date,
+          Type: type,
+          Reoccure: reoccure,
+        },
+        {
+          withCredentials: true, // enable sending and receiving cookies
+        }
+      )
+      .then((respond) => {
+        console.log(respond);
+        // on Sccuess MessageBox
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   const submit = () => {
     // validate input field
     const isInputFieldValid = checkInputFields();
     const isSelectFieldValid = checkSelectFields();
     if (isInputFieldValid && isSelectFieldValid) {
-      console.log("Send Data to backend !");
+      requestToCreateNewBudget();
     }
   };
 
