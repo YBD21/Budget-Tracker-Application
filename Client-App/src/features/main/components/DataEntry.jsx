@@ -196,7 +196,7 @@ const DataEntry = () => {
   return (
     <div className="mt-0">
       {/* Name Field */}
-      <div className="pb-3">
+      <div className="mb-4">
         <label className="block text-sm font-semibold text-gray-800 py-2">
           Name
         </label>
@@ -214,7 +214,7 @@ const DataEntry = () => {
         />
       </div>
       {/* Amount Field */}
-      <div className="pb-5">
+      <div className="mb-4">
         <label className="block text-sm font-semibold text-gray-800 py-2">
           Amount
         </label>
@@ -310,7 +310,7 @@ const DataEntry = () => {
         </div>
       </div>
       {/* Submit Button */}
-      <div className="flex justify-between mt-10 gap-2">
+      <div className="flex justify-between mt-10 gap-2 max-sm:mb-4">
         <button
           className="px-10 py-2 tracking-wide
             text-white bg-black font-semibold rounded-lg  text-center mr-2 mb-2
@@ -320,8 +320,7 @@ const DataEntry = () => {
           Submit
         </button>
         <button
-          className="px-10 py-2 tracking-wide border-2 border-black
-            text-black bg-white font-semibold rounded-lg  text-center mr-2 mb-2
+          className="px-10 py-2 tracking-wide text-white bg-neutral-700 font-semibold rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
           onClick={cancel}
         >

@@ -166,7 +166,7 @@ const ViewBudget = () => {
         </div>
       </div>
       {/* Add Button */}
-      <div className="flex justify-center mt-10">
+      <div className="flex justify-center mt-10 max-sm:mb-2">
         <button
           className="px-14 py-2 tracking-wide
             text-white bg-black font-semibold rounded-lg  text-center mr-2 mb-2
