@@ -85,8 +85,13 @@ const DataEntry = () => {
       message = `Amount must be up to ${maxLength} characters !`; // Set the error message
       validStatus = false; // Set validStatus to false
     } else if (typeof amount !== "number") {
-      message = `Amount must be Number !`; // Set the error message
-      validStatus = false; // Set validStatus to false
+      const numValue = parseInt(amount);
+      if (!isNaN(numValue)) {
+        setAmount(numValue);
+      } else {
+        message = `Amount must be a Number !`; // Set the error message
+        validStatus = false; // Set validStatus to false
+      }
     }
 
     // Update the Name with the valid and message values
@@ -99,12 +104,12 @@ const DataEntry = () => {
   const checkDate = () => {
     let message = ""; // Initialize error message to an empty string
     let validStatus = true; // Set validStatus to true by default
-    const hyphenCount = date.split("-").length - 1;
+    const dateValue = new Date(date);
     // Check if the Date is empty
     if (date.trim().length === 0) {
       message = "Date is required !"; // Set the error message
       validStatus = false; // Set validStatus to false
-    } else if (hyphenCount !== 2) {
+    } else if (isNaN(dateValue)) {
       message = `Invalid Date !`; // Set the error message
       validStatus = false; // Set validStatus to false
     }
@@ -163,7 +168,6 @@ const DataEntry = () => {
     // validate input field
     const isInputFieldValid = checkInputFields();
     const isSelectFieldValid = checkSelectFields();
-
     if (isInputFieldValid && isSelectFieldValid) {
       console.log("Send Data to backend !");
     }
@@ -203,6 +207,7 @@ const DataEntry = () => {
         <input
           type="text"
           value={name}
+          placeholder="Enter Name"
           onChange={(e) => setName(e.target.value)}
           className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none 
           focus:ring focus:ring-opacity-40"
@@ -213,23 +218,28 @@ const DataEntry = () => {
         <label className="block text-sm font-semibold text-gray-800 py-2">
           Amount
         </label>
-         {/* Error Message Name */}
-         {errorAmount?.message && (
+        {/* Error Message Amount */}
+        {errorAmount?.message && (
           <ErrorMainMessage message={errorAmount?.message} />
         )}
         <input
           type="number"
           value={amount}
-          onChange={(e) => setAmount(+e.target.value)}
+          onChange={(e) => setAmount(e.target.value)}
+          placeholder="Enter Amount"
           className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none 
           focus:ring focus:ring-opacity-40"
         />
       </div>
       {/* Date Field */}
-      <div className="pb-5">
+      <div className="pb-0">
         <label className="block text-sm font-semibold text-gray-800 py-2">
           Date
         </label>
+        {/* Error Message Date */}
+        {errorDate?.message && (
+          <ErrorMainMessage message={errorDate?.message} />
+        )}
         <input
           type="date"
           value={date}
@@ -241,44 +251,62 @@ const DataEntry = () => {
         />
       </div>
 
-      <div className="w-full flex flex-col gap-8 mt-5">
+      <div className="w-full flex flex-col">
         {/* Type -- Select Box */}
-        <div className="relative">
-          <select
-            className="w-full px-1 py-2.5 text-black bg-white rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black max-sm:text-sm"
-            onChange={(e) => setType(e.target.value)}
-            value={type}
-          >
-            <option value="" disabled>
-              Select Type
-            </option>
-            {typeOptions.map((element, index) => (
-              <option key={index} value={element}>
-                {element}
+        <div className="py-2">
+          <label className="block text-sm font-semibold text-gray-800 py-2">
+            Type
+          </label>
+          {/* Error Message Type */}
+          {errorType?.message && (
+            <ErrorMainMessage message={errorType?.message} />
+          )}
+          <div className="relative mt-2">
+            <select
+              className="w-full px-1 py-2.5 text-black bg-white rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black max-sm:text-sm"
+              onChange={(e) => setType(e.target.value)}
+              value={type}
+            >
+              <option value="" disabled>
+                Select Type
               </option>
-            ))}
-          </select>
-          <ExpandMoreIcon className="absolute right-6 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black max-sm:scale-150" />
+              {typeOptions.map((element, index) => (
+                <option key={index} value={element}>
+                  {element}
+                </option>
+              ))}
+            </select>
+            <ExpandMoreIcon className="absolute right-6 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black max-sm:scale-150" />
+          </div>
         </div>
 
         {/* Reoccurring -- Select Box*/}
-        <div className="relative">
-          <select
-            className="w-full px-1 py-2.5 text-black rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black
-          bg-white focus:border-black focus:ring-black max-sm:text-sm"
-            value={reoccure}
-            onChange={(e) => setReoccure(e.target.value)}
-          >
-            <option value="" disabled>
-              Select Reoccurring
-            </option>
-            {reoccurringOption.map((element, index) => (
-              <option key={index} value={element}>
-                {element}
+
+        <div className="py-2">
+          <label className="block text-sm font-semibold text-gray-800 py-2">
+            Reoccurring
+          </label>
+          {/* Error Message Reoccurring */}
+          {errorReoccure?.message && (
+            <ErrorMainMessage message={errorReoccure?.message} />
+          )}
+          <div className="relative mt-2">
+            <select
+              className="w-full px-1 py-2.5 text-black bg-white rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black max-sm:text-sm"
+              onChange={(e) => setReoccure(e.target.value)}
+              value={reoccure}
+            >
+              <option value="" disabled>
+                Select Reoccurring
               </option>
-            ))}
-          </select>
-          <ExpandMoreIcon className="absolute right-6 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black max-sm:top-1/2 max-sm:scale-150" />
+              {reoccurringOption.map((element, index) => (
+                <option key={index} value={element}>
+                  {element}
+                </option>
+              ))}
+            </select>
+            <ExpandMoreIcon className="absolute right-6 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black max-sm:scale-150" />
+          </div>
         </div>
       </div>
       {/* Submit Button */}

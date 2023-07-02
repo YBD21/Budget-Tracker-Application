@@ -16,7 +16,7 @@ const Summary = () => {
           {" "}
           Total Income{" "}
         </p>
-        <p className="text-lg text-blue-900 font-bold px-4 max-sm:text-base">
+        <p className="text-lg text-blue-900 font-bold px-4 max-sm:text-base max-sm:py-0.5">
           Rs.{2400}
         </p>
       </div>
@@ -26,14 +26,17 @@ const Summary = () => {
           {" "}
           Total Expense{" "}
         </p>
-        <p className="text-lg text-red-800 font-bold px-4 max-sm:text-base">
+        <p className="text-lg text-red-800 font-bold px-4 max-sm:text-base max-sm:py-0.5">
           Rs.{2200}
         </p>
       </div>
       {/* Balance */}
       <div className="w-1/3 flex flex-col">
-        <p className="text-base font-semibold px-4 max-sm:text-sm"> Balance </p>
-        <p className="text-lg text-green-700 font-bold px-4 max-sm:text-base">
+        <p className="text-base font-semibold px-4 max-sm:text-sm">
+          {" "}
+          Total Balance{" "}
+        </p>
+        <p className="text-lg text-green-700 font-bold px-4 max-sm:text-base max-sm:py-0.5">
           Rs.{200}
         </p>
       </div>
