@@ -46,6 +46,18 @@ const verifyToken = (token) => {
   return sendData;
 };
 
+const verifyTokenAndDecodeToken = (token) => {
+  let sendData = false;
+  jwt.verify(token, secretKey, function (err, decoded) {
+    if (err) {
+      console.log(err.message);
+    } else {
+      sendData = { ...decoded };
+    }
+  });
+  return sendData;
+};
+
 const login = async (email, password) => {
   let sendData = { Message: "", Error: "" };
 
@@ -97,4 +109,5 @@ module.exports = {
   checkPassword,
   generateToken,
   verifyToken,
+  verifyTokenAndDecodeToken,
 };

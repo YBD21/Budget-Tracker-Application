@@ -70,7 +70,7 @@ authSystemRouter.post("/login", async (req, res) => {
     res.cookie("userData", respond.accessToken, {
       secure: true, // set to true to enable sending the cookie only over HTTPS
       httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
-      sameSite: "strict", // change to none for render hosting
+      sameSite: "strict",
     });
     console.log(`User : ${email} is Logged In ! `);
   }
