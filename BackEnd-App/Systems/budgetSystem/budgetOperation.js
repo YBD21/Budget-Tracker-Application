@@ -9,7 +9,7 @@ const createBudget = async (userData, formData) => {
   const unixTimestamp = new Date().getTime();
 
   const newEntry = {
-    Name: formData.Name,
+    Title: formData.Title,
     Amount: formData.Amount,
     Date: formData.Date,
     Type: formData.Type,

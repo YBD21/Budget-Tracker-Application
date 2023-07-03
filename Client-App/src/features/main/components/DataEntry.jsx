@@ -9,13 +9,13 @@ const DataEntry = () => {
 
   const inputDateRef = useRef(null);
 
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
   const [type, setType] = useState("");
   const [reoccure, setReoccure] = useState("");
 
-  const [errorName, setErrorName] = useState(null);
+  const [errorTitle, setErrorTitle] = useState(null);
   const [errorAmount, setErrorAmount] = useState(null);
   const [errorDate, setErrorDate] = useState(null);
   const [errorType, setErrorType] = useState(null);
@@ -36,37 +36,37 @@ const DataEntry = () => {
   };
 
   const checkInputFields = () => {
-    const isValidName = checkName();
+    const isValidTitle = checkTitle();
     const isValidAmount = checkAmount();
     const isValidDate = checkDate();
-    if (isValidName && isValidAmount && isValidDate) {
+    if (isValidTitle && isValidAmount && isValidDate) {
       return true;
     }
     return false;
   };
 
-  const checkName = () => {
-    const maxLength = 30; // Maximum allwoed Length for Name
-    const minLength = 3; // Minimum allwoed Length for Name
+  const checkTitle = () => {
+    const maxLength = 30; // Maximum allwoed Length for Title
+    const minLength = 3; // Minimum allwoed Length for Title
     let message = ""; // Initialize error message to an empty string
     let validStatus = true; // Set validStatus to true by default
 
     // Check if the city is empty
-    if (name.trim().length === 0) {
-      message = "Name is required !"; // Set the error message
+    if (title.trim().length === 0) {
+      message = "Title is required !"; // Set the error message
       validStatus = false; // Set validStatus to false
-    } else if (name.length > maxLength) {
-      // Check if the name is too long
-      message = `Name must be up to ${maxLength} characters !`; // Set the error message
+    } else if (title.length > maxLength) {
+      // Check if the title is too long
+      message = `Title must be up to ${maxLength} characters !`; // Set the error message
       validStatus = false; // Set validStatus to false
-    } else if (name.trim().length < minLength) {
+    } else if (title.trim().length < minLength) {
       // Check if the city is too short
-      message = `Name must be more than ${minLength} characters !`; // Set the error message
+      message = `Title must be more than ${minLength} characters !`; // Set the error message
       validStatus = false; // Set validStatus to false
     }
 
-    // Update the Name with the valid and message values
-    setErrorName({ message });
+    // Update the Title with the valid and message values
+    setErrorTitle({ message });
 
     // Return the validStatus flag
     return validStatus;
@@ -95,7 +95,7 @@ const DataEntry = () => {
       }
     }
 
-    // Update the Name with the valid and message values
+    // Update the Title with the valid and message values
     setErrorAmount({ message });
 
     // Return the validStatus flag
@@ -170,7 +170,7 @@ const DataEntry = () => {
       .post(
         "/budget-system/create-budget",
         {
-          Name: name,
+          Title: title,
           Amount: amount,
           Date: date,
           Type: type,
@@ -203,8 +203,8 @@ const DataEntry = () => {
   }, [amount]);
 
   useEffect(() => {
-    setErrorName(null);
-  }, [name]);
+    setErrorTitle(null);
+  }, [title]);
 
   useEffect(() => {
     setErrorDate(null);
@@ -220,20 +220,20 @@ const DataEntry = () => {
 
   return (
     <div className="mt-0">
-      {/* Name Field */}
+      {/* Title Field */}
       <div className="mb-4">
         <label className="block text-sm font-semibold text-gray-800 py-2">
-          Name
+          Title
         </label>
-        {/* Error Message Name */}
-        {errorName?.message && (
-          <ErrorMainMessage message={errorName?.message} />
+        {/* Error Message Title */}
+        {errorTitle?.message && (
+          <ErrorMainMessage message={errorTitle?.message} />
         )}
         <input
           type="text"
-          value={name}
-          placeholder="Enter Name"
-          onChange={(e) => setName(e.target.value)}
+          value={title}
+          placeholder="Enter Title"
+          onChange={(e) => setTitle(e.target.value)}
           className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none 
           focus:ring focus:ring-opacity-40"
         />
