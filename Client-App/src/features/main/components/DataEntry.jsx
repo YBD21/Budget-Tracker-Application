@@ -28,6 +28,16 @@ const DataEntry = () => {
     inputDateRef.current.showPicker();
   };
 
+  const handleOnChangeTitle = (e) => {
+    const inputValue = e.target.value;
+    const formattedString = inputValue
+      .trim()
+      .replace(/[^a-zA-Z ]/g, "")
+      .replace(/\s+/g, " ")
+      .replace(/\b\w/g, (match) => match.toUpperCase());
+    setTitle(formattedString);
+  };
+
   const cancel = () => {
     dispatch({
       type: "SET_VIEW_PAGE",
@@ -233,7 +243,7 @@ const DataEntry = () => {
           type="text"
           value={title}
           placeholder="Enter Title"
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={handleOnChangeTitle}
           className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none 
           focus:ring focus:ring-opacity-40"
         />
