@@ -3,6 +3,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useStateValue } from "../context/StateProvider";
 import ErrorMainMessage from "../error/ErrorMainMessage";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
+import SuccessMessageBox from "../success/SuccessMessageBox";
 
 const DataEntry = () => {
   const [{ isViewPage }, dispatch] = useStateValue();
@@ -15,6 +16,7 @@ const DataEntry = () => {
   const [type, setType] = useState("");
   const [reoccure, setReoccure] = useState("");
 
+  const [success, setSuccess] = useState(null);
   const [errorTitle, setErrorTitle] = useState(null);
   const [errorAmount, setErrorAmount] = useState(null);
   const [errorDate, setErrorDate] = useState(null);
@@ -191,11 +193,15 @@ const DataEntry = () => {
         }
       )
       .then((respond) => {
-        console.log(respond);
-        // on Sccuess MessageBox
+        console.log(respond.data);
+        if (respond.data === true) {
+          setSuccess("Success");
+        } else {
+          // set respond message here
+        }
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.message);
       });
   };
 
@@ -227,6 +233,10 @@ const DataEntry = () => {
   useEffect(() => {
     setErrorReoccure(null);
   }, [reoccure]);
+
+  useEffect(() => {
+    setSuccess(null);
+  }, [amount, title, date, type, reoccure]);
 
   return (
     <div className="mt-0">
@@ -344,6 +354,8 @@ const DataEntry = () => {
           </div>
         </div>
       </div>
+      {/* Success Message */}
+      {success && <SuccessMessageBox props={success} status={true} />}
       {/* Submit Button */}
       <div className="flex justify-between mt-10 gap-2 max-sm:mb-4">
         <button

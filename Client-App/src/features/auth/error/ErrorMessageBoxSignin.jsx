@@ -43,10 +43,7 @@ const ErrorMessageBoxSignin = (message) => {
   };
 
   // console.log("From Error Message :", message.Error_message);
-  // console.log(typeof message.Error_message);
   // console.log(message.status);
-  // console.log(text.First);
-  // console.log(typeof(text));
 
   return (
     <>
