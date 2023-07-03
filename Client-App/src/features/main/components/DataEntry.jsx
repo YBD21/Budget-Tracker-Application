@@ -183,7 +183,6 @@ const DataEntry = () => {
       .then((respond) => {
         console.log(respond);
         // on Sccuess MessageBox
-
       })
       .catch((error) => {
         console.log(error);

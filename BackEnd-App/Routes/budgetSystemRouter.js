@@ -1,17 +1,19 @@
 const express = require("express");
 const { verifyTokenAndDecodeToken } = require("../Systems/authSystem/login");
+const { createBudget } = require("../Systems/budgetSystem/budgetOperation");
 
 const budgetSystemRouter = express.Router();
 
-budgetSystemRouter.post("/create-budget", (req, res) => {
+budgetSystemRouter.post("/create-budget", async (req, res) => {
   const accessToken = req.cookies.userData;
-  const decodedToken = verifyTokenAndDecodeToken(accessToken);
-  if (decodedToken !== false) {
-    // const { Name, Amount, Date, Type, Reoccure } = req.body;
-    const data = req.body;
-    console.log(data);
+  const userData = verifyTokenAndDecodeToken(accessToken);
+  if (userData !== false) {
+    const formData = req.body;
+    const respond = await createBudget(userData, formData);
+    res.send(respond);
+  } else {
+    res.status(401).send("Unauthorized");
   }
-  res.send("ok");
 });
 
 module.exports = budgetSystemRouter;
