@@ -8,8 +8,14 @@ const {
   sendVerificationEmail,
   verifyHash,
 } = require("../Systems/authSystem/emailVerification");
-const { createAccount } = require("../Systems/authSystem/createAccount");
+const {
+  createAccount,
+  getEmailUniqueId,
+} = require("../Systems/authSystem/createAccount");
 const { login, verifyToken } = require("../Systems/authSystem/login");
+const {
+  createBudgetSummary,
+} = require("../Systems/budgetSystem/budgetOperation");
 
 // read http only cookie
 authSystemRouter.get("/user-data", (req, res) => {
@@ -54,6 +60,12 @@ authSystemRouter.post("/create-account", async (req, res) => {
   const { FirstName, LastName, Email, Password } = req.body;
 
   const respond = await createAccount(FirstName, LastName, Email, Password);
+
+  const userId = getEmailUniqueId(Email);
+
+  // createBudgetSummary
+  const createBudgetSummaryStatus = createBudgetSummary(userId);
+
   res.json(respond);
 });
 

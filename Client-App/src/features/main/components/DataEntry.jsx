@@ -22,7 +22,7 @@ const DataEntry = () => {
   const [errorReoccure, setErrorReoccure] = useState(null);
 
   const typeOptions = ["Income", "Expense"];
-  const reoccurringOption = ["Monthly", "One time"];
+  const reoccurringOption = ["Monthly", "One Time"];
 
   const handleDateFocus = () => {
     inputDateRef.current.showPicker();
