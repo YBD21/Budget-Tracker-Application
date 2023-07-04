@@ -1,6 +1,8 @@
 const express = require("express");
 const { verifyTokenAndDecodeToken } = require("../Systems/authSystem/login");
-const { createBudget } = require("../Systems/budgetSystem/budgetOperation");
+const {
+  createNewBudgetAndUpdateSummary,
+} = require("../Systems/budgetSystem/budgetOperation");
 
 const budgetSystemRouter = express.Router();
 
@@ -9,7 +11,8 @@ budgetSystemRouter.post("/create-budget", async (req, res) => {
   const userData = verifyTokenAndDecodeToken(accessToken);
   if (userData !== false) {
     const formData = req.body;
-    const respond = await createBudget(userData, formData);
+    // create new budget and update Budget Summary
+    const respond = await createNewBudgetAndUpdateSummary(userData, formData);
     res.send(respond);
   } else {
     res.status(401).send("Unauthorized");
