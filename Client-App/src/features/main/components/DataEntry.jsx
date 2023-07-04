@@ -4,6 +4,7 @@ import { useStateValue } from "../context/StateProvider";
 import ErrorMainMessage from "../error/ErrorMainMessage";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
 import SuccessMessageBox from "../success/SuccessMessageBox";
+import ErrorMainMessageBox from "../error/ErrorMainMessageBox";
 
 const DataEntry = () => {
   const [{ isViewPage }, dispatch] = useStateValue();
@@ -17,11 +18,13 @@ const DataEntry = () => {
   const [reoccure, setReoccure] = useState("");
 
   const [success, setSuccess] = useState(null);
+
   const [errorTitle, setErrorTitle] = useState(null);
   const [errorAmount, setErrorAmount] = useState(null);
   const [errorDate, setErrorDate] = useState(null);
   const [errorType, setErrorType] = useState(null);
   const [errorReoccure, setErrorReoccure] = useState(null);
+  const [errorRespond, setErrorRespond] = useState(null);
 
   const typeOptions = ["Income", "Expense"];
   const reoccurringOption = ["Monthly", "One Time"];
@@ -197,11 +200,12 @@ const DataEntry = () => {
         if (respond.data === true) {
           setSuccess("Success");
         } else {
-          // set respond message here
+          setErrorRespond("Holy Smoke");
         }
       })
       .catch((error) => {
-        console.log(error.message);
+        // console.log(error.message);
+        setErrorRespond(error.message);
       });
   };
 
@@ -234,8 +238,10 @@ const DataEntry = () => {
     setErrorReoccure(null);
   }, [reoccure]);
 
+  // any change on input field reset message
   useEffect(() => {
     setSuccess(null);
+    setErrorRespond(null);
   }, [amount, title, date, type, reoccure]);
 
   return (
@@ -356,6 +362,12 @@ const DataEntry = () => {
       </div>
       {/* Success Message */}
       {success && <SuccessMessageBox props={success} status={true} />}
+
+      {/* Display Error Message  */}
+      {errorRespond && (
+        <ErrorMainMessageBox Error_message={errorRespond} status={true} />
+      )}
+
       {/* Submit Button */}
       <div className="flex justify-between mt-10 gap-2 max-sm:mb-4">
         <button
