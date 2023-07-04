@@ -1,9 +1,15 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { useStateValue } from "../context/StateProvider";
 
 const Summary = () => {
   const [{ isViewPage }] = useStateValue();
-  // change mb-6 to when form is DataEntry
+
+  const [totalIncome, setTotalIncome] = useState(0);
+  const [totalExpense, setTotalExpense] = useState(0);
+  const [totalBalance, setTotalBalance] = useState(0);
+
+  // call backend to get income,expense,balance
+
   return (
     <div
       className={`w-full h-20 flex flex-row justify-between rounded-md mt-10 border-black border-2 items-center text-center ${
@@ -16,8 +22,8 @@ const Summary = () => {
           {" "}
           Total Income{" "}
         </p>
-        <p className="text-lg text-blue-900 font-bold px-4 max-sm:text-base max-sm:py-0.5">
-          Rs.{2400}
+        <p className="text-lg text-green-900 font-bold px-4 max-sm:text-base max-sm:py-0.5">
+          Rs. {totalIncome}
         </p>
       </div>
       {/* Total Expense */}
@@ -27,7 +33,7 @@ const Summary = () => {
           Total Expense{" "}
         </p>
         <p className="text-lg text-red-800 font-bold px-4 max-sm:text-base max-sm:py-0.5">
-          Rs.{2200}
+          Rs. {totalExpense}
         </p>
       </div>
       {/* Balance */}
@@ -36,8 +42,8 @@ const Summary = () => {
           {" "}
           Total Balance{" "}
         </p>
-        <p className="text-lg text-green-700 font-bold px-4 max-sm:text-base max-sm:py-0.5">
-          Rs.{200}
+        <p className="text-lg text-blue-500 font-bold px-4 max-sm:text-base max-sm:py-0.5">
+          Rs. {totalBalance}
         </p>
       </div>
     </div>
