@@ -47,6 +47,8 @@ budgetSystemRouter.get("/get-budget-summary", async (req, res) => {
       httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
       sameSite: "strict",
     });
+
+    res.send(newAccessToken);
   } else {
     res.status(401).send("Unauthorized");
   }

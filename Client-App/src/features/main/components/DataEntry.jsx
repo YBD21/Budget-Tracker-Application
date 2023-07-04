@@ -7,7 +7,7 @@ import SuccessMessageBox from "../success/SuccessMessageBox";
 import ErrorMainMessageBox from "../error/ErrorMainMessageBox";
 
 const DataEntry = () => {
-  const [{ isViewPage }, dispatch] = useStateValue();
+  const [{ isSubmitClicked }, dispatch] = useStateValue();
 
   const inputDateRef = useRef(null);
 
@@ -47,6 +47,13 @@ const DataEntry = () => {
     dispatch({
       type: "SET_VIEW_PAGE",
       isViewPage: true,
+    });
+  };
+
+  const updateIsSubmitClick = () => {
+    dispatch({
+      type: "SET_SUBMIT_CLICK",
+      isSubmitClicked: !isSubmitClicked,
     });
   };
 
@@ -215,6 +222,7 @@ const DataEntry = () => {
     const isSelectFieldValid = checkSelectFields();
     if (isInputFieldValid && isSelectFieldValid) {
       requestToCreateNewBudget();
+      updateIsSubmitClick();
     }
   };
 
