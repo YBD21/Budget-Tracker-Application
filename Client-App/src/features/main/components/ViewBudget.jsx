@@ -132,7 +132,7 @@ const ViewBudget = () => {
                   Date
                 </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
-                  Name
+                  Title
                 </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
                   Type

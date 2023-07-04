@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import jwt_decode from "jwt-decode";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useStateValue } from "../context/StateProvider";
 import ErrorMainMessage from "../error/ErrorMainMessage";
@@ -7,7 +8,7 @@ import SuccessMessageBox from "../success/SuccessMessageBox";
 import ErrorMainMessageBox from "../error/ErrorMainMessageBox";
 
 const DataEntry = () => {
-  const [{ isSubmitClicked }, dispatch] = useStateValue();
+  const [{ isViewPage }, dispatch] = useStateValue();
 
   const inputDateRef = useRef(null);
 
@@ -50,11 +51,23 @@ const DataEntry = () => {
     });
   };
 
-  const updateIsSubmitClick = () => {
-    dispatch({
-      type: "SET_SUBMIT_CLICK",
-      isSubmitClicked: !isSubmitClicked,
-    });
+  const fetchBudgetSummary = () => {
+    axiosWithBaseURL
+      .get("/budget-system/get-budget-summary", {
+        withCredentials: true, // enable sending and receiving cookies
+      })
+      .then(function (respond) {
+        console.log(respond.data);
+
+        const data = jwt_decode(respond.data);
+        console.log(data);
+        if (data?.id) {
+          dispatch({
+            type: "SET_USER",
+            userData: data,
+          });
+        }
+      });
   };
 
   const checkInputFields = () => {
@@ -206,6 +219,7 @@ const DataEntry = () => {
         console.log(respond.data);
         if (respond.data === true) {
           setSuccess("Success");
+          fetchBudgetSummary();
         } else {
           setErrorRespond("Holy Smoke");
         }
@@ -222,7 +236,6 @@ const DataEntry = () => {
     const isSelectFieldValid = checkSelectFields();
     if (isInputFieldValid && isSelectFieldValid) {
       requestToCreateNewBudget();
-      updateIsSubmitClick();
     }
   };
 

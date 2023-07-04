@@ -1,32 +1,9 @@
-import { useEffect } from "react";
 import { useStateValue } from "../context/StateProvider";
-import axiosWithBaseURL from "../../../constants/axiosRoute";
-import jwt_decode from "jwt-decode";
 
 const Summary = () => {
-  const [{ isViewPage, userData, isSubmitClicked }, dispatch] = useStateValue();
+  const [{ isViewPage, userData }] = useStateValue();
 
   const { totalIncome, totalExpense, totalBalance } = userData;
-
-  const fetchBudgetSummary = () => {
-    axiosWithBaseURL
-      .get("/budget-system/get-budget-summary", {
-        withCredentials: true, // enable sending and receiving cookies
-      })
-      .then(function (respond) {
-        const data = jwt_decode(respond.data);
-        if (data?.id) {
-          dispatch({
-            type: "SET_USER",
-            userData: data,
-          });
-        }
-      });
-  };
-
-  useEffect(() => {
-    fetchBudgetSummary();
-  }, [isSubmitClicked]);
 
   return (
     <div

@@ -25,14 +25,14 @@ const updateBudgetSummary = async (userId, amount, type) => {
         if (type === typeOptions[0]) {
           // Income
           updatedSummary = {
-            totalIncome: totalIncome + amount,
-            totalBalance: totalIncome + amount - totalExpense,
+            totalIncome: totalIncome + parseInt(amount),
+            totalBalance: totalIncome + parseInt(amount) - totalExpense,
           };
         } else if (type === typeOptions[1]) {
           // Expense
           updatedSummary = {
-            totalExpense: totalExpense + amount,
-            totalBalance: totalIncome - (totalExpense + amount),
+            totalExpense: totalExpense + parseInt(amount),
+            totalBalance: totalIncome - (totalExpense + parseInt(amount)),
           };
         }
 

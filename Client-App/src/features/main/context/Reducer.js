@@ -1,7 +1,6 @@
 export const initialState = {
   userData: [],
   isViewPage: true,
-  isSubmitClicked: false,
 };
 
 const reducer = (state, action) => {
@@ -17,12 +16,6 @@ const reducer = (state, action) => {
       return {
         ...state,
         isViewPage: action.isViewPage,
-      };
-
-    case "SET_SUBMIT_CLICK":
-      return {
-        ...state,
-        isSubmitClicked: action.isSubmitClicked,
       };
 
     default:
