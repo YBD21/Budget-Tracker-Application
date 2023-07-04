@@ -29,7 +29,12 @@ budgetSystemRouter.get("/get-budget-summary", async (req, res) => {
   if (userData !== false) {
     const { firstName, lastName, role, id, email } = userData;
     //  get budget-summary
-    const { totalIncome, totalExpense, totalBalance } = getBudgetSummary(id);
+    const { totalIncome, totalExpense, totalBalance } = await getBudgetSummary(
+      id
+    );
+
+    // console.log(totalIncome, totalExpense, totalBalance);
+
     // set HTTP Only cookies copy userData except budgetsummary
     const newAccessToken = generateToken(
       firstName,

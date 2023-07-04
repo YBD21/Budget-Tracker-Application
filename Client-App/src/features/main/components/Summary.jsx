@@ -4,7 +4,7 @@ import axiosWithBaseURL from "../../../constants/axiosRoute";
 import jwt_decode from "jwt-decode";
 
 const Summary = () => {
-  const [{ isViewPage, userData, isSubmitClicked }] = useStateValue();
+  const [{ isViewPage, userData, isSubmitClicked }, dispatch] = useStateValue();
 
   const { totalIncome, totalExpense, totalBalance } = userData;
 

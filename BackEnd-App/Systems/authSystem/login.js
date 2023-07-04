@@ -30,9 +30,9 @@ const generateToken = (
     role: userRole,
     id: userId,
     email: userEmail,
-    totalIncome,
-    totalExpense,
-    totalBalance,
+    totalIncome: totalIncome,
+    totalExpense: totalExpense,
+    totalBalance: totalBalance,
   };
 
   const token = jwt.sign(filterData, secretKey, { expiresIn: "1h" });
