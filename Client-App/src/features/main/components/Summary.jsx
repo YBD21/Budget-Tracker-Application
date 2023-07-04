@@ -1,14 +1,9 @@
-import { useState, useEffect } from "react";
 import { useStateValue } from "../context/StateProvider";
 
 const Summary = () => {
-  const [{ isViewPage }] = useStateValue();
+  const [{ isViewPage, userData }] = useStateValue();
 
-  const [totalIncome, setTotalIncome] = useState(0);
-  const [totalExpense, setTotalExpense] = useState(0);
-  const [totalBalance, setTotalBalance] = useState(0);
-
-  // call backend to get income,expense,balance
+  const { totalIncome, totalExpense, totalBalance } = userData;
 
   return (
     <div

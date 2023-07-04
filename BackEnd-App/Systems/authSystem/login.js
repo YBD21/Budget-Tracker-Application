@@ -2,6 +2,7 @@ const { dataBase } = require("../../firebaseConfig");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { getEmailUniqueId } = require("./createAccount");
+const { getBudgetSummary } = require("../budgetSystem/readBudget");
 
 require("dotenv").config();
 
@@ -17,7 +18,10 @@ const generateToken = (
   userLastName,
   userRole,
   userId,
-  userEmail
+  userEmail,
+  totalIncome,
+  totalExpense,
+  totalBalance
 ) => {
   //firstName,lastName,mobileNumber,accountType
   const filterData = {
@@ -26,6 +30,9 @@ const generateToken = (
     role: userRole,
     id: userId,
     email: userEmail,
+    totalIncome,
+    totalExpense,
+    totalBalance,
   };
 
   const token = jwt.sign(filterData, secretKey, { expiresIn: "1h" });
@@ -62,9 +69,15 @@ const login = async (email, password) => {
   let sendData = { Message: "", Error: "" };
 
   const mailName = email.split("@")[1].split(".")[0];
-  const uniqueId = getEmailUniqueId(email);
+  const userId = getEmailUniqueId(email);
 
-  const loginRef = `SignWithEmail/${mailName}/${uniqueId}`;
+  // getBudgetSummary
+
+  const { totalIncome, totalExpense, totalBalance } = await getBudgetSummary(
+    userId
+  );
+
+  const loginRef = `SignWithEmail/${mailName}/${userId}`;
 
   const refToLogin = dataBase.ref(loginRef);
 
@@ -88,7 +101,18 @@ const login = async (email, password) => {
         const userId = snapshot.val().AccountID;
         const email = snapshot.val().Email;
 
-        const token = generateToken(firstName, lastName, role, userId, email);
+        // update token with totalIncome,totalExpense,totalBalance
+
+        const token = generateToken(
+          firstName,
+          lastName,
+          role,
+          userId,
+          email,
+          totalIncome,
+          totalExpense,
+          totalBalance
+        );
         // checkPassword and send to client
 
         return (sendData = {
