@@ -6,7 +6,10 @@ const {
 const {
   createNewBudgetAndUpdateSummary,
 } = require("../Systems/budgetSystem/budgetOperation");
-const { getBudgetSummary } = require("../Systems/budgetSystem/readBudget");
+const {
+  getBudgetSummary,
+  getBudgetEntryData,
+} = require("../Systems/budgetSystem/readBudget");
 
 const budgetSystemRouter = express.Router();
 
@@ -47,6 +50,7 @@ budgetSystemRouter.get("/get-budget-summary", async (req, res) => {
       totalBalance
     );
 
+    // set cookies
     res.cookie("userData", newAccessToken, {
       secure: true, // set to true to enable sending the cookie only over HTTPS
       httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
@@ -54,6 +58,20 @@ budgetSystemRouter.get("/get-budget-summary", async (req, res) => {
     });
 
     res.send(newAccessToken);
+  } else {
+    res.status(401).send("Unauthorized");
+  }
+});
+
+budgetSystemRouter.get("/get-entry-data", async (req, res) => {
+  const accessToken = req.cookies.userData;
+  const userData = verifyTokenAndDecodeToken(accessToken);
+
+  if (userData !== false) {
+    const { id } = userData;
+    //  get budget entry data
+    const userEntryData = await getBudgetEntryData(id);
+    res.status(200).send(userEntryData);
   } else {
     res.status(401).send("Unauthorized");
   }

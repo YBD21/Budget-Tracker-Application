@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WestIcon from "@mui/icons-material/West";
 import EastIcon from "@mui/icons-material/East";
 import { useStateValue } from "../context/StateProvider";
+import axiosWithBaseURL from "../../../constants/axiosRoute";
 
 const ViewBudget = () => {
   const [{ entryList }, dispatch] = useStateValue();
@@ -18,7 +19,31 @@ const ViewBudget = () => {
 
   const itemsPerPage = 5;
 
-  // fetch entry data here
+  const setEntryDataList = (data) => {
+    dispatch({
+      type: "SET_ENTRY_LIST",
+      entryList: data,
+    });
+    setEntryData(data);
+  };
+
+  const fetchEntryData = () => {
+    axiosWithBaseURL
+      .get("/budget-system/get-entry-data", {
+        withCredentials: true,
+      })
+      .then((respond) => {
+        setEntryDataList(respond.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    // fetch entry data here
+    fetchEntryData();
+  }, []);
 
   const handleClick = (event) => {
     setPage(Number(event.target.id));
@@ -34,18 +59,22 @@ const ViewBudget = () => {
   const tableRows = [];
 
   for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
+    const entry = entryData[i];
     tableRows.push(
-      <tr key={i}>
-        <td className="border px-4 py-2.5">2023/06/28</td>
-        <td className="border px-4 py-2.5">Santosh Deuja</td>
-        <td className="border px-4 py-2.5 text-green-700 font-bold">Income</td>
-        <td className="border px-4 py-2 font-bold">Monthly</td>
+      <tr key={entry?.id}>
+        <td className="border px-4 py-2.5 font-bold">{i + 1}</td>
+        <td className="border px-4 py-2.5">{entry?.data?.Date}</td>
+        <td className="border px-4 py-2.5">{entry?.data?.Title}</td>
+        <td className="border px-4 py-2.5 text-green-700 font-bold">
+          {entry?.data?.Type}
+        </td>
+        <td className="border px-4 py-2 font-bold">{entry?.data?.Reoccure}</td>
       </tr>
     );
   }
 
   const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(45 / itemsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(entryData.length / itemsPerPage); i++) {
     pageNumbers.push(
       <li key={i}>
         <button
@@ -131,6 +160,9 @@ const ViewBudget = () => {
           <table className="table-auto w-full">
             <thead>
               <tr className="bg-gray-100">
+                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-3">
+                  S.N
+                </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
                   Date
                 </th>

@@ -19,4 +19,24 @@ const getBudgetSummary = async (userId) => {
   }
 };
 
-module.exports = { getBudgetSummary };
+const getBudgetEntryData = async (userId) => {
+  const budgetEntryDataRef = fireStoreDB.collection(
+    `Users/${userId}/BudgetEntry`
+  );
+
+  try {
+    const snapshot = await budgetEntryDataRef.get();
+
+    const entryDataList = snapshot.docs.map((doc) => ({
+      id: doc.id,
+      data: doc.data(),
+    }));
+
+    return entryDataList;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+};
+
+module.exports = { getBudgetSummary, getBudgetEntryData };
