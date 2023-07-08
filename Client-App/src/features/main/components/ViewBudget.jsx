@@ -11,11 +11,11 @@ const ViewBudget = () => {
   const [page, setPage] = useState(1);
   const [entryData, setEntryData] = useState([]);
 
-  const dateRangeOptions = ["Latest", "Oldest"];
+  const dateRangeOptions = ["Date Range", "Latest", "Oldest"];
 
-  const typeOptions = ["Income", "Expense"];
+  const typeOptions = ["Type", "Income", "Expense"];
 
-  const reoccurringOption = ["Monthly", "One time"];
+  const reoccurringOption = ["Reoccurring", "Monthly", "One time"];
 
   const itemsPerPage = 5;
 
@@ -59,7 +59,7 @@ const ViewBudget = () => {
   const tableRows = [];
 
   for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
-    const entry = entryData[i];
+    const entry = entryList[i];
     tableRows.push(
       <tr key={entry?.id}>
         <td className="border px-4 py-2.5 font-bold">{i + 1}</td>
@@ -111,9 +111,6 @@ const ViewBudget = () => {
             className="w-full px-1 py-1.5 text-black rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black
            bg-white focus:border-black focus:ring-black max-sm:text-xs"
           >
-            <option value="" disabled>
-              Date Range
-            </option>
             {dateRangeOptions.map((element, index) => (
               <option key={index} value={element}>
                 {element}
@@ -125,9 +122,6 @@ const ViewBudget = () => {
         {/* Select Dropdown Type */}
         <div className="relative inline-block w-1/3">
           <select className="w-full px-1 py-1.5 text-black bg-white rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black max-sm:text-xs">
-            <option value="" disabled>
-              Type
-            </option>
             {typeOptions.map((element, index) => (
               <option key={index} value={element}>
                 {element}
@@ -142,9 +136,6 @@ const ViewBudget = () => {
             className={`w-full px-1 py-1.5 text-black rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black
           bg-white focus:border-black focus:ring-black max-sm:text-xs`}
           >
-            <option value="" disabled>
-              Reoccurring
-            </option>
             {reoccurringOption.map((element, index) => (
               <option key={index} value={element}>
                 {element}
