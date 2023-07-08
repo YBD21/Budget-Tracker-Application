@@ -15,7 +15,7 @@ const ViewBudget = () => {
 
   const typeOptions = ["Type", "Income", "Expense"];
 
-  const reoccurringOption = ["Reoccurring", "Monthly", "One time"];
+  const reoccurringOption = ["Reoccurring", "Monthly", "One Time"];
 
   const itemsPerPage = 5;
 
@@ -60,15 +60,29 @@ const ViewBudget = () => {
 
   for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
     const entry = entryList[i];
+    // typeOptions[2] = "Expense"
+    const textColorOfType =
+      entry?.data?.Type === typeOptions[2] ? "text-red-600" : "text-green-600";
+
+    // reoccurringOption[2] = "One time"
+    const textColorOfReoccure =
+      entry?.data?.Reoccure === reoccurringOption[2]
+        ? "text-lime-800"
+        : "text-amber-800";
+
     tableRows.push(
       <tr key={entry?.id}>
         <td className="border px-4 py-2.5 font-bold">{i + 1}</td>
         <td className="border px-4 py-2.5">{entry?.data?.Date}</td>
         <td className="border px-4 py-2.5">{entry?.data?.Title}</td>
-        <td className="border px-4 py-2.5 text-green-700 font-bold">
+        <td className={`border px-4 py-2.5 font-semibold ${textColorOfType}`}>
           {entry?.data?.Type}
         </td>
-        <td className="border px-4 py-2 font-bold">{entry?.data?.Reoccure}</td>
+        <td
+          className={`border px-4 py-2.5 font-semibold ${textColorOfReoccure}`}
+        >
+          {entry?.data?.Reoccure}
+        </td>
       </tr>
     );
   }
