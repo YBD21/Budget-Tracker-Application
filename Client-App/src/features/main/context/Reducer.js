@@ -1,5 +1,6 @@
 export const initialState = {
   userData: [],
+  entryList: [],
   isViewPage: true,
 };
 
@@ -16,6 +17,12 @@ const reducer = (state, action) => {
       return {
         ...state,
         isViewPage: action.isViewPage,
+      };
+
+    case "SET_ENTRY_LIST":
+      return {
+        ...state,
+        entryList: { ...action.entryList },
       };
 
     default:
