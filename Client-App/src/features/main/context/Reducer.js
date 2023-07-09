@@ -22,7 +22,7 @@ const reducer = (state, action) => {
     case "SET_ENTRY_LIST":
       return {
         ...state,
-        entryList: { ...action.entryList },
+        entryList: [...action.entryList],
       };
 
     default:

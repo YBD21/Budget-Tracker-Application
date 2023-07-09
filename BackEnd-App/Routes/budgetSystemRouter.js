@@ -71,6 +71,7 @@ budgetSystemRouter.get("/get-entry-data", async (req, res) => {
     const { id } = userData;
     //  get budget entry data
     const userEntryData = await getBudgetEntryData(id);
+    console.log(`User requested BudgetEntry Data`);
     res.status(200).send(userEntryData);
   } else {
     res.status(401).send("Unauthorized");

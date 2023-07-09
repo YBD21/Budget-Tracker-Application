@@ -57,10 +57,10 @@ const DataEntry = () => {
         withCredentials: true, // enable sending and receiving cookies
       })
       .then(function (respond) {
-        console.log(respond.data);
+        // console.log(respond.data);
 
         const data = jwt_decode(respond.data);
-        console.log(data);
+        // console.log(data);
         if (data?.id) {
           dispatch({
             type: "SET_USER",
@@ -216,7 +216,7 @@ const DataEntry = () => {
         }
       )
       .then((respond) => {
-        console.log(respond.data);
+        // console.log(respond.data);
         if (respond.data === true) {
           setSuccess("Success");
           fetchBudgetSummary();

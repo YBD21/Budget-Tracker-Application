@@ -10,8 +10,9 @@ const ViewBudget = () => {
   const [{ entryList }, dispatch] = useStateValue();
   const [page, setPage] = useState(1);
   const [entryData, setEntryData] = useState([]);
+  const [totalPage, setTotalPage] = useState(0);
 
-  const dateRangeOptions = ["Date Range", "Latest", "Oldest"];
+  const dateRangeOptions = ["Latest", "Oldest"];
 
   const typeOptions = ["Type", "Income", "Expense"];
 
@@ -45,15 +46,31 @@ const ViewBudget = () => {
     fetchEntryData();
   }, []);
 
-  const handleClick = (event) => {
-    setPage(Number(event.target.id));
+  const countTotalPage = () => {
+    let count = entryList.length / itemsPerPage;
+    setTotalPage(count);
   };
+
+  useEffect(() => {
+    countTotalPage();
+  }, [entryList]);
 
   const handleAdd = () => {
     dispatch({
       type: "SET_VIEW_PAGE",
       isViewPage: false,
     });
+  };
+
+  const handleNextClick = () => {
+    if (totalPage > page) {
+      setPage(page + 1);
+    }
+    // else fetchMoreEntryData
+  };
+
+  const handlePreviousClick = () => {
+    setPage(page <= 1 ? 1 : page - 1);
   };
 
   const tableRows = [];
@@ -71,7 +88,7 @@ const ViewBudget = () => {
         : "text-amber-800";
 
     tableRows.push(
-      <tr key={entry?.id}>
+      <tr key={i}>
         <td className="border px-4 py-2.5 font-bold">{i + 1}</td>
         <td className="border px-4 py-2.5">{entry?.data?.Date}</td>
         <td className="border px-4 py-2.5">{entry?.data?.Title}</td>
@@ -84,24 +101,6 @@ const ViewBudget = () => {
           {entry?.data?.Reoccure}
         </td>
       </tr>
-    );
-  }
-
-  const pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(entryData.length / itemsPerPage); i++) {
-    pageNumbers.push(
-      <li key={i}>
-        <button
-          id={i}
-          onClick={handleClick}
-          className={`${
-            i === page ? "bg-gray-400 text-white" : "bg-white text-black"
-          } hover:bg-gray-500 hover:text-white py-2 px-4 border-2
-           border-black rounded ml-2`}
-        >
-          {i}
-        </button>
-      </li>
     );
   }
 
@@ -187,19 +186,23 @@ const ViewBudget = () => {
           </table>
         </div>
         {/* Pagination */}
-        <div className="flex flex-row justify-between mt-5 mx-6">
+        <div className="flex flex-row justify-between mt-5 mx-4">
+          {/* Previous Button */}
           <button
             className="px-10 py-1.5 tracking-wide border-2 border-black
             text-black bg-white font-medium rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-gray-400 active:ring-opacity-50"
+            onClick={handlePreviousClick}
           >
             <WestIcon className="scale-150" />
           </button>
 
+          {/* Next Button */}
           <button
             className="px-10 py-1.5 tracking-wide border-2 border-black
             text-black bg-white font-medium rounded-lg  text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-gray-400 active:ring-opacity-50"
+            onClick={handleNextClick}
           >
             <EastIcon className="scale-150" />
           </button>
