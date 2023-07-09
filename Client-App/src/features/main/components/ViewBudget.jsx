@@ -18,6 +18,10 @@ const ViewBudget = () => {
 
   const reoccurringOption = ["Reoccurring", "Monthly", "One Time"];
 
+  const [orderByDate, setOrderByDate] = useState(dateRangeOptions[0]);
+  const [type, setType] = useState(typeOptions[0]);
+  const [reoccure, setReoccure] = useState(reoccurringOption[0]);
+
   const itemsPerPage = 5;
 
   const setEntryDataList = (data) => {
@@ -30,9 +34,17 @@ const ViewBudget = () => {
 
   const fetchEntryData = () => {
     axiosWithBaseURL
-      .get("/budget-system/get-entry-data", {
-        withCredentials: true,
-      })
+      .get(
+        "/budget-system/get-entry-data",
+        {
+          orderByDate,
+          type,
+          reoccure,
+        },
+        {
+          withCredentials: true,
+        }
+      )
       .then((respond) => {
         setEntryDataList(respond.data);
       })
@@ -123,6 +135,10 @@ const ViewBudget = () => {
           <select
             className="w-full px-1 py-1.5 text-black rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black
            bg-white focus:border-black focus:ring-black max-sm:text-xs"
+            value={orderByDate}
+            onChange={(e) => {
+              setOrderByDate(e.target.value);
+            }}
           >
             {dateRangeOptions.map((element, index) => (
               <option key={index} value={element}>
@@ -134,7 +150,13 @@ const ViewBudget = () => {
         </div>
         {/* Select Dropdown Type */}
         <div className="relative inline-block w-1/3">
-          <select className="w-full px-1 py-1.5 text-black bg-white rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black max-sm:text-xs">
+          <select
+            className="w-full px-1 py-1.5 text-black bg-white rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black focus:border-black focus:ring-black max-sm:text-xs"
+            value={type}
+            onChange={(e) => {
+              setType(e.target.value);
+            }}
+          >
             {typeOptions.map((element, index) => (
               <option key={index} value={element}>
                 {element}
@@ -148,6 +170,10 @@ const ViewBudget = () => {
           <select
             className={`w-full px-1 py-1.5 text-black rounded-lg text-base font-semibold text-center appearance-none cursor-pointer border-2 focus:outline-none focus:ring focus:ring-opacity-40 border-black
           bg-white focus:border-black focus:ring-black max-sm:text-xs`}
+            value={reoccure}
+            onChange={(e) => {
+              setReoccure(e.target.value);
+            }}
           >
             {reoccurringOption.map((element, index) => (
               <option key={index} value={element}>
