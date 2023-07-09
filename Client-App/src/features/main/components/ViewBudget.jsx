@@ -9,7 +9,7 @@ import axiosWithBaseURL from "../../../constants/axiosRoute";
 const ViewBudget = () => {
   const [{ entryList }, dispatch] = useStateValue();
   const [page, setPage] = useState(1);
-  const [entryData, setEntryData] = useState([]);
+  // const [entryData, setEntryData] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
 
   const dateRangeOptions = ["Latest", "Oldest"];
@@ -29,7 +29,7 @@ const ViewBudget = () => {
       type: "SET_ENTRY_LIST",
       entryList: data,
     });
-    setEntryData(data);
+    // setEntryData(data);
   };
 
   const fetchEntryData = () => {
@@ -51,16 +51,21 @@ const ViewBudget = () => {
   useEffect(() => {
     // fetch entry data here
     fetchEntryData();
+    setPage(1);
   }, [orderByDate]);
 
-  const countTotalPage = () => {
-    let count = entryList.length / itemsPerPage;
-    setTotalPage(count);
-  };
+  useEffect(() => {
+    setPage(1);
+  }, [type]);
 
   useEffect(() => {
-    countTotalPage();
-  }, [entryList]);
+    setPage(1);
+  }, [reoccure]);
+
+  const countTotalPage = (dataCount) => {
+    let count = dataCount / itemsPerPage;
+    setTotalPage(count);
+  };
 
   const handleAdd = () => {
     dispatch({
@@ -82,8 +87,29 @@ const ViewBudget = () => {
 
   const tableRows = [];
 
+  const filteredEntries = entryList.filter((entry) => {
+    if (type === typeOptions[0] && reoccure === reoccurringOption[0]) {
+      return true; // Do not apply any filter
+    }
+
+    if (type !== typeOptions[0] && entry.data.Type !== type) {
+      return false; // Filter based on type
+    }
+
+    if (reoccure !== reoccurringOption[0] && entry.data.Reoccure !== reoccure) {
+      return false; // Filter based on reoccurrence
+    }
+
+    return true; // Entry passes the selected filters
+  });
+
+  // update totalPageCount per ItemPage
+  useEffect(() => {
+    countTotalPage(filteredEntries.length);
+  }, [filteredEntries]);
+
   for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
-    const entry = entryList[i];
+    const entry = filteredEntries[i];
     // typeOptions[2] = "Expense"
     const textColorOfType =
       entry?.data?.Type === typeOptions[2] ? "text-red-600" : "text-green-600";
@@ -198,7 +224,7 @@ const ViewBudget = () => {
                   Type
                 </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
-                  Reoccuring
+                  Reoccure
                 </th>
               </tr>
             </thead>
