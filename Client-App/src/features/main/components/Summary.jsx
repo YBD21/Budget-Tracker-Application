@@ -22,7 +22,7 @@ const Summary = () => {
         </p>
       </div>
       {/* Total Expense */}
-      <div className="w-1/3 flex flex-col border-r-2 border-black">
+      <div className="w-1/3 flex flex-col">
         <p className="text-base font-semibold px-4 max-sm:text-sm">
           {" "}
           Total Expense{" "}
@@ -32,7 +32,7 @@ const Summary = () => {
         </p>
       </div>
       {/* Balance */}
-      <div className="w-1/3 flex flex-col">
+      <div className="w-1/3 flex flex-col border-l-2 border-black">
         <p className="text-base font-semibold px-4 max-sm:text-sm">
           {" "}
           Total Balance{" "}

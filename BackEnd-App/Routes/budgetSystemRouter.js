@@ -69,8 +69,10 @@ budgetSystemRouter.get("/get-entry-data", async (req, res) => {
 
   if (userData !== false) {
     const { id } = userData;
+    const { orderByDate } = req.query;
+
     //  get budget entry data
-    const userEntryData = await getBudgetEntryData(id);
+    const userEntryData = await getBudgetEntryData(id, orderByDate);
     console.log(`User requested BudgetEntry Data`);
     res.status(200).send(userEntryData);
   } else {

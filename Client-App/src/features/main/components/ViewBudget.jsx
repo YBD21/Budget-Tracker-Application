@@ -16,7 +16,7 @@ const ViewBudget = () => {
 
   const typeOptions = ["Type", "Income", "Expense"];
 
-  const reoccurringOption = ["Reoccurring", "Monthly", "One Time"];
+  const reoccurringOption = ["Reoccure", "Monthly", "One Time"];
 
   const [orderByDate, setOrderByDate] = useState(dateRangeOptions[0]);
   const [type, setType] = useState(typeOptions[0]);
@@ -34,17 +34,12 @@ const ViewBudget = () => {
 
   const fetchEntryData = () => {
     axiosWithBaseURL
-      .get(
-        "/budget-system/get-entry-data",
-        {
+      .get("/budget-system/get-entry-data", {
+        params: {
           orderByDate,
-          type,
-          reoccure,
         },
-        {
-          withCredentials: true,
-        }
-      )
+        withCredentials: true,
+      })
       .then((respond) => {
         setEntryDataList(respond.data);
       })
@@ -56,7 +51,7 @@ const ViewBudget = () => {
   useEffect(() => {
     // fetch entry data here
     fetchEntryData();
-  }, []);
+  }, [orderByDate]);
 
   const countTotalPage = () => {
     let count = entryList.length / itemsPerPage;

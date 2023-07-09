@@ -19,11 +19,20 @@ const getBudgetSummary = async (userId) => {
   }
 };
 
-const getBudgetEntryData = async (userId) => {
-  const budgetEntryDataRef = fireStoreDB.collection(
-    `Users/${userId}/BudgetEntry`
-  );
+const getBudgetEntryData = async (userId, orderByDate) => {
+  let orderBy = "desc";
+  // Latest == desc
+  // Oldest = asc
+  const dateRangeOptions = ["Latest", "Oldest"];
 
+  if (orderByDate === dateRangeOptions[1]) {
+    orderBy = "asc";
+  }
+
+  const budgetEntryDataRef = fireStoreDB
+    .collection(`Users/${userId}/BudgetEntry`)
+    .orderBy("Created_At", orderBy)
+    .limit(15);
   try {
     const snapshot = await budgetEntryDataRef.get();
 
