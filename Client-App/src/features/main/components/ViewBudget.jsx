@@ -6,7 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WestIcon from "@mui/icons-material/West";
 import EastIcon from "@mui/icons-material/East";
-import EditIcon from "@mui/icons-material/Edit";
+import VisibilityIcon from "@mui/icons-material/Visibility";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const ViewBudget = () => {
@@ -143,9 +143,9 @@ const ViewBudget = () => {
           </td>
           <td className={`border px-4 py-3.5 font-semibold`}>
             <div className="flex gap-5 justify-between">
-              {/* Edit */}
+              {/* View */}
               <button className="py-2 px-2.5 bg-black rounded-lg group relative">
-                <EditIcon className="scale-125 text-white pointer-events-none" />
+                <VisibilityIcon className="scale-125 text-white pointer-events-none" />
               </button>
               {/* Delete */}
               <button className="py-2 px-2.5 bg-red-900 rounded-lg group relative">
@@ -169,7 +169,7 @@ const ViewBudget = () => {
           value={search}
           onChange={(e) => setSearch(e.target.value.trimStart())}
         />
-        <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-800 pointer-events-none" />
+        <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-800 pointer-events-none scale-110" />
       </div>
 
       {/* Select DropDown Group */}
