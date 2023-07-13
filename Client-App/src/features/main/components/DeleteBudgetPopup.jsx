@@ -1,7 +1,10 @@
+import jwt_decode from "jwt-decode";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
+import { useStateValue } from "../context/StateProvider";
 
 const DeleteBudgetPopup = ({ onChild, deteteData }) => {
+  const [{ isViewPage }, dispatch] = useStateValue();
   // Type , Amount , Title , Reoccure , Date
 
   const typeOptions = ["Income", "Expense"];
@@ -23,6 +26,26 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
     onChild(false);
   };
 
+  const fetchBudgetSummary = () => {
+    axiosWithBaseURL
+      .get("/budget-system/get-budget-summary", {
+        withCredentials: true, // enable sending and receiving cookies
+      })
+      .then(function (respond) {
+        // console.log(respond.data);
+
+        const data = jwt_decode(respond.data);
+        // console.log(data);
+        if (data?.id) {
+          dispatch({
+            type: "SET_USER",
+            userData: data,
+          });
+        }
+        close();
+      });
+  };
+
   const handelDelete = () => {
     axiosWithBaseURL
       .delete("/budget-system/delete-budget-data", {
@@ -32,9 +55,10 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
         },
         withCredentials: true,
       })
-      .then((response) => {
-        // setEntryDataList(response.data);
-        console.log(response.data);
+      .then((respond) => {
+        if (respond.data === true) {
+          fetchBudgetSummary();
+        }
       })
       .catch((error) => {
         console.log(error);

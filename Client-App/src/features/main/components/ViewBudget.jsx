@@ -58,7 +58,7 @@ const ViewBudget = () => {
     // Fetch entry data when orderByDate changes
     fetchEntryData();
     setPage(1);
-  }, [orderByDate]);
+  }, [orderByDate, isDelete]);
 
   useEffect(() => {
     setPage(1);
