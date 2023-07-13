@@ -9,7 +9,7 @@ const HomePage = () => {
   return (
     <>
       <NavBar />
-      <div className="flex flex-col justify-center mx-auto max-sm:max-w-sm sm:max-w-2xl max-sm:mx-2.5">
+      <div className="flex flex-col justify-center mx-auto max-sm:max-w-sm sm:max-w-3xl max-sm:mx-2.5">
         <Summary />
         {isViewPage ? <ViewBudget /> : <DataEntry />}
       </div>

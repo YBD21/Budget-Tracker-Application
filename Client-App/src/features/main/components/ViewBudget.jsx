@@ -25,6 +25,8 @@ const ViewBudget = () => {
   const [type, setType] = useState(typeOptions[0]);
   const [reoccure, setReoccure] = useState(reoccurringOption[0]);
 
+  const [search, setSearch] = useState("");
+
   const itemsPerPage = 5;
 
   const setEntryDataList = (data) => {
@@ -91,16 +93,21 @@ const ViewBudget = () => {
   const tableRows = [];
 
   const filteredEntries = entryList.filter((entry) => {
-    if (type === typeOptions[0] && reoccure === reoccurringOption[0]) {
-      return true; // Do not apply any filter
-    }
-
     if (type !== typeOptions[0] && entry.data.Type !== type) {
       return false; // Filter based on type
     }
 
     if (reoccure !== reoccurringOption[0] && entry.data.Reoccure !== reoccure) {
       return false; // Filter based on reoccurrence
+    }
+
+    if (search && entry?.data?.Title) {
+      const title = entry.data.Title.toLowerCase();
+      const searchValueLower = search.toLowerCase();
+      const regex = new RegExp(searchValueLower, "g");
+      if (!regex.test(title)) {
+        return false; // Filter based on Title not matching the regex search
+      }
     }
 
     return true; // Entry passes the selected filters
@@ -162,6 +169,8 @@ const ViewBudget = () => {
           type="text"
           placeholder="Search"
           className="pl-10 pr-3 py-2 w-full border border-gray-800 rounded-lg focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+          value={search}
+          onChange={(e) => setSearch(e.target.value.trimStart())}
         />
         <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-800 pointer-events-none" />
       </div>
