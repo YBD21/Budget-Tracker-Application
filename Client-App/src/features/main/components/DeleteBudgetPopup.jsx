@@ -9,10 +9,10 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
   const { id, data } = deteteData;
 
   const textColorOfType =
-    data?.Type === typeOptions[2] ? "text-red-600" : "text-green-600";
+    data?.Type === typeOptions[1] ? "text-red-600" : "text-green-600";
 
   const textColorOfReoccure =
-    data?.Reoccure === reoccurringOptions[2]
+    data?.Reoccure === reoccurringOptions[1]
       ? "text-lime-800"
       : "text-amber-800";
 
@@ -25,54 +25,60 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
-      <div className="relative z-10 inline-block w-full p-6 mx-auto bg-white rounded-lg sm:max-w-3xl sm:p-5 min-h-[20vh]">
+      <div className="relative z-10 inline-block w-full p-6 mx-auto bg-white rounded-lg sm:max-w-2xl sm:p-5 min-h-[20vh]">
         {/* View Single Budget */}
-        <div className="flex justify-between mt-12 mb-5 rounded-md items-center text-center">
+        <div className="flex flex-col gap-5 text-center">
+          <h3 className="text-black font-semibold text-lg">
+            Are you sure you want to delete this ?
+          </h3>
+        </div>
+
+        <div className="flex justify-between my-4 rounded-md items-center text-center">
           <table className="table-auto w-full">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-3">
-                  ID
-                </th>
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
-                  Date
-                </th>
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
-                  Title
-                </th>
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
-                  Type
-                </th>
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
-                  Reoccure
-                </th>
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
-                  Amount
-                </th>
-              </tr>
-            </thead>
-            {/* Row */}
             <tbody className="text-center">
               <tr key={id}>
-                <td className="border px-4 py-2.5 font-bold">{id}</td>
-                <td className="border px-4 py-2.5">{data?.Date}</td>
-                <td className="border px-4 py-2.5">{data?.Title}</td>
+                <td className="border px-4 py-2.5 font-bold bg-gray-100">ID</td>
+                <td className="border px-4 py-2.5 font-semibold">{id}</td>
+              </tr>
+              <tr key={data.Date}>
+                <td className="border px-4 py-2.5 font-bold bg-gray-100">
+                  Date
+                </td>
+                <td className="border px-4 py-2.5">{data.Date}</td>
+              </tr>
+              <tr key={data.Title}>
+                <td className="border px-4 py-2.5 font-bold bg-gray-100">
+                  Title
+                </td>
+                <td className="border px-4 py-2.5">{data.Title}</td>
+              </tr>
+              <tr key={data.Type}>
+                <td className="border px-4 py-2.5 font-bold bg-gray-100">
+                  Type
+                </td>
                 <td
                   className={`border px-4 py-2.5 font-semibold ${textColorOfType}`}
                 >
-                  {data?.Type}
+                  {data.Type}
+                </td>
+              </tr>
+              <tr key={data.Reoccure}>
+                <td className="border px-4 py-2.5 font-bold bg-gray-100">
+                  Reoccure
                 </td>
                 <td
                   className={`border px-4 py-2.5 font-semibold ${textColorOfReoccure}`}
                 >
-                  {data?.Reoccure}
+                  {data.Reoccure}
                 </td>
-
-                <td className={`border px-4 py-2.5 font-semibold`}>
+              </tr>
+              <tr key={amount}>
+                <td className="border px-4 py-2.5 font-bold bg-gray-100">
+                  Amount
+                </td>
+                <td className="border px-4 py-2.5 font-semibold">
                   Rs.
-                  {amount.toLocaleString("en-IN", {
-                    maximumFractionDigits: 2,
-                  })}
+                  {amount.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
                 </td>
               </tr>
             </tbody>

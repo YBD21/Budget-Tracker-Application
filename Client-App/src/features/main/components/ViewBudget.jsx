@@ -163,15 +163,13 @@ const ViewBudget = () => {
             })}
           </td>
           <td className={`border px-4 py-3.5 font-semibold`}>
-            <div className="flex justify-between">
-              {/* Delete */}
-              <button
-                className="py-2 px-2.5 bg-red-900 rounded-lg group relative"
-                onClick={() => handleDelete(entry)}
-              >
-                <DeleteIcon className="scale-125 text-white pointer-events-none" />
-              </button>
-            </div>
+            {/* Delete */}
+            <button
+              className="py-2 px-2.5 bg-red-900 rounded-lg group relative"
+              onClick={() => handleDelete(entry)}
+            >
+              <DeleteIcon className="scale-125 text-white pointer-events-none" />
+            </button>
           </td>
         </tr>
       );
