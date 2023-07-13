@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
+import { useStateValue } from "../context/StateProvider";
+import axiosWithBaseURL from "../../../constants/axiosRoute";
+
 import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WestIcon from "@mui/icons-material/West";
 import EastIcon from "@mui/icons-material/East";
-import { useStateValue } from "../context/StateProvider";
-import axiosWithBaseURL from "../../../constants/axiosRoute";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const ViewBudget = () => {
   const [{ entryList }, dispatch] = useStateValue();
@@ -120,21 +123,35 @@ const ViewBudget = () => {
         ? "text-lime-800"
         : "text-amber-800";
 
-    tableRows.push(
-      <tr key={i}>
-        <td className="border px-4 py-2.5 font-bold">{i + 1}</td>
-        <td className="border px-4 py-2.5">{entry?.data?.Date}</td>
-        <td className="border px-4 py-2.5">{entry?.data?.Title}</td>
-        <td className={`border px-4 py-2.5 font-semibold ${textColorOfType}`}>
-          {entry?.data?.Type}
-        </td>
-        <td
-          className={`border px-4 py-2.5 font-semibold ${textColorOfReoccure}`}
-        >
-          {entry?.data?.Reoccure}
-        </td>
-      </tr>
-    );
+    if (entry !== undefined) {
+      tableRows.push(
+        <tr key={i}>
+          <td className="border px-4 py-2.5 font-bold">{i + 1}</td>
+          <td className="border px-4 py-2.5">{entry?.data?.Date}</td>
+          <td className="border px-4 py-2.5">{entry?.data?.Title}</td>
+          <td className={`border px-4 py-2.5 font-semibold ${textColorOfType}`}>
+            {entry?.data?.Type}
+          </td>
+          <td
+            className={`border px-4 py-2.5 font-semibold ${textColorOfReoccure}`}
+          >
+            {entry?.data?.Reoccure}
+          </td>
+          <td className={`border px-4 py-3.5 font-semibold`}>
+            <div className="flex gap-5 justify-between">
+              {/* Edit */}
+              <button className="py-2 px-2.5 bg-black rounded-lg group relative">
+                <EditIcon className="scale-125 text-white pointer-events-none" />
+              </button>
+              {/* Delete */}
+              <button className="py-2 px-2.5 bg-red-900 rounded-lg group relative">
+                <DeleteIcon className="scale-125 text-white pointer-events-none" />
+              </button>
+            </div>
+          </td>
+        </tr>
+      );
+    }
   }
 
   return (
@@ -225,6 +242,9 @@ const ViewBudget = () => {
                 </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
                   Reoccure
+                </th>
+                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
+                  Action
                 </th>
               </tr>
             </thead>

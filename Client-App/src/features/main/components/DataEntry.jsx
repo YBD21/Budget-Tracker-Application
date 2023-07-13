@@ -35,10 +35,10 @@ const DataEntry = () => {
   };
 
   const handleOnChangeTitle = (e) => {
+    // .replace(/[^a-zA-Z ]/g, "")
     const inputValue = e.target.value;
     const formattedString = inputValue
       .trim()
-      .replace(/[^a-zA-Z ]/g, "")
       .replace(/\s+/g, " ")
       .replace(/\b\w/g, (match) => match.toUpperCase());
     setTitle(formattedString);
