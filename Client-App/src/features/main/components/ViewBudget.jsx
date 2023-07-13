@@ -6,8 +6,10 @@ import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WestIcon from "@mui/icons-material/West";
 import EastIcon from "@mui/icons-material/East";
-import VisibilityIcon from "@mui/icons-material/Visibility";
+
 import DeleteIcon from "@mui/icons-material/Delete";
+import PopupPortal from "../../../constants/PopupPortal";
+import DeleteBudgetPopup from "./DeleteBudgetPopup";
 
 const ViewBudget = () => {
   const [{ entryList }, dispatch] = useStateValue();
@@ -23,6 +25,9 @@ const ViewBudget = () => {
   const [reoccure, setReoccure] = useState(reoccurringOptions[0]);
 
   const [search, setSearch] = useState("");
+
+  const [isDelete, setDelete] = useState(false);
+  const [currentDeleteData, setCurrentDeleteData] = useState({});
 
   const itemsPerPage = 5;
 
@@ -71,7 +76,7 @@ const ViewBudget = () => {
   const handleAdd = () => {
     dispatch({
       type: "SET_VIEW_PAGE",
-      isViewPage: false,
+      isDeletePage: false,
     });
   };
 
@@ -116,6 +121,15 @@ const ViewBudget = () => {
     countTotalPage(filteredEntries.length);
   }, [filteredEntries]);
 
+  const handleDelete = (viewData) => {
+    setDelete(true);
+    setCurrentDeleteData(viewData);
+  };
+
+  const handleDeleteFromChild = (data) => {
+    setDelete(data);
+  };
+
   for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
     const entry = filteredEntries[i];
 
@@ -127,10 +141,11 @@ const ViewBudget = () => {
         ? "text-lime-800"
         : "text-amber-800";
 
+    const amount = +entry?.data?.Amount;
+
     if (entry !== undefined) {
       tableRows.push(
         <tr key={i}>
-          <td className="border px-4 py-2.5 font-bold">{i + 1}</td>
           <td className="border px-4 py-2.5">{entry?.data?.Date}</td>
           <td className="border px-4 py-2.5">{entry?.data?.Title}</td>
           <td className={`border px-4 py-2.5 font-semibold ${textColorOfType}`}>
@@ -141,14 +156,19 @@ const ViewBudget = () => {
           >
             {entry?.data?.Reoccure}
           </td>
+          <td className={`border px-4 py-2.5 font-semibold`}>
+            Rs.
+            {amount.toLocaleString("en-IN", {
+              maximumFractionDigits: 2,
+            })}
+          </td>
           <td className={`border px-4 py-3.5 font-semibold`}>
-            <div className="flex gap-5 justify-between">
-              {/* View */}
-              <button className="py-2 px-2.5 bg-black rounded-lg group relative">
-                <VisibilityIcon className="scale-125 text-white pointer-events-none" />
-              </button>
+            <div className="flex justify-between">
               {/* Delete */}
-              <button className="py-2 px-2.5 bg-red-900 rounded-lg group relative">
+              <button
+                className="py-2 px-2.5 bg-red-900 rounded-lg group relative"
+                onClick={() => handleDelete(entry)}
+              >
                 <DeleteIcon className="scale-125 text-white pointer-events-none" />
               </button>
             </div>
@@ -234,9 +254,6 @@ const ViewBudget = () => {
           <table className="table-auto w-full">
             <thead>
               <tr className="bg-gray-100">
-                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-3">
-                  S.N
-                </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-10">
                   Date
                 </th>
@@ -248,6 +265,9 @@ const ViewBudget = () => {
                 </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
                   Reoccure
+                </th>
+                <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
+                  Amount
                 </th>
                 <th className="px-4 py-3 text-gray-800 border-2 border-gray-200 max-sm:px-8">
                   Action
@@ -292,6 +312,20 @@ const ViewBudget = () => {
           Add
         </button>
       </div>
+
+      {/* View Single Budget Popup */}
+      {isDelete ? (
+        <PopupPortal>
+          <DeleteBudgetPopup
+            onChild={handleDeleteFromChild}
+            deteteData={currentDeleteData}
+          />
+        </PopupPortal>
+      ) : (
+        false
+      )}
+
+      {/* Delete Single Budget Popup*/}
     </>
   );
 };
