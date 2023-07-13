@@ -1,4 +1,5 @@
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import axiosWithBaseURL from "../../../constants/axiosRoute";
 
 const DeleteBudgetPopup = ({ onChild, deteteData }) => {
   // Type , Amount , Title , Reoccure , Date
@@ -22,7 +23,23 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
     onChild(false);
   };
 
-  const handelDelete = () => {};
+  const handelDelete = () => {
+    axiosWithBaseURL
+      .delete("/budget-system/delete-budget-data", {
+        params: {
+          id,
+          data,
+        },
+        withCredentials: true,
+      })
+      .then((response) => {
+        // setEntryDataList(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">

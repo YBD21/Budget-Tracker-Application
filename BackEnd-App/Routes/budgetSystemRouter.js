@@ -5,6 +5,7 @@ const {
 } = require("../Systems/authSystem/login");
 const {
   createNewBudgetAndUpdateSummary,
+  deleteBudgetEntryAndUpdateSummary,
 } = require("../Systems/budgetSystem/budgetOperation");
 const {
   getBudgetSummary,
@@ -75,6 +76,20 @@ budgetSystemRouter.get("/get-entry-data", async (req, res) => {
     const userEntryData = await getBudgetEntryData(id, orderByDate);
     console.log(`User requested BudgetEntry Data`);
     res.status(200).send(userEntryData);
+  } else {
+    res.status(401).send("Unauthorized");
+  }
+});
+
+budgetSystemRouter.delete("/delete-budget-data", async (req, res) => {
+  const accessToken = req.cookies.userData;
+  const userData = verifyTokenAndDecodeToken(accessToken);
+  if (userData !== false) {
+    const { id: userId } = userData;
+    const data = req.query;
+    console.log(`User requested to Delete BudgetEntry Data`);
+    const respond = await deleteBudgetEntryAndUpdateSummary(userId, data);
+    res.status(200).send(respond);
   } else {
     res.status(401).send("Unauthorized");
   }
