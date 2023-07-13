@@ -12,18 +12,15 @@ import DeleteIcon from "@mui/icons-material/Delete";
 const ViewBudget = () => {
   const [{ entryList }, dispatch] = useStateValue();
   const [page, setPage] = useState(1);
-  // const [entryData, setEntryData] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
 
   const dateRangeOptions = ["Latest", "Oldest"];
-
   const typeOptions = ["Type", "Income", "Expense"];
-
-  const reoccurringOption = ["Reoccure", "Monthly", "One Time"];
+  const reoccurringOptions = ["Reoccure", "Monthly", "One Time"];
 
   const [orderByDate, setOrderByDate] = useState(dateRangeOptions[0]);
   const [type, setType] = useState(typeOptions[0]);
-  const [reoccure, setReoccure] = useState(reoccurringOption[0]);
+  const [reoccure, setReoccure] = useState(reoccurringOptions[0]);
 
   const [search, setSearch] = useState("");
 
@@ -34,7 +31,6 @@ const ViewBudget = () => {
       type: "SET_ENTRY_LIST",
       entryList: data,
     });
-    // setEntryData(data);
   };
 
   const fetchEntryData = () => {
@@ -45,8 +41,8 @@ const ViewBudget = () => {
         },
         withCredentials: true,
       })
-      .then((respond) => {
-        setEntryDataList(respond.data);
+      .then((response) => {
+        setEntryDataList(response.data);
       })
       .catch((error) => {
         console.log(error);
@@ -54,7 +50,7 @@ const ViewBudget = () => {
   };
 
   useEffect(() => {
-    // fetch entry data here
+    // Fetch entry data when orderByDate changes
     fetchEntryData();
     setPage(1);
   }, [orderByDate]);
@@ -68,7 +64,7 @@ const ViewBudget = () => {
   }, [reoccure]);
 
   const countTotalPage = (dataCount) => {
-    let count = dataCount / itemsPerPage;
+    let count = Math.ceil(dataCount / itemsPerPage);
     setTotalPage(count);
   };
 
@@ -87,7 +83,7 @@ const ViewBudget = () => {
   };
 
   const handlePreviousClick = () => {
-    setPage(page <= 1 ? 1 : page - 1);
+    setPage((prevPage) => Math.max(prevPage - 1, 1));
   };
 
   const tableRows = [];
@@ -97,7 +93,10 @@ const ViewBudget = () => {
       return false; // Filter based on type
     }
 
-    if (reoccure !== reoccurringOption[0] && entry.data.Reoccure !== reoccure) {
+    if (
+      reoccure !== reoccurringOptions[0] &&
+      entry.data.Reoccure !== reoccure
+    ) {
       return false; // Filter based on reoccurrence
     }
 
@@ -113,20 +112,18 @@ const ViewBudget = () => {
     return true; // Entry passes the selected filters
   });
 
-  // update totalPageCount per ItemPage
   useEffect(() => {
     countTotalPage(filteredEntries.length);
   }, [filteredEntries]);
 
   for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
     const entry = filteredEntries[i];
-    // typeOptions[2] = "Expense"
+
     const textColorOfType =
       entry?.data?.Type === typeOptions[2] ? "text-red-600" : "text-green-600";
 
-    // reoccurringOption[2] = "One time"
     const textColorOfReoccure =
-      entry?.data?.Reoccure === reoccurringOption[2]
+      entry?.data?.Reoccure === reoccurringOptions[2]
         ? "text-lime-800"
         : "text-amber-800";
 
@@ -222,7 +219,7 @@ const ViewBudget = () => {
               setReoccure(e.target.value);
             }}
           >
-            {reoccurringOption.map((element, index) => (
+            {reoccurringOptions.map((element, index) => (
               <option key={index} value={element}>
                 {element}
               </option>
