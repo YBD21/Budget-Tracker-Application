@@ -12,7 +12,11 @@ const {
   createAccount,
   getEmailUniqueId,
 } = require("../Systems/authSystem/createAccount");
-const { login, verifyToken } = require("../Systems/authSystem/login");
+const {
+  login,
+  verifyToken,
+  verifyTokenAndDecodeToken,
+} = require("../Systems/authSystem/login");
 const {
   createBudgetSummary,
 } = require("../Systems/budgetSystem/budgetOperation");
@@ -87,6 +91,20 @@ authSystemRouter.post("/login", async (req, res) => {
     console.log(`User : ${email} is Logged In ! `);
   }
   res.json(respond);
+});
+
+// Logout
+authSystemRouter.delete("/user-data", (req, res) => {
+  const accessToken = req.cookies.userData;
+  const userData = verifyTokenAndDecodeToken(accessToken);
+  res.clearCookie("userData", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+  });
+
+  console.log(`User With E-Mail: ${userData?.email} LogOut X_X !`);
+  res.send(true);
 });
 
 module.exports = authSystemRouter;

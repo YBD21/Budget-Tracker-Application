@@ -18,8 +18,8 @@ app.use(
   })
 );
 
-// limit incomming json data to 1 MB
-app.use(express.json({ limit: "1mb" }));
+// limit incomming json data to 1 KB
+app.use(express.json({ limit: "1kb" }));
 
 // gives ability to read cookies
 app.use(cookieParser());

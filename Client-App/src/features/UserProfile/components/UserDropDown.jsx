@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useStateValue } from "../../main/context/StateProvider";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import Profile from "./Profile";
+import axiosWithBaseURL from "../../../constants/axiosRoute";
 
 const UserDropDown = ({ status, onStatusChange }) => {
   const [isOpen, setIsOpen] = useState(status);
@@ -12,16 +13,29 @@ const UserDropDown = ({ status, onStatusChange }) => {
   const clearUserData = () => {
     dispatch({
       type: "SET_USER",
-      userData: null,
+      userData: [],
     });
+  };
+
+  // request Backend to delete httpOnly Cookies
+  const callBackendToLogOut = () => {
+    axiosWithBaseURL
+      .delete("/auth-system/user-data", {
+        withCredentials: true, // enable sending and receiving cookies
+      })
+      .then(function (respond) {
+        console.log(respond.data);
+        clearUserData();
+      })
+      .catch(function (error) {
+        // console.log(error.message);
+      });
   };
 
   const logOut = () => {
     // if userData has data then clear
-    if (userData?.role) {
-      clearUserData();
-
-      //   callBackendToLogOut();
+    if (userData?.id) {
+      callBackendToLogOut();
     }
   };
 
