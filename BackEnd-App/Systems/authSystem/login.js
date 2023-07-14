@@ -66,65 +66,57 @@ const verifyTokenAndDecodeToken = (token) => {
 };
 
 const login = async (email, password) => {
-  let sendData = { Message: "", Error: "" };
+  const sendData = { Message: "", Error: "" };
 
   const mailName = email.split("@")[1].split(".")[0];
   const userId = getEmailUniqueId(email);
 
-  // getBudgetSummary
-
-  const { totalIncome, totalExpense, totalBalance } = await getBudgetSummary(
-    userId
-  );
-
   const loginRef = `SignWithEmail/${mailName}/${userId}`;
-
   const refToLogin = dataBase.ref(loginRef);
 
-  await refToLogin.once("value", (snapshot) => {
-    // email found
-    if (snapshot.exists()) {
-      // check if account is disable
-      if (snapshot.val().IsDisable === true) {
-        return (sendData = { ...sendData, Error: "Disable Account" });
-      } else {
-        // update lastSeen
-        const currentDate = new Date().toString();
-        refToLogin.update({
-          lastSeen: currentDate,
-        });
+  try {
+    const [summaryResult, snapshot] = await Promise.all([
+      getBudgetSummary(userId),
+      refToLogin.once("value"),
+    ]);
 
-        // createJwtToken With userData
+    const { totalIncome, totalExpense, totalBalance } = summaryResult;
+
+    if (snapshot.exists()) {
+      if (snapshot.val().IsDisable === true) {
+        sendData.Error = "Disable Account";
+      } else {
+        const currentDate = new Date().toString();
+        await refToLogin.update({ lastSeen: currentDate });
+
         const firstName = snapshot.val().FirstName;
         const lastName = snapshot.val().LastName;
         const role = snapshot.val().AccountType;
-        const userId = snapshot.val().AccountID;
-        const email = snapshot.val().Email;
-
-        // update token with totalIncome,totalExpense,totalBalance
+        const accountId = snapshot.val().AccountID;
+        const userEmail = snapshot.val().Email;
 
         const token = generateToken(
           firstName,
           lastName,
           role,
-          userId,
-          email,
+          accountId,
+          userEmail,
           totalIncome,
           totalExpense,
           totalBalance
         );
-        // checkPassword and send to client
 
-        return (sendData = {
-          ...sendData,
-          Message: checkPassword(snapshot.val().Password, password),
-          accessToken: token,
-        });
+        sendData.Message = checkPassword(snapshot.val().Password, password);
+        sendData.accessToken = token;
       }
     } else {
-      return (sendData = { ...sendData, Error: "Incorrect Data" });
+      sendData.Error = "Incorrect Data";
     }
-  });
+  } catch (error) {
+    console.error("Error occurred:", error);
+    sendData.Error = "An error occurred";
+  }
+
   return sendData;
 };
 
