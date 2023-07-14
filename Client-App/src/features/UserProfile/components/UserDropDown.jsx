@@ -24,7 +24,7 @@ const UserDropDown = ({ status, onStatusChange }) => {
         withCredentials: true, // enable sending and receiving cookies
       })
       .then(function (respond) {
-        console.log(respond.data);
+        // console.log(respond.data);
         clearUserData();
       })
       .catch(function (error) {

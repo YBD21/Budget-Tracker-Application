@@ -157,7 +157,7 @@ const ViewBudget = () => {
             {entry?.data?.Reoccure}
           </td>
           <td className={`border px-4 py-2.5 font-semibold`}>
-            Rs.
+            Rs.{" "}
             {amount.toLocaleString("en-IN", {
               maximumFractionDigits: 2,
             })}
