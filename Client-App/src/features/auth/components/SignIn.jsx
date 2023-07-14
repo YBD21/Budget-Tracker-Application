@@ -1,12 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+import CryptoJS from "crypto-js";
 import Cookies from "js-cookie";
-import axiosWithURL from "../../../constants/axiosRoute";
 import jwt_decode from "jwt-decode";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+
+import axiosWithURL from "../../../constants/axiosRoute";
 import ErrorMessageBoxSignin from "../error/ErrorMessageBoxSignin";
 import { useStateValue } from "../../main/context/StateProvider";
+import { hashKey } from "../../../constants/hashKey";
 
 const SignIn = () => {
   const Email = "email";
@@ -90,22 +94,52 @@ const SignIn = () => {
     // console.log(open);
   };
 
-  // remember me function here
+  // remember me function
   const setCookies = () => {
     if (email.length != 0 && password.length != 0 && isChecked === true) {
-      // console.log("saved cookies");
+      // Encrypt
+      const cipherEmail = CryptoJS.AES.encrypt(
+        email,
+        hashKey.secretKey
+      ).toString();
+
+      const cipherPassword = CryptoJS.AES.encrypt(
+        password,
+        hashKey.secretKey
+      ).toString();
+
+      //  console.log(cipherEmail);
+      //  console.log(cipherPassword);
+
       // cookies expire date on 7th day.
-      Cookies.set(Email, email, { expires: 7 });
-      Cookies.set(Password, password, { expires: 7 });
+      Cookies.set(hashKey.userName, cipherEmail, { expires: 7 });
+      Cookies.set(hashKey.Password, cipherPassword, { expires: 7 });
     }
     setIsChecked(!isChecked);
   };
 
   // get saved email and password from cookie
-
   const getCookies = () => {
-    const emailFromCookie = Cookies.get(Email);
-    const passwordFromCookie = Cookies.get(Password);
+    const cipherEmailFromCookie = Cookies.get(hashKey.userName);
+    const cipherPasswordFromCookie = Cookies.get(hashKey.Password);
+
+    // Decrypt
+    const bytesOfEmailFromCookie = CryptoJS.AES.decrypt(
+      cipherEmailFromCookie,
+      hashKey.secretKey
+    );
+
+    const bytesOfPasswordFromCookie = CryptoJS.AES.decrypt(
+      cipherPasswordFromCookie,
+      hashKey.secretKey
+    );
+
+    // parse into meaningful information
+    const emailFromCookie = bytesOfEmailFromCookie.toString(CryptoJS.enc.Utf8);
+
+    const passwordFromCookie = bytesOfPasswordFromCookie.toString(
+      CryptoJS.enc.Utf8
+    );
 
     // console.log(emailFromCookie);
     // console.log(passwordFromCookie);
