@@ -1,8 +1,5 @@
 const express = require("express");
-const {
-  verifyTokenAndDecodeToken,
-  generateToken,
-} = require("../Systems/authSystem/login");
+const { generateToken } = require("../Systems/authSystem/login");
 const {
   createNewBudgetAndUpdateSummary,
   deleteBudgetEntryAndUpdateSummary,
@@ -12,25 +9,25 @@ const {
   getBudgetEntryData,
 } = require("../Systems/budgetSystem/readBudget");
 
+const authMiddleware = require("../ middleware/authMiddleware");
+
 const budgetSystemRouter = express.Router();
 
-budgetSystemRouter.post("/create-budget", async (req, res) => {
-  const accessToken = req.cookies.userData;
-  const userData = verifyTokenAndDecodeToken(accessToken);
-  if (userData !== false) {
-    const formData = req.body;
-    // create new budget and update Budget Summary
-    const respond = await createNewBudgetAndUpdateSummary(userData, formData);
-    res.send(respond);
-  } else {
-    res.status(401).send("Unauthorized");
-  }
+budgetSystemRouter.post("/create-budget", authMiddleware, async (req, res) => {
+  const userData = req.userData;
+  const formData = req.body;
+  // console.log("formData", req.body);
+  // console.log("User data", userData);
+  // create new budget and update Budget Summary
+  const respond = await createNewBudgetAndUpdateSummary(userData, formData);
+  res.send(respond);
 });
 
-budgetSystemRouter.get("/get-budget-summary", async (req, res) => {
-  const accessToken = req.cookies.userData;
-  const userData = verifyTokenAndDecodeToken(accessToken);
-  if (userData !== false) {
+budgetSystemRouter.get(
+  "/get-budget-summary",
+  authMiddleware,
+  async (req, res) => {
+    const userData = req.userData;
     const { firstName, lastName, role, id, email } = userData;
     //  get budget-summary
     const { totalIncome, totalExpense, totalBalance } = await getBudgetSummary(
@@ -59,40 +56,28 @@ budgetSystemRouter.get("/get-budget-summary", async (req, res) => {
     });
 
     res.send(newAccessToken);
-  } else {
-    res.status(401).send("Unauthorized");
   }
-});
+);
 
-budgetSystemRouter.get("/get-entry-data", async (req, res) => {
-  const accessToken = req.cookies.userData;
-  const userData = verifyTokenAndDecodeToken(accessToken);
+budgetSystemRouter.get("/get-entry-data", authMiddleware, async (req, res) => {
+  const userData = req.userData;
 
-  if (userData !== false) {
-    const { id } = userData;
-    const { orderByDate } = req.query;
+  const { id } = userData;
+  const { orderByDate } = req.query;
 
-    //  get budget entry data
-    const userEntryData = await getBudgetEntryData(id, orderByDate);
-    console.log(`User requested BudgetEntry Data`);
-    res.status(200).send(userEntryData);
-  } else {
-    res.status(401).send("Unauthorized");
-  }
+  //  get budget entry data
+  const userEntryData = await getBudgetEntryData(id, orderByDate);
+  console.log(`User requested BudgetEntry Data`);
+  res.status(200).send(userEntryData);
 });
 
 budgetSystemRouter.delete("/delete-budget-data", async (req, res) => {
-  const accessToken = req.cookies.userData;
-  const userData = verifyTokenAndDecodeToken(accessToken);
-  if (userData !== false) {
-    const { id: userId } = userData;
-    const data = req.query;
-    console.log(`User requested to Delete BudgetEntry Data`);
-    const respond = await deleteBudgetEntryAndUpdateSummary(userId, data);
-    res.status(200).send(respond);
-  } else {
-    res.status(401).send("Unauthorized");
-  }
+  const userData = req.userData;
+  const { id: userId } = userData;
+  const data = req.query;
+  console.log(`User requested to Delete BudgetEntry Data`);
+  const respond = await deleteBudgetEntryAndUpdateSummary(userId, data);
+  res.status(200).send(respond);
 });
 
 module.exports = budgetSystemRouter;

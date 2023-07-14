@@ -10,6 +10,8 @@ require("dotenv").config();
 const port = process.env.PORT || 5000;
 const url = process.env.URL || "http://localhost:3000";
 
+// helmet , express-ratelimit , crsf
+
 //use cors to allow cross origin resource sharing
 app.use(
   cors({
