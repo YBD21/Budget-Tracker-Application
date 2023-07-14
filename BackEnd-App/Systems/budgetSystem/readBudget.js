@@ -31,8 +31,8 @@ const getBudgetEntryData = async (userId, orderByDate) => {
 
   const budgetEntryDataRef = fireStoreDB
     .collection(`Users/${userId}/BudgetEntry`)
-    .orderBy("Created_At", orderBy)
-    .limit(15);
+    .orderBy("Created_At", orderBy);
+  // .limit(15);
   try {
     const snapshot = await budgetEntryDataRef.get();
 
