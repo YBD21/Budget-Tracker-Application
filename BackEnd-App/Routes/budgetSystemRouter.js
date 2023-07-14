@@ -71,13 +71,17 @@ budgetSystemRouter.get("/get-entry-data", authMiddleware, async (req, res) => {
   res.status(200).send(userEntryData);
 });
 
-budgetSystemRouter.delete("/delete-budget-data", async (req, res) => {
-  const userData = req.userData;
-  const { id: userId } = userData;
-  const data = req.query;
-  console.log(`User requested to Delete BudgetEntry Data`);
-  const respond = await deleteBudgetEntryAndUpdateSummary(userId, data);
-  res.status(200).send(respond);
-});
+budgetSystemRouter.delete(
+  "/delete-budget-data",
+  authMiddleware,
+  async (req, res) => {
+    const userData = req.userData;
+    const { id: userId } = userData;
+    const data = req.query;
+    console.log(`User requested to Delete BudgetEntry Data`);
+    const respond = await deleteBudgetEntryAndUpdateSummary(userId, data);
+    res.status(200).send(respond);
+  }
+);
 
 module.exports = budgetSystemRouter;
