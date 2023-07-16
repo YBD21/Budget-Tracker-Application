@@ -13,8 +13,6 @@ import { useStateValue } from "../../main/context/StateProvider";
 import { hashKey } from "../../../constants/hashKey";
 
 const SignIn = () => {
-  const Email = "email";
-  const Password = "password";
   const [{ userData }, dispatch] = useStateValue();
   const navigate = useNavigate();
 
@@ -164,7 +162,7 @@ const SignIn = () => {
   return (
     <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
       <div className="w-full p-6 mb-auto mx-auto mt-24 rounded-md sm:max-w-lg">
-        <h1 className="text-3xl font-semibold text-center text-black">Login</h1>
+        <h2 className="text-3xl font-semibold text-center text-black">Login</h2>
         {/* login submit */}
         <form className="mt-3" onSubmit={handleLoginSubmit}>
           <div className="pb-5">
