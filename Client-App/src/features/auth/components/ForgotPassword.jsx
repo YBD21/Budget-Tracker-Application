@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { hashKey } from "../../../constants/hashKey";
 
 import ReCAPTCHA from "react-google-recaptcha";
 import SearchIcon from "@mui/icons-material/Search";
+import axiosWithBaseURL from "../../../constants/axiosRoute";
 
 const ForgotPassword = () => {
   const [recapchaStatus, setRecapchaStatus] = useState(false);
@@ -15,17 +16,28 @@ const ForgotPassword = () => {
   };
 
   const handleChangeRecapcha = (response) => {
-    // Your code to handle the captcha response
-    console.log(response);
-    
-    // if response call backend to find phone number
+    verifyRecapcha(response);
   };
 
-  // useEffect(() => {
-  //   if (recapchaStatus === true) {
-  //     setRecapchaStatus(false);
-  //   }
-  // }, [recapchaStatus]);
+  const verifyRecapcha = (response) => {
+    axiosWithBaseURL
+      .post(
+        "/auth-system/verify-captcha",
+        {
+          recaptchaResponse: response,
+        },
+        {
+          withCredentials: true, // enable sending and receiving cookies
+        }
+      )
+      .then(function (respond) {
+        // if true call backend to find phone number
+        console.log(respond.data);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
+  };
 
   return (
     <div className="flex flex-col justify-center min-h-screen">
