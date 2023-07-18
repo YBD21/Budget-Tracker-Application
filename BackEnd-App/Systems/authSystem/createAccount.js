@@ -21,6 +21,7 @@ const createAccount = async (firstName, lastName, email, password) => {
   let sendData = { Message: "", Error: "" };
   let userExist = false;
 
+  // mail type eg- gmail, hotmail etc..
   const mailName = email.split("@")[1].split(".")[0];
   const uniqueId = getEmailUniqueId(email);
 
