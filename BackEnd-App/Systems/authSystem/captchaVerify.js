@@ -20,7 +20,7 @@ const verifyCaptcha = async (recaptchaResponse) => {
       },
     });
 
-    console.log(respond.data);
+    // console.log(respond.data);
 
     if (respond.data.success) {
       // ReCAPTCHA verification successful

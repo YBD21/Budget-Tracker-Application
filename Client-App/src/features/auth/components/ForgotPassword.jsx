@@ -31,12 +31,19 @@ const ForgotPassword = () => {
         }
       )
       .then(function (respond) {
-        // if true call backend to find phone number
         console.log(respond.data);
+        // request backend to find Account
+        if (respond.data === true) {
+          findAccount();
+        }
       })
       .catch(function (error) {
         console.log(error.message);
       });
+  };
+
+  const findAccount = () => {
+    //
   };
 
   return (
@@ -45,10 +52,6 @@ const ForgotPassword = () => {
         <h2 className="text-3xl font-semibold text-center text-black mb-6">
           Account Lookup
         </h2>
-
-        <p className="text-lg font-semibold text-center text-black mt-3">
-          Enter your email address to find your account
-        </p>
 
         <form className="mt-4" onSubmit={handleSubmit}>
           <div className="pb-4">
