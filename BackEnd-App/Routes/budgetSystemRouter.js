@@ -52,7 +52,7 @@ budgetSystemRouter.get(
     res.cookie("userData", newAccessToken, {
       secure: true, // set to true to enable sending the cookie only over HTTPS
       httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
-      sameSite: "strict",
+      sameSite: "none",
     });
 
     res.send(newAccessToken);

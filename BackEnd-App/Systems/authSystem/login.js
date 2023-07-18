@@ -23,7 +23,7 @@ const generateToken = (
   totalExpense,
   totalBalance
 ) => {
-  //firstName,lastName,mobileNumber,accountType
+
   const filterData = {
     firstName: userFirstName,
     lastName: userLastName,

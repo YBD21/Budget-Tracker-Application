@@ -20,10 +20,10 @@ app.use(
   })
 );
 
-// limit incomming json data to 1 KB
-app.use(express.json({ limit: "1kb" }));
+// limit incomming json data to 1 MB
+app.use(express.json({ limit: "1Mb" }));
 
-// gives ability to read cookies
+// gives ability to read and write cookies
 app.use(cookieParser());
 
 // Mount userRouter middleware at "/auth-System" path

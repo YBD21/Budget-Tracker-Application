@@ -66,7 +66,6 @@ const ForgotPassword = () => {
           {recapchaStatus ? (
             <div className="flex justify-center">
               <ReCAPTCHA
-                ref={recaptchaRef}
                 sitekey={hashKey.reCaptchaKey}
                 size="normal"
                 onChange={handleChangeRecapcha}

@@ -8,18 +8,23 @@ const {
   sendVerificationEmail,
   verifyHash,
 } = require("../Systems/authSystem/emailVerification");
+
 const {
   createAccount,
   getEmailUniqueId,
 } = require("../Systems/authSystem/createAccount");
+
 const {
   login,
   verifyToken,
   verifyTokenAndDecodeToken,
 } = require("../Systems/authSystem/login");
+
 const {
   createBudgetSummary,
 } = require("../Systems/budgetSystem/budgetOperation");
+
+const { verifyCaptcha } = require("../Systems/authSystem/captchaVerify");
 
 // read http only cookie
 authSystemRouter.get("/user-data", (req, res) => {
@@ -59,6 +64,23 @@ authSystemRouter.post("/verify-otp", (req, res) => {
   res.send(isCorrect);
 });
 
+// Verify Captcha
+authSystemRouter.post("/verify-captcha", async (req, res) => {
+  const { recaptchaResponse } = req.body;
+  const verifyData = await verifyCaptcha(recaptchaResponse);
+
+  if (verifyData.success === true) {
+    // set HTTP Only Cookie
+    res.cookie("findAccess", verifyData.token, {
+      secure: true,
+      httpOnly: true,
+      sameSite: "none",
+    });
+  }
+
+  res.send(verifyData.success);
+});
+
 //Create Account
 authSystemRouter.post("/create-account", async (req, res) => {
   const { FirstName, LastName, Email, Password } = req.body;
@@ -86,8 +108,9 @@ authSystemRouter.post("/login", async (req, res) => {
     res.cookie("userData", respond.accessToken, {
       secure: true, // set to true to enable sending the cookie only over HTTPS
       httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
-      sameSite: "strict",
+      sameSite: "none",
     });
+
     console.log(`User : ${email} is Logged In ! `);
   }
   res.json(respond);
@@ -97,10 +120,11 @@ authSystemRouter.post("/login", async (req, res) => {
 authSystemRouter.delete("/user-data", (req, res) => {
   const accessToken = req.cookies.userData;
   const userData = verifyTokenAndDecodeToken(accessToken);
+
   res.clearCookie("userData", {
     httpOnly: true,
     secure: true,
-    sameSite: "strict",
+    sameSite: "none",
   });
 
   console.log(`User With E-Mail: ${userData?.email} LogOut X_X !`);
