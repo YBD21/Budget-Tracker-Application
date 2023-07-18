@@ -15,4 +15,20 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+const findAccessMiddleware = (req, res, next) => {
+  try {
+    const findAccessToken = req.cookies.findAccess;
+    const accessData = verifyFindAccessTokenAndDecode(findAccessToken);
+
+    if (userData === false) {
+      return res.status(401).send("Unauthorized");
+    }
+    req.accessData = accessData;
+    next();
+  } catch (error) {
+    console.error("Error occurred in findAccessMiddleware:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+module.exports = { authMiddleware, findAccessMiddleware };
