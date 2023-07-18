@@ -9,6 +9,7 @@ import axiosWithBaseURL from "../../../constants/axiosRoute";
 
 const ForgotPassword = () => {
   const [recapchaStatus, setRecapchaStatus] = useState(false);
+  const [email, setEmail] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,7 +44,20 @@ const ForgotPassword = () => {
   };
 
   const findAccount = () => {
-    //
+    axiosWithBaseURL
+      .post(
+        "/auth-system/find-account",
+        { userName: email },
+        {
+          withCredentials: true, // enable sending and receiving cookies
+        }
+      )
+      .then(function (respond) {
+        console.log(respond.data);
+      })
+      .catch(function (error) {
+        console.log(error.message);
+      });
   };
 
   return (
@@ -60,6 +74,8 @@ const ForgotPassword = () => {
             </label>
             <input
               type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
               className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
             />
