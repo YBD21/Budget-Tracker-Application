@@ -7,6 +7,7 @@ const { getBudgetSummary } = require("../budgetSystem/readBudget");
 require("dotenv").config();
 
 const secretKey = process.env.JWT_SECRET_KEY;
+const reCaptchaSecretKey = process.env.GOOGLE_RECAPTCHA_SECRET_KEY;
 
 const checkPassword = (hashPassword, password) => {
   const check = bcrypt.compareSync(password, hashPassword);
@@ -23,7 +24,6 @@ const generateToken = (
   totalExpense,
   totalBalance
 ) => {
-
   const filterData = {
     firstName: userFirstName,
     lastName: userLastName,
@@ -56,6 +56,18 @@ const verifyToken = (token) => {
 const verifyTokenAndDecodeToken = (token) => {
   let sendData = false;
   jwt.verify(token, secretKey, function (err, decoded) {
+    if (err) {
+      console.log(err.message);
+    } else {
+      sendData = { ...decoded };
+    }
+  });
+  return sendData;
+};
+
+const verifyFindAccessTokenAndDecode = (token) => {
+  let sendData = false;
+  jwt.verify(token, reCaptchaSecretKey, function (err, decoded) {
     if (err) {
       console.log(err.message);
     } else {
@@ -126,4 +138,5 @@ module.exports = {
   generateToken,
   verifyToken,
   verifyTokenAndDecodeToken,
+  verifyFindAccessTokenAndDecode,
 };

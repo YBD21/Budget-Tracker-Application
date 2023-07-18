@@ -25,6 +25,7 @@ const {
 } = require("../Systems/budgetSystem/budgetOperation");
 
 const { verifyCaptcha } = require("../Systems/authSystem/captchaVerify");
+const { findAccessMiddleware } = require("../ middleware/authMiddleware");
 
 // read http only cookie
 authSystemRouter.get("/user-data", (req, res) => {
@@ -80,6 +81,27 @@ authSystemRouter.post("/verify-captcha", async (req, res) => {
 
   res.send(verifyData.success);
 });
+
+// Find Account
+authSystemRouter.post(
+  "/find-account",
+  findAccessMiddleware,
+  async (req, res) => {
+    try {
+      const { userName } = req.body;
+      const { verifyStatus } = req.accessData;
+
+      if (verifyStatus !== true) {
+        return res.status(401).send("Unauthorized");
+      }
+      // findAccount 
+      
+    } catch (error) {
+      console.error("Error occurred in Find Account Route:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }
+);
 
 //Create Account
 authSystemRouter.post("/create-account", async (req, res) => {

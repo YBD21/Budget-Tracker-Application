@@ -9,7 +9,7 @@ const {
   getBudgetEntryData,
 } = require("../Systems/budgetSystem/readBudget");
 
-const {authMiddleware} = require("../ middleware/authMiddleware");
+const { authMiddleware } = require("../ middleware/authMiddleware");
 
 const budgetSystemRouter = express.Router();
 

@@ -1,4 +1,7 @@
-const { verifyTokenAndDecodeToken } = require("../Systems/authSystem/login");
+const {
+  verifyTokenAndDecodeToken,
+  verifyFindAccessTokenAndDecode,
+} = require("../Systems/authSystem/login");
 
 const authMiddleware = (req, res, next) => {
   try {
@@ -20,9 +23,10 @@ const findAccessMiddleware = (req, res, next) => {
     const findAccessToken = req.cookies.findAccess;
     const accessData = verifyFindAccessTokenAndDecode(findAccessToken);
 
-    if (userData === false) {
+    if (accessData === false) {
       return res.status(401).send("Unauthorized");
     }
+
     req.accessData = accessData;
     next();
   } catch (error) {
