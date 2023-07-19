@@ -26,7 +26,10 @@ const {
 
 const { verifyCaptcha } = require("../Systems/authSystem/captchaVerify");
 const { findAccessMiddleware } = require("../ middleware/authMiddleware");
-const { findAccount } = require("../Systems/authSystem/forgotPassword");
+const {
+  findAccount,
+  generateFoundAccountToken,
+} = require("../Systems/authSystem/forgotPassword");
 
 // read http only cookie
 authSystemRouter.get("/user-data", (req, res) => {
@@ -90,14 +93,26 @@ authSystemRouter.post(
   async (req, res) => {
     try {
       const { userName: email } = req.body;
-      const { verifyStatus } = req.accessData;
+      const accessData = req.accessData; // from middleware
 
-      if (verifyStatus !== true) {
+      if (accessData?.verifyStatus === true) {
+        const accountExist = await findAccount(email);
+
+        // attach email to findAccess token
+
+        const token = generateFoundAccountToken(email);
+
+        // set HTTP Only Cookie
+        res.cookie("findAccess", token, {
+          secure: true,
+          httpOnly: true,
+          sameSite: "none",
+        });
+
+        return res.send(accountExist);
+      } else {
         return res.status(401).send("Unauthorized");
       }
-
-      const accountExist = await findAccount(email);
-      return res.send(accountExist);
     } catch (error) {
       console.error("Error occurred in Find Account Route:", error);
       res.status(500).send("Internal Server Error");

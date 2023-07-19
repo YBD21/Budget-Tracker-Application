@@ -1,6 +1,10 @@
+const jwt = require("jsonwebtoken");
 const { dataBase } = require("../../firebaseConfig");
-
 const { getEmailUniqueId } = require("./createAccount");
+
+require("dotenv").config();
+
+const reCaptchaSecretKey = process.env.GOOGLE_RECAPTCHA_SECRET_KEY;
 
 const findAccount = async (email) => {
   let userExist = false;
@@ -23,4 +27,11 @@ const findAccount = async (email) => {
   return userExist;
 };
 
-module.exports = { findAccount };
+const generateFoundAccountToken = (email) => {
+  const message = { verifyStatus: true, email };
+
+  const token = jwt.sign(message, reCaptchaSecretKey, { expiresIn: "10m" });
+  return token;
+};
+
+module.exports = { findAccount, generateFoundAccountToken };
