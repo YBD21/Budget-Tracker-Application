@@ -8,7 +8,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import SearchIcon from "@mui/icons-material/Search";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
 
-const ForgotPassword = ({ togglePage }) => {
+const ForgotPassword = ({ togglePage, setEmailToParent }) => {
   const [recapchaStatus, setRecapchaStatus] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -23,6 +23,7 @@ const ForgotPassword = ({ togglePage }) => {
 
   const switchToVerifyOTP = () => {
     togglePage(ForgotPasswordPagesOption[1]);
+    setEmailToParent(email);
   };
 
   const verifyRecapcha = (response) => {

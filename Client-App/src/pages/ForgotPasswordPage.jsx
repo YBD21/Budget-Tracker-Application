@@ -6,22 +6,32 @@ import { ForgotPasswordPagesOption } from "../constants/pageOptions";
 
 const ForgotPasswordPage = () => {
   const [pageName, setPageName] = useState(ForgotPasswordPagesOption[0]);
+  const [email, setEmail] = useState("");
 
   const switchPage = (name) => {
     setPageName(name);
   };
 
+  const setEmailfromChild = (Email) => {
+    setEmail(Email);
+  };
+
   switch (pageName) {
     case ForgotPasswordPagesOption[1]:
       // Verify
-      return <VerifyOtp togglePage={switchPage} />;
+      return <VerifyOtp togglePage={switchPage} Email={email} />;
 
     case ForgotPasswordPagesOption[2]:
       // reset password
-      return <ResetPassword />;
+      return <ResetPassword Email={email} />;
 
     default:
-      return <ForgotPassword togglePage={switchPage} />;
+      return (
+        <ForgotPassword
+          togglePage={switchPage}
+          setEmailToParent={setEmailfromChild}
+        />
+      );
   }
 };
 
