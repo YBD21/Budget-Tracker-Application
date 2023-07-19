@@ -5,8 +5,9 @@ import VerifyOtp from "../features/auth/components/VerifyOtp";
 import { ForgotPasswordPagesOption } from "../constants/pageOptions";
 
 const ForgotPasswordPage = () => {
-  const [pageName, setPageName] = useState(ForgotPasswordPagesOption[0]);
-  const [email, setEmail] = useState("");
+  //ForgotPasswordPagesOption[0]
+  const [pageName, setPageName] = useState(ForgotPasswordPagesOption[2]);
+  const [email, setEmail] = useState("ybd.deuja@gmail.com");
 
   const switchPage = (name) => {
     setPageName(name);
