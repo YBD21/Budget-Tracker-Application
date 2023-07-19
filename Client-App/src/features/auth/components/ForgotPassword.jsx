@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { hashKey } from "../../../constants/hashKey";
+import { ForgotPasswordPagesOption } from "../../../constants/pageOptions";
 
 import ReCAPTCHA from "react-google-recaptcha";
 import SearchIcon from "@mui/icons-material/Search";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
 
-const ForgotPassword = () => {
+const ForgotPassword = ({ togglePage }) => {
   const [recapchaStatus, setRecapchaStatus] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -18,6 +19,10 @@ const ForgotPassword = () => {
 
   const handleChangeRecapcha = (response) => {
     verifyRecapcha(response);
+  };
+
+  const switchToVerifyOTP = () => {
+    togglePage(ForgotPasswordPagesOption[1]);
   };
 
   const verifyRecapcha = (response) => {
@@ -32,7 +37,7 @@ const ForgotPassword = () => {
         }
       )
       .then(function (respond) {
-        console.log(respond.data);
+        // console.log(respond.data);
         // request backend to find Account
         if (respond.data === true) {
           findAccount();
@@ -54,6 +59,9 @@ const ForgotPassword = () => {
       )
       .then(function (respond) {
         console.log(respond.data);
+        if (respond.data === true) {
+          switchToVerifyOTP();
+        }
       })
       .catch(function (error) {
         console.log(error.message);
