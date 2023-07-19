@@ -7,7 +7,7 @@ const Email = process.env.MAIL;
 const transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 587,
-  secure: true,
+  secure: false,
   auth: {
     user: Email,
     pass: process.env.MAIL_PASSWORD,
@@ -43,7 +43,7 @@ const sendVerificationEmail = async (userEmail, otp) => {
 `;
 
   const mailOptions = {
-    from: `"BudgetTracker"`, // sender address
+    from: `"BudgetTracker"${Email}`, // sender address
     to: `${userEmail}`, // list of receivers
     subject: "Email Verification", // Subject line
     html: html, // html body
