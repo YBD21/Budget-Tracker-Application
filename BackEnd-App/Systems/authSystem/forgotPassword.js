@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { dataBase } = require("../../firebaseConfig");
-const { getEmailUniqueId } = require("./createAccount");
+const { getEmailUniqueId, encryptPassword } = require("./createAccount");
 
 require("dotenv").config();
 
@@ -34,4 +34,27 @@ const generateFoundAccountToken = (email) => {
   return token;
 };
 
-module.exports = { findAccount, generateFoundAccountToken };
+const resetPassword = async (email, newPassword) => {
+  const mailName = email.split("@")[1].split(".")[0];
+
+  try {
+    const [uniqueId, encPassword] = await Promise.all([
+      getEmailUniqueId(email),
+      encryptPassword(newPassword),
+    ]);
+
+    const accountRef = `SignWithEmail/${mailName}/${uniqueId}`;
+    const refToAccount = dataBase.ref(accountRef);
+
+    await refToAccount.update({ Password: encPassword });
+
+    // Update successful, return true
+    return true;
+  } catch (error) {
+    // Error occurred, return false
+    console.error("Error updating password:", error);
+    return false;
+  }
+};
+
+module.exports = { findAccount, generateFoundAccountToken, resetPassword };

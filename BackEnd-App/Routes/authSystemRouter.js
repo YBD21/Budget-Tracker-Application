@@ -29,6 +29,7 @@ const { findAccessMiddleware } = require("../ middleware/authMiddleware");
 const {
   findAccount,
   generateFoundAccountToken,
+  resetPassword,
 } = require("../Systems/authSystem/forgotPassword");
 
 // read http only cookie
@@ -119,6 +120,13 @@ authSystemRouter.post(
     }
   }
 );
+
+// Reset Password
+authSystemRouter.patch("/reset-password", async (req, res) => {
+  const { email, password } = req.body;
+  const resetStatus = await resetPassword(email, password);
+  res.send(resetStatus);
+});
 
 //Create Account
 authSystemRouter.post("/create-account", async (req, res) => {

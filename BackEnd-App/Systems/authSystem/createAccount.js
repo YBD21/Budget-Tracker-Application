@@ -69,4 +69,4 @@ const createAccount = async (firstName, lastName, email, password) => {
   return sendData;
 };
 
-module.exports = { createAccount, getEmailUniqueId };
+module.exports = { createAccount, getEmailUniqueId, encryptPassword };
