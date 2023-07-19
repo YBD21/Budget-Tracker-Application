@@ -3,21 +3,94 @@ import { Link } from "react-router-dom";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-
-import { ForgotPasswordPagesOption } from "../../../constants/pageOptions";
+import ErrorMessageText from "../error/ErrorMessageText";
+import axiosWithBaseURL from "../../../constants/axiosRoute";
 
 const ResetPassword = ({ Email }) => {
   const [open, setOpen] = useState(false);
-  const [createpassword, setCreatePassword] = useState("");
-  const [confirmpassword, setConfirmPassword] = useState("");
+  const [createPassword, setCreatePassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [error, setError] = useState(null);
+  const [errorCreatePassword, setErrorCreatePassword] = useState({});
+  const [errorConfirmPassword, setErrorConfirmPassword] = useState({});
+
+  const [success, setSuccess] = useState(null);
 
   // handle toggle to show or hide password
   const toggle = () => {
     setOpen(!open);
   };
 
+  const validateForm = () => {
+    let status = false;
+
+    // Reset previous error messages
+    setErrorCreatePassword({});
+    setErrorConfirmPassword({});
+
+    if (createPassword.length === 0) {
+      setErrorCreatePassword({
+        CreatePassword: true,
+        Message: "Create Password Cannot Be Empty!",
+      });
+      status = true;
+    } else if (createPassword.length < 8) {
+      setErrorCreatePassword({
+        CreatePassword: true,
+        Message: "Password Must Be At Least 8 Characters Long!",
+      });
+      status = true;
+    } else if (createPassword.length > 16) {
+      setErrorCreatePassword({
+        CreatePassword: true,
+        Message: "Password Cannot Be More Than 16 Characters Long!",
+      });
+      status = true;
+    }
+
+    if (confirmPassword.length === 0) {
+      setErrorConfirmPassword({
+        ConfirmPassword: true,
+        Message: "Confirm Password Cannot Be Empty!",
+      });
+      status = true;
+    }
+
+    if (createPassword !== confirmPassword) {
+      setErrorConfirmPassword({
+        ConfirmPassword: true,
+        Message: "Password Does Not Match!",
+      });
+      status = true;
+    }
+
+    return status;
+  };
+
   const resetPassword = (e) => {
     e.preventDefault(); // prevent page from refresh
+    setError(null); // reset previous error message
+    const isValid = validateForm();
+
+    if (isValid === false) {
+      CallBackendToResetPassword();
+    }
+  };
+
+  const CallBackendToResetPassword = () => {
+    // console.log("Backend Called ");
+    axiosWithBaseURL
+      .patch("/auth-system/reset-password", {
+        email: Email,
+        password: confirmPassword,
+      })
+      .then(function (respond) {
+        console.log(respond.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
   };
 
   return (
@@ -29,6 +102,18 @@ const ResetPassword = ({ Email }) => {
 
         {/* Resetpassword Form*/}
         <form className="mt-8">
+          {/* Username Input Box (Hidden for accessibility) */}
+          <div className="hidden">
+            <label htmlFor="username" className="block sr-only">
+              Username
+            </label>
+            <input
+              type="text"
+              id="username"
+              autoComplete="username"
+              className="sr-only"
+            />
+          </div>
           {/* Password Input Box */}
           <div className="mb-4">
             <label className="block text-sm font-semibold text-gray-800">
@@ -38,8 +123,9 @@ const ResetPassword = ({ Email }) => {
             <div className="flex flex-row cursor-pointer">
               <input
                 type={open === false ? "password" : "text"}
-                value={createpassword}
+                value={createPassword}
                 onChange={(e) => setCreatePassword(e.target.value)}
+                autoComplete="new-password"
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40 "
               />
               <div className="text-2xl ml-[-2.5rem] mt-2.5">
@@ -51,7 +137,11 @@ const ResetPassword = ({ Email }) => {
               </div>
             </div>
           </div>
+
           {/* Error Message */}
+          {errorCreatePassword.CreatePassword && (
+            <ErrorMessageText props={errorCreatePassword.Message} />
+          )}
 
           {/* Confirm Password Input Box */}
           <div className="mb-4">
@@ -62,7 +152,8 @@ const ResetPassword = ({ Email }) => {
             <div className="flex flex-row cursor-pointer">
               <input
                 type={open === false ? "password" : "text"}
-                value={confirmpassword}
+                value={confirmPassword}
+                autoComplete="confirm-password"
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
               />
@@ -75,7 +166,15 @@ const ResetPassword = ({ Email }) => {
               </div>
             </div>
           </div>
+
           {/* Error Message */}
+          {errorConfirmPassword.ConfirmPassword && (
+            <ErrorMessageText props={errorConfirmPassword.Message} />
+          )}
+
+          {/* Error Message Box */}
+
+          {/* Success Message Box */}
 
           <div className="mt-8">
             <button
