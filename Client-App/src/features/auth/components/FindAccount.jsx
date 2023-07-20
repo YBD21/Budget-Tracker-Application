@@ -132,7 +132,7 @@ const FindAccount = ({ togglePage, setEmailToParent }) => {
             />
 
             {errorEmail.Email && (
-              <ErrorMessageText props={errorEmail?.Message} />
+              <ErrorMessageText props={errorEmail?.Msage} />
             )}
 
             {errorFindAccount.Find && (
