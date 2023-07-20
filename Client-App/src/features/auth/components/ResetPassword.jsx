@@ -5,6 +5,7 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ErrorMessageText from "../error/ErrorMessageText";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
+import ErrorMessageBoxForgorPassword from "../error/ErrorMessageBoxForgorPassword";
 
 const ResetPassword = ({ Email }) => {
   const [open, setOpen] = useState(false);
@@ -89,7 +90,13 @@ const ResetPassword = ({ Email }) => {
         console.log(respond.data);
       })
       .catch(function (error) {
-        console.log(error);
+        // throw error message
+        if (error?.response?.statusText) {
+          // console.log(error.response.statusText);
+          setError(error?.response?.statusText);
+        } else {
+          setError(error.message);
+        }
       });
   };
 
@@ -144,7 +151,7 @@ const ResetPassword = ({ Email }) => {
           )}
 
           {/* Confirm Password Input Box */}
-          <div className="mb-4">
+          <div className="mb-6">
             <label className="block text-sm font-semibold text-gray-800">
               Confirm Password
             </label>
@@ -174,14 +181,20 @@ const ResetPassword = ({ Email }) => {
 
           {/* Error Message Box */}
 
+          {error && (
+            <ErrorMessageBoxForgorPassword
+              Error_message={error}
+              status={true}
+            />
+          )}
+
           {/* Success Message Box */}
 
-          <div className="mt-8">
+          <div className="mt-6">
             <button
               className="w-full px-5 py-2.5 tracking-wide
         text-white bg-black font-medium rounded-lg t text-center mr-3 mb-2
-        focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden
-        "
+        focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 relative overflow-hidden"
               onClick={resetPassword}
             >
               Reset Password
