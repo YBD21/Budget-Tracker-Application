@@ -7,18 +7,49 @@ import { ForgotPasswordPagesOption } from "../../../constants/pageOptions";
 import ReCAPTCHA from "react-google-recaptcha";
 import SearchIcon from "@mui/icons-material/Search";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
+import ErrorMessageText from "../error/ErrorMessageText";
 
 const FindAccount = ({ togglePage, setEmailToParent }) => {
   const [recapchaStatus, setRecapchaStatus] = useState(false);
   const [email, setEmail] = useState("");
 
+  const [error, setError] = useState(null);
+  const [errorFindAccount, setErrorFindAccount] = useState({});
+  const [errorEmail, setErrorEmail] = useState({});
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    setRecapchaStatus(true);
+    const validateStatus = validateEmail();
+    if (validateStatus === true) {
+      setRecapchaStatus(true);
+    }
   };
 
   const handleChangeRecapcha = (response) => {
     verifyRecapcha(response);
+  };
+
+  const validateEmail = () => {
+    // Email regex pattern
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (email.length === 0) {
+      setErrorEmail({
+        Email: true,
+        Message: "Email Cannot Be Empty !",
+      });
+      return false;
+    }
+
+    if (!emailPattern.test(email)) {
+      setErrorEmail({
+        Email: true,
+        Message: "Invalid Email !",
+      });
+      return false;
+    }
+
+    return true;
   };
 
   const switchToVerifyOTP = () => {
@@ -38,7 +69,7 @@ const FindAccount = ({ togglePage, setEmailToParent }) => {
         }
       )
       .then(function (respond) {
-        // console.log(respond.data);
+        console.log(respond.data);
         // request backend to find Account
         if (respond.data === true) {
           findAccount();
@@ -59,13 +90,24 @@ const FindAccount = ({ togglePage, setEmailToParent }) => {
         }
       )
       .then(function (respond) {
-        console.log(respond.data);
         if (respond.data === true) {
           switchToVerifyOTP();
+        } else {
+          setErrorFindAccount({
+            Find: true,
+            Message: "Email not registered. Please sign up to continue.",
+          });
         }
       })
       .catch(function (error) {
         console.log(error.message);
+        // throw error message
+        if (error?.response?.statusText) {
+          // console.log(error.response.statusText);
+          setError(error?.response?.statusText);
+        } else {
+          setError(error.message);
+        }
       });
   };
 
@@ -77,7 +119,7 @@ const FindAccount = ({ togglePage, setEmailToParent }) => {
         </h2>
 
         <form className="mt-4" onSubmit={handleSubmit}>
-          <div className="pb-4">
+          <div className="pb-2">
             <label className="block text-sm font-semibold text-gray-800 py-2">
               Email
             </label>
@@ -88,11 +130,28 @@ const FindAccount = ({ togglePage, setEmailToParent }) => {
               autoComplete="email"
               className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
             />
+
+            {errorEmail.Email && (
+              <ErrorMessageText props={errorEmail?.Message} />
+            )}
+
+            {errorFindAccount.Find && (
+              <ErrorMessageText props={errorFindAccount?.Message} />
+            )}
           </div>
+
+          {/* Error Message Box*/}
+
+          {error && (
+            <ErrorMessageBoxForgorPassword
+              Error_message={error}
+              status={true}
+            />
+          )}
 
           {/* ReCapcha */}
           {recapchaStatus ? (
-            <div className="flex justify-center">
+            <div className="flex justify-center mt-2">
               <ReCAPTCHA
                 sitekey={hashKey.reCaptchaKey}
                 size="normal"
@@ -100,7 +159,7 @@ const FindAccount = ({ togglePage, setEmailToParent }) => {
               />
             </div>
           ) : (
-            <div className="min-w-max mt-3">
+            <div className="min-w-max">
               {/* Search */}
               <button
                 className="w-full px-4 py-2.5 tracking-wide

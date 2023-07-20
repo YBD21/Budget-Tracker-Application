@@ -172,7 +172,7 @@ const CreateAccount = () => {
     if (!emailPattern.test(email) && email.length !== 0) {
       setErrorEmail({
         Email: true,
-        Message: "Invalid email !",
+        Message: "Invalid Email !",
       });
       count += 1;
     }

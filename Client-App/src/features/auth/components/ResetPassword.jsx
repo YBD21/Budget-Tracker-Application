@@ -94,7 +94,7 @@ const ResetPassword = ({ Email }) => {
         password: confirmPassword,
       })
       .then(function (respond) {
-        console.log(respond.data);
+        // console.log(respond.data);
         if (respond.data === true) {
           setSuccess("ResetPassword");
           // wait timer of 2 sec and redirect
