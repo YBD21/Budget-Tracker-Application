@@ -1,5 +1,5 @@
 import { useState } from "react";
-import ForgotPassword from "../features/auth/components/ForgotPassword";
+import FindAccount from "../features/auth/components/FindAccount";
 import ResetPassword from "../features/auth/components/ResetPassword";
 import VerifyOtp from "../features/auth/components/VerifyOtp";
 import { ForgotPasswordPagesOption } from "../constants/pageOptions";
@@ -28,7 +28,7 @@ const ForgotPasswordPage = () => {
 
     default:
       return (
-        <ForgotPassword
+        <FindAccount
           togglePage={switchPage}
           setEmailToParent={setEmailfromChild}
         />

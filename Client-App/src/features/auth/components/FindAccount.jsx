@@ -8,7 +8,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 import SearchIcon from "@mui/icons-material/Search";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
 
-const ForgotPassword = ({ togglePage, setEmailToParent }) => {
+const FindAccount = ({ togglePage, setEmailToParent }) => {
   const [recapchaStatus, setRecapchaStatus] = useState(false);
   const [email, setEmail] = useState("");
 
@@ -73,7 +73,7 @@ const ForgotPassword = ({ togglePage, setEmailToParent }) => {
     <div className="flex flex-col justify-center min-h-screen">
       <div className="w-full p-6 mb-auto mx-auto mt-32 rounded-md sm:max-w-lg">
         <h2 className="text-3xl font-semibold text-center text-black mb-6">
-          Account Lookup
+          Find Account
         </h2>
 
         <form className="mt-4" onSubmit={handleSubmit}>
@@ -130,4 +130,4 @@ const ForgotPassword = ({ togglePage, setEmailToParent }) => {
   );
 };
 
-export default ForgotPassword;
+export default FindAccount;
