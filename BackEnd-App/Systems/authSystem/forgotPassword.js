@@ -46,6 +46,15 @@ const resetPassword = async (email, newPassword) => {
     const accountRef = `SignWithEmail/${mailName}/${uniqueId}`;
     const refToAccount = dataBase.ref(accountRef);
 
+    // Check if the account exists by getting the snapshot
+    const snapshot = await refToAccount.once("value");
+    if (!snapshot.exists()) {
+      // Account not found, return false
+      console.error("Account not found for email:", email);
+      return false;
+    }
+
+    // Update the password
     await refToAccount.update({ Password: encPassword });
 
     // Update successful, return true
