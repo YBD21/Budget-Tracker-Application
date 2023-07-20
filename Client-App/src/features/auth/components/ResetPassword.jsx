@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import VisibilityIcon from "@mui/icons-material/Visibility";
@@ -18,9 +19,15 @@ const ResetPassword = ({ Email }) => {
 
   const [success, setSuccess] = useState(null);
 
+  const navigate = useNavigate();
+
   // handle toggle to show or hide password
   const toggle = () => {
     setOpen(!open);
+  };
+
+  const redirectToLogin = () => {
+    return navigate("/Login", { replace: true });
   };
 
   const validateForm = () => {
@@ -88,6 +95,11 @@ const ResetPassword = ({ Email }) => {
       })
       .then(function (respond) {
         console.log(respond.data);
+        if (respond.data === true) {
+          setSuccess("ResetPassword");
+          // wait timer of 2 sec and redirect
+          setTimeout(redirectToLogin, 2000);
+        }
       })
       .catch(function (error) {
         // throw error message
@@ -189,6 +201,7 @@ const ResetPassword = ({ Email }) => {
           )}
 
           {/* Success Message Box */}
+          {success && <SuccessMessageBox props={success} status={true} />}
 
           <div className="mt-6">
             <button

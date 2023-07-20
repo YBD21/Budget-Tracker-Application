@@ -10,6 +10,11 @@ const SuccessMessageBox = (message) => {
           First: "Great !",
           Second: "Budget entry successfully added.",
         });
+      case "ResetPassword":
+        return setText({
+          First: "Great !",
+          Second: "Your Password Has Been Reset Sucessfully.",
+        });
     }
   }, [isClicked]);
 

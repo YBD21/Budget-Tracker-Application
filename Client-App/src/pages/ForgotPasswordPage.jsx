@@ -6,8 +6,8 @@ import { ForgotPasswordPagesOption } from "../constants/pageOptions";
 
 const ForgotPasswordPage = () => {
   //ForgotPasswordPagesOption[0]
-  const [pageName, setPageName] = useState(ForgotPasswordPagesOption[2]);
-  const [email, setEmail] = useState("example@gmail.com");
+  const [pageName, setPageName] = useState(ForgotPasswordPagesOption[0]);
+  const [email, setEmail] = useState("");
 
   const switchPage = (name) => {
     setPageName(name);
