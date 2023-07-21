@@ -28,12 +28,12 @@ function App() {
 
         setTimeout(() => {
           setLoading(false);
-        }, 500);
+        }, 300);
       })
       .catch(function (error) {
         setTimeout(() => {
           setLoading(false);
-        }, 500);
+        }, 300);
       });
   };
 
