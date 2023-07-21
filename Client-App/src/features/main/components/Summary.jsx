@@ -18,7 +18,7 @@ const Summary = () => {
         </p>
         <p className="text-lg text-green-900 font-bold px-4 max-sm:text-base max-sm:py-0.5">
           Rs.{" "}
-          {totalIncome.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
+          {totalIncome?.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
         </p>
       </div>
       {/* Total Expense */}
@@ -28,7 +28,7 @@ const Summary = () => {
         </p>
         <p className="text-lg text-red-800 font-bold px-4 max-sm:text-base max-sm:py-0.5">
           Rs.{" "}
-          {totalExpense.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
+          {totalExpense?.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
         </p>
       </div>
       {/* Balance */}
@@ -38,7 +38,7 @@ const Summary = () => {
         </p>
         <p className="text-lg text-blue-500 font-bold px-4 max-sm:text-base max-sm:py-0.5">
           Rs.{" "}
-          {totalBalance.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
+          {totalBalance?.toLocaleString("en-IN", { maximumFractionDigits: 2 })}
         </p>
       </div>
     </div>

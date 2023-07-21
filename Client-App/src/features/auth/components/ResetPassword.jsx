@@ -7,6 +7,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import ErrorMessageText from "../error/ErrorMessageText";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
 import ErrorMessageBoxForgorPassword from "../error/ErrorMessageBoxForgorPassword";
+import SuccessMessageBox from "../../main/success/SuccessMessageBox";
 
 const ResetPassword = ({ Email }) => {
   const [open, setOpen] = useState(false);
