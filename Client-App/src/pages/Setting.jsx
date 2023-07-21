@@ -1,6 +1,6 @@
 import React from "react";
-import EditProfile from "../features/main/components/userprofile/EditProfile";
-import UserInfo from "../features/main/components/userprofile/UserInfo";
+import EditProfile from "../features/main/components/userprofile/setting/editprofile/EditProfile";
+import UserInfo from "../features/main/components/userprofile/setting/userinfo/UserInfo";
 
 const Setting = () => {
   return (
