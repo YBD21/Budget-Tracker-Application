@@ -119,7 +119,7 @@ const FindAccount = ({ togglePage, setEmailToParent }) => {
         </h2>
 
         <form className="mt-4" onSubmit={handleSubmit}>
-          <div className="pb-2">
+          <div className="mb-2">
             <label className="block text-sm font-semibold text-gray-800 py-2">
               Email
             </label>
@@ -130,9 +130,8 @@ const FindAccount = ({ togglePage, setEmailToParent }) => {
               autoComplete="email"
               className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-black rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
             />
-
             {errorEmail.Email && (
-              <ErrorMessageText props={errorEmail?.Msage} />
+              <ErrorMessageText props={errorEmail?.Message} />
             )}
 
             {errorFindAccount.Find && (
@@ -148,29 +147,30 @@ const FindAccount = ({ togglePage, setEmailToParent }) => {
               status={true}
             />
           )}
-
-          {/* ReCapcha */}
-          {recapchaStatus ? (
-            <div className="flex justify-center mt-2">
-              <ReCAPTCHA
-                sitekey={hashKey.reCaptchaKey}
-                size="normal"
-                onChange={handleChangeRecapcha}
-              />
-            </div>
-          ) : (
-            <div className="min-w-max">
-              {/* Search */}
-              <button
-                className="w-full px-4 py-2.5 tracking-wide
+          <div className="mt-6">
+            {/* ReCapcha */}
+            {recapchaStatus ? (
+              <div className="flex justify-center mt-2">
+                <ReCAPTCHA
+                  sitekey={hashKey.reCaptchaKey}
+                  size="normal"
+                  onChange={handleChangeRecapcha}
+                />
+              </div>
+            ) : (
+              <div className="min-w-max">
+                {/* Search */}
+                <button
+                  className="w-full px-4 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg  text-center mr-3 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
-              >
-                <SearchIcon className="scale-150 mr-4" />
-                Search
-              </button>
-            </div>
-          )}
+                >
+                  <SearchIcon className="scale-150 mr-4" />
+                  Search
+                </button>
+              </div>
+            )}
+          </div>
         </form>
 
         <div className="mt-5">
