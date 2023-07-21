@@ -10,8 +10,6 @@ const UserInfo = () => {
   const [{ userData }, dispatch] = useStateValue();
   const [isEdit, setIsEdit] = useState(false);
 
-  const email = userData?.email;
-
   const [firstName, setFirstName] = useState(userData?.firstName);
   const [lastName, setLastName] = useState(userData?.lastName);
 
@@ -149,19 +147,6 @@ const UserInfo = () => {
   return (
     <div className=" basis-1/2 justify-between w-full max-md:w-full max-lg:mb-5">
       <div className="w-full flex max-lg:flex-col">
-        {/* Email address */}
-        <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
-          <label className="block text-sm font-semibold text-gray-800">
-            Email address
-          </label>
-          <input
-            type="email"
-            value={email}
-            disabled
-            className="block w-full px-4 py-2 mt-2 text-black-700 border-2 border-gray-400 bg-gray-100 rounded-md cursor-not-allowed"
-          />
-        </div>
-
         {/* First Name */}
         <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
           <label className="block text-sm font-semibold text-gray-800">
