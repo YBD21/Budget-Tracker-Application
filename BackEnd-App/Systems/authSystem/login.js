@@ -97,7 +97,7 @@ const login = async (email, password) => {
         await refToLogin.update({ lastSeen: currentDate });
 
         const { totalIncome, totalExpense, totalBalance } =
-          getBudgetSummary(userId);
+          await getBudgetSummary(userId);
 
         const firstName = snapshot.val().FirstName;
         const lastName = snapshot.val().LastName;
