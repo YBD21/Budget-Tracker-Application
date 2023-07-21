@@ -145,15 +145,15 @@ const UserInfo = () => {
   }, [lastName]);
 
   return (
-    <div className=" basis-1/2 justify-between w-full max-md:w-full max-lg:mb-5">
+    <div className="col-span-1">
       <div className="w-full flex max-lg:flex-col">
         {/* First Name */}
-        <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
+        <div className=" my-4 ml-3 mr-10">
           <label className="block text-sm font-semibold text-gray-800">
             First Name
           </label>
 
-          <div className="flex flex-row">
+          <div className="flex flex-col">
             <input
               type="text"
               value={!isEdit ? userData?.firstName : firstName}
@@ -174,39 +174,38 @@ const UserInfo = () => {
         </div>
 
         {/* Last Name */}
-        <div className="w-1/2 my-4 ml-3 mr-10 max-lg:w-3/4">
+        <div className="my-4 ml-3 mr-10">
           <label className="block text-sm font-semibold text-gray-800">
             Last Name
           </label>
 
-          <div className="flex flex-row cursor-pointer">
+          <div className="flex flex-col">
             <input
               type="text"
               value={!isEdit ? userData?.lastName : lastName}
               onChange={(e) => setLastName(e.target.value.trim())}
               className={`block w-full px-4 py-2 mt-4 text-black-700 border-2
-              focus:ring-opacity-40 ${
-                !isEdit
-                  ? "cursor-not-allowed border-gray-600 bg-gray-100 rounded-md"
-                  : "border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
-              }`}
+            focus:ring-opacity-40 ${
+              !isEdit
+                ? "cursor-not-allowed border-gray-600 bg-gray-100 rounded-md"
+                : "border-black bg-white rounded-md focus:border-black focus:ring-black focus:outline-none focus:ring focus:ring-opacity-40"
+            }`}
               disabled={!isEdit}
             />
+            {/* Error Message */}
+            {errorLastName.LastName && (
+              <ErrorMessageText props={errorLastName.Message} />
+            )}
           </div>
-          {/* Error Message */}
-          {errorLastName.LastName && (
-            <ErrorMessageText props={errorLastName.Message} />
-          )}
         </div>
       </div>
 
-      {/*  Action  */}
-
-      <div className="w-full flex flex-row justify-center mt-5">
-        <div className="w-full ml-3">
+      {/*  Action */}
+      <div className="w-full flex justify-center mt-5">
+        <div className="w-full ml-3 mr-10">
           {!isEdit ? (
             <button
-              className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
+              className="w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-center mr-2 mb-2
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
               onClick={edit}
@@ -214,11 +213,11 @@ const UserInfo = () => {
               <span className="text-white font-semibold">Edit</span>
             </button>
           ) : (
-            <div className="flex justify-between">
+            <div className="flex justify-between gap-10">
               <button
-                className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
-           text-white bg-black  rounded-lg  mr-2 mb-2
-           focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
+                className="w-full px-5 py-2.5 tracking-wide
+              text-white bg-black rounded-lg text-center mr-2 mb-2
+              focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
                 onClick={saveChanges}
               >
                 <span className="text-white font-semibold text-center">
@@ -226,9 +225,9 @@ const UserInfo = () => {
                 </span>
               </button>
               <button
-                className="w-1/3 max-lg:w-1/2 px-5 py-2.5 tracking-wide
-             text-white bg-neutral-700 font-medium rounded-lg text-center mr-2 mb-2
-             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
+                className="w-full px-5 py-2.5 tracking-wide
+              text-white bg-neutral-700 font-medium rounded-lg text-center mr-2 mb-2
+              focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
                 onClick={cancel}
               >
                 <span className="text-white font-semibold">Cancel</span>

@@ -1,5 +1,3 @@
-import React from "react";
-
 const ErrorMessageText = (value) => {
   return (
     <div className="flex flex-row my-3 ml-2 border-red-900 rounded justify-start text-center">

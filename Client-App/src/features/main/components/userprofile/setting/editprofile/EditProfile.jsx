@@ -30,7 +30,7 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="basis-1/3 ml-2 py-5 justify-between">
+    <div className="col-span-1 py-5 ml-2 place-items-center w-full">
       <div className="w-full flex justify-center py-3">
         <img
           src={userProfileDefaultImage}
