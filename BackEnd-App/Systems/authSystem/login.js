@@ -78,28 +78,26 @@ const verifyFindAccessTokenAndDecode = (token) => {
 };
 
 const login = async (email, password) => {
-  const sendData = { Message: "", Error: "" };
-
-  const mailName = email.split("@")[1].split(".")[0];
-  const userId = getEmailUniqueId(email);
-
-  const loginRef = `SignWithEmail/${mailName}/${userId}`;
-  const refToLogin = dataBase.ref(loginRef);
-
   try {
-    const [summaryResult, snapshot] = await Promise.all([
-      getBudgetSummary(userId),
-      refToLogin.once("value"),
-    ]);
+    const sendData = { Message: "", Error: "" };
 
-    const { totalIncome, totalExpense, totalBalance } = summaryResult;
+    const mailName = email.split("@")[1].split(".")[0];
+    const userId = getEmailUniqueId(email);
+
+    const loginRef = `SignWithEmail/${mailName}/${userId}`;
+    const refToLogin = dataBase.ref(loginRef);
+
+    const snapshot = await refToLogin.once("value");
 
     if (snapshot.exists()) {
       if (snapshot.val().IsDisable === true) {
-        sendData.Error = "Disable Account";
+        sendData.Error = "Account is disabled";
       } else {
         const currentDate = new Date().toString();
         await refToLogin.update({ lastSeen: currentDate });
+
+        const { totalIncome, totalExpense, totalBalance } =
+          getBudgetSummary(userId);
 
         const firstName = snapshot.val().FirstName;
         const lastName = snapshot.val().LastName;
@@ -124,12 +122,12 @@ const login = async (email, password) => {
     } else {
       sendData.Error = "Incorrect Data";
     }
+
+    return sendData;
   } catch (error) {
     console.error("Error occurred:", error);
-    sendData.Error = "An error occurred";
+    return { Message: "", Error: "An error occurred" };
   }
-
-  return sendData;
 };
 
 module.exports = {
