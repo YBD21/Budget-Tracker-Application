@@ -1,6 +1,6 @@
 import React from "react";
-import userProfileDefaultImage from "../../../assets/user-profile-icon.webp";
-import { useStateValue } from "../../main/context/StateProvider";
+import userProfileDefaultImage from "../../../../assets/user-profile-icon.webp";
+import { useStateValue } from "../../context/StateProvider";
 
 const Profile = () => {
   // import userData from contexProvider or dataLayer

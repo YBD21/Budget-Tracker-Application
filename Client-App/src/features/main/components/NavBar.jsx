@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+
 import HomeIcon from "@mui/icons-material/Home";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import UserDropDown from "../../UserProfile/components/UserDropDown";
+
+import UserDropDown from "./userprofile/UserDropDown";
 
 const NavBar = () => {
   const location = useLocation();

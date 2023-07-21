@@ -1,8 +1,12 @@
 import { useRef, useState, useEffect } from "react";
-import { useStateValue } from "../../main/context/StateProvider";
+import { Link } from "react-router-dom";
+import { useStateValue } from "../../context/StateProvider";
+
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import SettingsIcon from "@mui/icons-material/Settings";
+
 import Profile from "./Profile";
-import axiosWithBaseURL from "../../../constants/axiosRoute";
+import axiosWithBaseURL from "../../../../constants/axiosRoute";
 
 const UserDropDown = ({ status, onStatusChange }) => {
   const [isOpen, setIsOpen] = useState(status);
@@ -67,12 +71,23 @@ const UserDropDown = ({ status, onStatusChange }) => {
           <Profile />
         </div>
         <ul className="divide-y divide-gray-600">
+          {/* Setting */}
+          <li className="flex items-center px-4 py-5  text-gray-700  hover:bg-gray-100 ">
+            <Link
+              to="/Setting"
+              className=" w-full font-medium text-lg hover:text-black"
+            >
+              <SettingsIcon className="svg-icons ml-3 mr-10" />
+              Setting
+            </Link>
+          </li>
+          {/* LogOut */}
           <li
-            className="flex items-center px-4 py-5 text-gray-700 hover:bg-gray-100 hover:text-black"
+            className="flex items-center px-4 py-5 text-gray-700 hover:bg-gray-100 hover:text-red-800"
             onClick={logOut}
           >
             <ExitToAppIcon className="svg-icons ml-3 mr-10" />
-            <span className="w-full font-medium text-lg  hover:text-[#d42109]">
+            <span className="w-full font-medium text-lg  hover:text-red-800">
               Logout
             </span>
           </li>
