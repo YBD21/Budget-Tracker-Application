@@ -38,8 +38,12 @@ body {
   min-height: 100vh;
 }
 
-.svg-icons {
+.navbar-svg-icons {
   transform: scale(1.75) !important;
+}
+
+.svg-icons {
+  transform: scale(1.75);
 }
 
 /* Chrome, Safari, Edge, Opera */

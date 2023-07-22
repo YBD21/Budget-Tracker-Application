@@ -40,7 +40,7 @@ const NavBar = () => {
           } group`}
         >
           <Link to="/Home" className="block px-2 py-4">
-            <HomeIcon className="svg-icons cursor-pointer transition duration-300 transform active:scale-105" />
+            <HomeIcon className="navbar-svg-icons cursor-pointer transition duration-300 transform" />
           </Link>
           <div className="absolute top-5 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md">
             <span className="text-white font-semibold"> Home </span>
@@ -52,7 +52,7 @@ const NavBar = () => {
           onClick={showUserMenu}
         >
           <div className="block px-2 py-4">
-            <AccountCircleIcon className="svg-icons transition duration-300 transform active:scale-105 pointer-events-none" />
+            <AccountCircleIcon className="navbar-svg-icons transition duration-300 transform pointer-events-none" />
           </div>
           <div className="absolute top-0 left-20 transform -translate-x-1/2 opacity-0 group-hover:opacity-100 max-sm:group-hover:opacity-0 transition-opacity duration-300 bg-black py-1 px-2 rounded-md max-sm:left-0">
             <span className="text-white font-semibold "> User Profile </span>

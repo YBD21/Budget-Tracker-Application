@@ -1,5 +1,8 @@
 import jwt_decode from "jwt-decode";
+
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import CancelIcon from "@mui/icons-material/Cancel";
+
 import axiosWithBaseURL from "../../../constants/axiosRoute";
 import { useStateValue } from "../context/StateProvider";
 
@@ -68,7 +71,7 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
-      <div className="relative z-10 inline-block w-full p-6 mx-auto bg-white rounded-lg sm:max-w-2xl sm:p-5 min-h-[20vh]">
+      <div className="relative z-10 inline-block w-full p-6 mx-auto bg-white rounded-lg max-w-2xl max-sm:max-w-xs sm:p-5 min-h-[20vh]">
         {/* View Single Budget */}
         <div className="flex flex-col gap-5 text-center p-5">
           <h3 className="text-black font-semibold text-2xl">
@@ -76,7 +79,7 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
           </h3>
         </div>
 
-        <div className="flex justify-between my-4 rounded-md items-center text-center">
+        <div className="flex justify-between my-4 rounded-md">
           <table className="table-auto w-full">
             <tbody className="text-center">
               <tr key={id}>
@@ -128,25 +131,22 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
           </table>
         </div>
 
-        <div className="w-full flex justify-between gap-8 mt-8 px-2">
+        <div className="w-full flex justify-center gap-8 mt-8 px-24 max-sm:px-6 max-sm:gap-6">
           <button
-            className="w-1/2 px-5 py-2.5 tracking-wide
-                 bg-red-800  rounded-lg text-center mr-2 mb-2
-           focus:outline-none focus:ring-2 focus:ring-red-800 focus:ring-opacity-50 active:ring-4 active:ring-red-800 active:ring-opacity-50 overflow-hidden"
+            className="w-full px-5 py-2.5 tracking-wide
+                 bg-red-700  rounded-lg text-center mr-2 mb-2
+           focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-opacity-50 active:ring-4 active:ring-red-700 active:ring-opacity-50 overflow-hidden"
             onClick={handelDelete}
           >
             <span className="text-white font-semibold text-lg ">Delete</span>
             <DeleteForeverIcon className="svg-icons text-white ml-6 pb-0.5" />
           </button>
-          <button
-            className="w-1/2 px-5 py-2.5 tracking-wide
-             text-white bg-neutral-700 font-medium rounded-lg text-center mr-2 mb-2
-             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50 overflow-hidden"
-            onClick={close}
-          >
-            <span className="text-white font-semibold text-lg">Cancel</span>
-          </button>
         </div>
+
+        {/* close */}
+        <button className="absolute top-0 right-0 m-5" onClick={close}>
+          <CancelIcon className="svg-icons max-sm:scale-150 text-neutral-600" />
+        </button>
       </div>
     </div>
   );
