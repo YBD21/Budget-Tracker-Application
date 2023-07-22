@@ -145,10 +145,10 @@ const UserInfo = () => {
   }, [lastName]);
 
   return (
-    <div className="col-span-1">
-      <div className="w-full flex max-lg:flex-col">
+    <div className="col-span-1 w-3/4 max-lg:w-full">
+      <div className="flex flex-col">
         {/* First Name */}
-        <div className=" my-4 ml-3 mr-10">
+        <div className=" my-4 mx-16 max-lg:mx-24 max-sm:mx-5">
           <label className="block text-sm font-semibold text-gray-800">
             First Name
           </label>
@@ -166,15 +166,16 @@ const UserInfo = () => {
               disabled={!isEdit}
             />
           </div>
-
           {/* Error Message */}
-          {errorFirstName.FirstName && (
-            <ErrorMessageText props={errorFirstName.Message} />
-          )}
+          <div className="max-h-5">
+            {errorFirstName.FirstName && (
+              <ErrorMessageText props={errorFirstName.Message} />
+            )}
+          </div>
         </div>
 
         {/* Last Name */}
-        <div className="my-4 ml-3 mr-10">
+        <div className="my-4 mx-16 max-lg:mx-24 max-sm:mx-5">
           <label className="block text-sm font-semibold text-gray-800">
             Last Name
           </label>
@@ -193,16 +194,18 @@ const UserInfo = () => {
               disabled={!isEdit}
             />
             {/* Error Message */}
-            {errorLastName.LastName && (
-              <ErrorMessageText props={errorLastName.Message} />
-            )}
+            <div className="max-h-5">
+              {errorLastName.LastName && (
+                <ErrorMessageText props={errorLastName.Message} />
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       {/*  Action */}
-      <div className="w-full flex justify-center mt-5">
-        <div className="w-full ml-3 mr-10">
+      <div className="w-full flex mt-5">
+        <div className="w-full mx-16 max-lg:mx-24 max-sm:mx-5">
           {!isEdit ? (
             <button
               className="w-full px-5 py-2.5 tracking-wide
@@ -213,7 +216,7 @@ const UserInfo = () => {
               <span className="text-white font-semibold">Edit</span>
             </button>
           ) : (
-            <div className="flex justify-between gap-10">
+            <div className="flex justify-between gap-10 max-sm:flex-col max-sm:gap-6">
               <button
                 className="w-full px-5 py-2.5 tracking-wide
               text-white bg-black rounded-lg text-center mr-2 mb-2

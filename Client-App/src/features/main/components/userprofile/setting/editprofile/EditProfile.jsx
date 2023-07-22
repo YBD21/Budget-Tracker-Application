@@ -40,7 +40,7 @@ const EditProfile = () => {
       </div>
       <p className="py-2 font-bold text-2xl text-center">{name}</p>
 
-      <div className="flex mt-3 justify-center">
+      <div className="flex mt-3 justify-center max-lg:mx-24 max-sm:mx-5">
         <button
           className="w-1/3 max-lg:w-full px-5 py-2.5 tracking-wide
             text-white bg-black font-medium rounded-lg text-center 
@@ -60,7 +60,7 @@ const EditProfile = () => {
         false
       )}
 
-      <div className="flex mt-10 justify-center">
+      <div className="flex mt-10 justify-center max-lg:mx-24 max-sm:mx-5">
         <button
           className="w-1/3 max-lg:w-full px-5 py-2.5 tracking-wide
             text-white bg-red-900 font-medium rounded-lg text-center mr-2 mb-2

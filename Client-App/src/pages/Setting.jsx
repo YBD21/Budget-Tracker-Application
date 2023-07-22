@@ -7,7 +7,7 @@ const Setting = () => {
   return (
     <>
       <NavBar />
-      <div className="grid grid-cols-2 gap-8 px-4 pb-5 mx-auto items-center max-lg:grid-cols-1  max-lg:max-w-2xl">
+      <div className="grid grid-cols-2 gap-8 px-4 pb-5 mx-auto items-center max-lg:grid-cols-1 max-lg:max-w-2xl">
         <EditProfile />
         <UserInfo />
       </div>
