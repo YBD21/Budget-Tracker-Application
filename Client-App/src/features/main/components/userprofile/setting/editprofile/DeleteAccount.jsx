@@ -45,7 +45,7 @@ const DeleteAccount = ({ onChild }) => {
           </h3>
           <div className="w-full flex flex-col mt-2 justify-center text-center">
             <div className="pt-6 pb-10">
-              <DeleteForeverIcon className="scale-[3] text-red-700" />
+              <DeleteForeverIcon className="scale-[3] text-red-900" />
             </div>
 
             <p className="text-gray-600 mt-2 mx-12 max-sm:mx-1 max-sm:px-2">
@@ -55,8 +55,8 @@ const DeleteAccount = ({ onChild }) => {
             <div className="w-full flex justify-center mt-8 px-24 max-sm:px-0">
               <button
                 className="w-full px-5 py-2.5 tracking-wide
-                 bg-red-700  rounded-lg text-center mr-2 mb-2
-           focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-opacity-50 active:ring-4 active:ring-red-700 active:ring-opacity-50 overflow-hidden"
+                 bg-red-900  rounded-lg text-center mr-2 mb-2
+           focus:outline-none focus:ring-2 focus:ring-red-900 focus:ring-opacity-50 active:ring-4 active:ring-red-900 active:ring-opacity-50 overflow-hidden"
                 onClick={handleDeleteAccount}
               >
                 <span className="text-white font-semibold text-lg ">

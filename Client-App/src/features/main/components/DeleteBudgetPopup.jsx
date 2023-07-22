@@ -134,8 +134,8 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
         <div className="w-full flex justify-center gap-8 mt-8 px-24 max-sm:px-6 max-sm:gap-6">
           <button
             className="w-full px-5 py-2.5 tracking-wide
-                 bg-red-700  rounded-lg text-center mr-2 mb-2
-           focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-opacity-50 active:ring-4 active:ring-red-700 active:ring-opacity-50 overflow-hidden"
+                 bg-red-900  rounded-lg text-center mr-2 mb-2
+           focus:outline-none focus:ring-2 focus:ring-red-900 focus:ring-opacity-50 active:ring-4 active:ring-red-900 active:ring-opacity-50 overflow-hidden"
             onClick={handelDelete}
           >
             <span className="text-white font-semibold text-lg ">Delete</span>
