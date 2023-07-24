@@ -25,12 +25,16 @@ const {
 } = require("../Systems/budgetSystem/budgetOperation");
 
 const { verifyCaptcha } = require("../Systems/authSystem/captchaVerify");
-const { findAccessMiddleware } = require("../ middleware/authMiddleware");
+const {
+  findAccessMiddleware,
+  authMiddleware,
+} = require("../ middleware/authMiddleware");
 const {
   findAccount,
   generateFoundAccountToken,
   resetPassword,
 } = require("../Systems/authSystem/forgotPassword");
+const { changePassword } = require("../Systems/authSystem/changePassword");
 
 // read http only cookie
 authSystemRouter.get("/user-data", (req, res) => {
@@ -126,6 +130,20 @@ authSystemRouter.patch("/reset-password", async (req, res) => {
   const { email, password } = req.body;
   const resetStatus = await resetPassword(email, password);
   res.send(resetStatus);
+});
+
+// Change Password
+authSystemRouter.patch("/change-password", authMiddleware, async (req, res) => {
+  const { email, id } = req.userData;
+
+  const { currentPassword, confirmPassword } = req.body;
+  const respond = await changePassword(
+    currentPassword,
+    confirmPassword,
+    email,
+    id
+  );
+  res.json(respond);
 });
 
 //Create Account

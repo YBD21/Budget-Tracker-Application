@@ -14,7 +14,13 @@ const ErrorMessageBoxSignin = (message) => {
       case "Incorrect Data":
         return setText({
           First: "Incorrect ",
-          Second: "Phone Number Or Password !",
+          Second: "Email Or Password !",
+        });
+
+      case "Incorrect Password":
+        return setText({
+          First: "Incorrect ",
+          Second: "Password !",
         });
 
       case "Disable Account":

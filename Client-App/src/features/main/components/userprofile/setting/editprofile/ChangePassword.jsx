@@ -51,7 +51,7 @@ const ChangePassword = ({ onChild }) => {
         if (respond.data === false) {
           return (
             // console.log(false),
-            setError("Incorrect Data")
+            setError("Incorrect Password")
           );
         } else {
           close();
