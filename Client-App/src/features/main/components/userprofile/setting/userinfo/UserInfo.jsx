@@ -16,6 +16,23 @@ const UserInfo = () => {
   const [errorFirstName, setErrorFirstName] = useState({});
   const [errorLastName, setErrorLastName] = useState({});
 
+  const handelFirstNameChange = (e) => {
+    const trimmedFirstName = e.target.value.trim();
+    const capitalizedValue =
+      trimmedFirstName.charAt(0).toUpperCase() + trimmedFirstName.slice(1);
+
+    setFirstName(capitalizedValue);
+  };
+
+  const handelLastNameChange = (e) => {
+    const trimmedLastName = e.target.value.trim();
+    // uppercase first char and remove prev first char and concate it
+    const capitalizedValue =
+      trimmedLastName.charAt(0).toUpperCase() + trimmedLastName.slice(1);
+
+    setLastName(capitalizedValue);
+  };
+
   const edit = () => {
     setIsEdit(true);
   };
@@ -162,7 +179,7 @@ const UserInfo = () => {
             <input
               type="text"
               value={!isEdit ? userData?.firstName : firstName}
-              onChange={(e) => setFirstName(e.target.value.trim())}
+              onChange={handelFirstNameChange}
               className={`block w-full px-4 py-2 mt-4 text-black-700 border-2 ${
                 !isEdit
                   ? "cursor-not-allowed border-gray-600 bg-gray-100 rounded-md"
@@ -189,7 +206,7 @@ const UserInfo = () => {
             <input
               type="text"
               value={!isEdit ? userData?.lastName : lastName}
-              onChange={(e) => setLastName(e.target.value.trim())}
+              onChange={handelLastNameChange}
               className={`block w-full px-4 py-2 mt-4 text-black-700 border-2
             focus:ring-opacity-40 ${
               !isEdit
