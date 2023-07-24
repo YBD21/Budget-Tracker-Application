@@ -111,7 +111,7 @@ const UserInfo = () => {
   const sendChangesToBackend = () => {
     axiosWithBaseURL
       .patch(
-        "user-management/edit-userName",
+        "/user-management/edit-user-name",
         {
           FirstName: firstName,
           LastName: lastName,
