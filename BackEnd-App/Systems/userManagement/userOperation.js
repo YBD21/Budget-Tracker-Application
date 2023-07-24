@@ -10,7 +10,12 @@ const updateUserNameAndGetUpdatedUserData = async (
       userData;
 
     // Wait for the updateUserName function to complete using await
-    const updateUserNameStatus = await updateUserName(firstName, lastName, id);
+    const updateUserNameStatus = await updateUserName(
+      firstName,
+      lastName,
+      email,
+      id
+    );
 
     if (updateUserNameStatus === true) {
       // If the update is successful, return the updated data

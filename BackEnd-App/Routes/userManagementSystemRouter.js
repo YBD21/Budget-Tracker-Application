@@ -22,7 +22,27 @@ userManagementSystemRouter.patch(
 
     if (updateUserData !== false) {
       // set HTTP Only cookies copy userData except budgetsummary
-      const newAccessToken = generateToken({ ...updateUserData });
+      const {
+        firstName,
+        lastName,
+        role,
+        id,
+        email,
+        totalIncome,
+        totalExpense,
+        totalBalance,
+      } = updateUserData;
+
+      const newAccessToken = generateToken(
+        firstName,
+        lastName,
+        role,
+        id,
+        email,
+        totalIncome,
+        totalExpense,
+        totalBalance
+      );
       // set cookies
       res.cookie("userData", newAccessToken, {
         secure: true, // set to true to enable sending the cookie only over HTTPS

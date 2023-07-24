@@ -122,12 +122,17 @@ const UserInfo = () => {
       )
       .then((respond) => {
         // console.log(respond.data);
-        const data = jwt_decode(token);
-        if (data?.id) {
-          dispatch({
-            type: "SET_USER",
-            userData: data,
-          });
+        if (respond.data !== false) {
+          const data = jwt_decode(respond.data);
+          console.log(data);
+          if (data?.id) {
+            dispatch({
+              type: "SET_USER",
+              userData: data,
+            });
+          }
+        } else {
+          // error message here
         }
         setIsEdit(false);
       })

@@ -1,5 +1,8 @@
-const updateUserName = async (firstName, lastName, userId) => {
+const { dataBase } = require("../../firebaseConfig");
+
+const updateUserName = async (firstName, lastName, email, userId) => {
   try {
+    const mailName = email.split("@")[1].split(".")[0];
     const userRef = `SignWithEmail/${mailName}/${userId}`;
     const refToUserName = dataBase.ref(userRef);
 
