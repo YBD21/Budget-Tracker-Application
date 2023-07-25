@@ -4,6 +4,9 @@ const {
   updateUserNameAndGetUpdatedUserData,
 } = require("../Systems/userManagement/userOperation");
 const { generateToken } = require("../Systems/authSystem/login");
+const {
+  deleteUserAccountFromDatabase,
+} = require("../Systems/userManagement/deleteUser");
 
 const userManagementSystemRouter = express.Router();
 
@@ -53,6 +56,34 @@ userManagementSystemRouter.patch(
       res.send(newAccessToken);
     } else {
       // send false
+      res.send(false);
+    }
+  }
+);
+
+// Delete Account
+userManagementSystemRouter.delete(
+  "/delete-account",
+  authMiddleware,
+  async (req, res) => {
+    const { id, email } = req.userData;
+
+    console.log(`Delete Account hasbeen requested by ${email} ---> id : ${id}`);
+
+    const isDeleteAccount = await deleteUserAccountFromDatabase(email, id);
+
+    console.log(isDeleteAccount);
+
+    if (isDeleteAccount === true) {
+      // now delete HttpOnly Cookies
+      res.clearCookie("userData", {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+      });
+      console.log(`Delete Account Successful : ${email} ---> id : ${id}`);
+    } else {
+      console.log(`Delete Account Failed : ${email} ---> id : ${id}`);
       res.send(false);
     }
   }

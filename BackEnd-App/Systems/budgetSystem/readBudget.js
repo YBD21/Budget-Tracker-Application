@@ -1,17 +1,28 @@
 const { fireStoreDB } = require("../../firebaseConfig");
+const { createBudgetSummary } = require("./createBudget");
 
 const getBudgetSummary = async (userId) => {
   const budgetSummaryRef = fireStoreDB.collection("Users").doc(userId);
 
   try {
     const doc = await budgetSummaryRef.get();
+
     if (doc.exists) {
       const { totalIncome, totalExpense, totalBalance } = doc.data();
-
       return { totalIncome, totalExpense, totalBalance };
     } else {
       console.log("Budget summary document does not exist");
-      return null;
+      // Call createBudgetSummary to create the budget summary document
+      const status = await createBudgetSummary(userId);
+
+      // If createBudgetSummary was successful, get the budget summary again
+      if (status === true) {
+        const updatedDoc = await budgetSummaryRef.get();
+        if (updatedDoc.exists) {
+          const { totalIncome, totalExpense, totalBalance } = updatedDoc.data();
+          return { totalIncome, totalExpense, totalBalance };
+        }
+      }
     }
   } catch (error) {
     console.error("Error while retrieving budget summary:", error);
