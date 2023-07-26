@@ -348,7 +348,7 @@ const DataEntry = () => {
                 </option>
               ))}
             </select>
-            <ExpandMoreIcon className="absolute right-6 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black max-sm:scale-150" />
+            <ExpandMoreIcon className="absolute right-6 top-1/2 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black sm:scale-150" />
           </div>
         </div>
 
@@ -377,7 +377,7 @@ const DataEntry = () => {
                 </option>
               ))}
             </select>
-            <ExpandMoreIcon className="absolute right-6 top-1/4 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black max-sm:scale-150" />
+            <ExpandMoreIcon className="absolute right-6 top-1/2 -translate-y-1/2 svg-icons cursor-pointer pointer-events-none text-black sm:scale-150" />
           </div>
         </div>
       </div>
