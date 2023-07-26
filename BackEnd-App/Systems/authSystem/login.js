@@ -83,46 +83,56 @@ const login = async (email, password) => {
 
     const mailName = email.split("@")[1].split(".")[0];
     const userId = getEmailUniqueId(email);
-
     const loginRef = `SignWithEmail/${mailName}/${userId}`;
     const refToLogin = dataBase.ref(loginRef);
-
     const snapshot = await refToLogin.once("value");
 
-    if (snapshot.exists()) {
-      if (snapshot.val().IsDisable === true) {
-        sendData.Error = "Account is disabled";
-      } else {
-        const currentDate = new Date().toString();
-        await refToLogin.update({ lastSeen: currentDate });
-
-        const { totalIncome, totalExpense, totalBalance } =
-          await getBudgetSummary(userId);
-
-        const firstName = snapshot.val().FirstName;
-        const lastName = snapshot.val().LastName;
-        const role = snapshot.val().AccountType;
-        const accountId = snapshot.val().AccountID;
-        const userEmail = snapshot.val().Email;
-
-        const token = generateToken(
-          firstName,
-          lastName,
-          role,
-          accountId,
-          userEmail,
-          totalIncome,
-          totalExpense,
-          totalBalance
-        );
-
-        sendData.Message = checkPassword(snapshot.val().Password, password);
-        sendData.accessToken = token;
-      }
-    } else {
+    if (!snapshot.exists()) {
       sendData.Error = "Incorrect Data";
+      return sendData;
     }
 
+    if (snapshot.val().IsDisable) {
+      sendData.Error = "Disable Account";
+      return sendData;
+    }
+
+    const isPasswordCorrect = checkPassword(snapshot.val().Password, password);
+    if (!isPasswordCorrect) {
+      sendData.Error = "Incorrect Data";
+      return sendData;
+    }
+
+    const {
+      FirstName: firstName,
+      LastName: lastName,
+      AccountType: role,
+      AccountID: accountId,
+      Email: userEmail,
+    } = snapshot.val();
+
+    const { totalIncome, totalExpense, totalBalance } = await getBudgetSummary(
+      userId
+    );
+
+    const token = generateToken(
+      firstName,
+      lastName,
+      role,
+      accountId,
+      userEmail,
+      totalIncome,
+      totalExpense,
+      totalBalance
+    );
+
+    const currentDate = new Date().toString();
+    await refToLogin.update({
+      LastSeen_At: currentDate,
+    });
+
+    sendData.Message = isPasswordCorrect;
+    sendData.accessToken = token;
     return sendData;
   } catch (error) {
     console.error("Error occurred:", error);

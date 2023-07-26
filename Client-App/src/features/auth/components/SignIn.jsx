@@ -65,6 +65,8 @@ const SignIn = () => {
         if (respond.data.Error !== undefined) {
           return setError(respond.data.Error);
         }
+
+        return setError(respond.data.Error);
       })
       .catch(function (error) {
         // throw error message

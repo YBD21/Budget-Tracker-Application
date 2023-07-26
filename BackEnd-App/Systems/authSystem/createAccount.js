@@ -56,6 +56,7 @@ const createAccount = async (firstName, lastName, email, password) => {
         Password: encPass,
         AccountType: "Client",
         AccountID: uniqueId,
+        IsDisable: false,
       },
       (error) => {
         if (error === null) {

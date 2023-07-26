@@ -17,6 +17,12 @@ const ErrorMessageBoxForgorPassword = (message) => {
           Second: ",please try again later !",
         });
 
+      case "Disable Account":
+        return setText({
+          First: "Sorry ",
+          Second: "Your Account Is Disable !",
+        });
+
       default:
         return setText({
           First: "Holy smokes !",
