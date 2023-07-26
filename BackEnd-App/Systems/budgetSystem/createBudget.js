@@ -42,8 +42,12 @@ const createBudgetSummary = async (userId) => {
   };
 
   try {
-    await budgetSummaryRef.set(newSummary);
-    sendData = true;
+    const summaryDoc = await budgetSummaryRef.get();
+    // data exists do noting
+    if (!summaryDoc.exists) {
+      await budgetSummaryRef.set(newSummary);
+      sendData = true;
+    }
   } catch (error) {
     console.error("Error while adding new Budget to Firestore: ", error);
   }
