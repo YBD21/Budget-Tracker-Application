@@ -72,7 +72,7 @@ const DeleteBudgetPopup = ({ onChild, deteteData, fetchFromChild }) => {
         }
       })
       .catch((error) => {
-        console.log(error);
+        // console.log(error);
       });
   };
 
