@@ -68,11 +68,9 @@ userManagementSystemRouter.delete(
   async (req, res) => {
     const { id, email } = req.userData;
 
-    console.log(`Delete Account hasbeen requested by ${email} ---> id : ${id}`);
+    console.log(`Delete Account hasbeen requested by ${email}`);
 
     const isDeleteAccount = await deleteUserAccountFromDatabase(email, id);
-
-    console.log(isDeleteAccount);
 
     if (isDeleteAccount === true) {
       // now delete HttpOnly Cookies
@@ -81,10 +79,11 @@ userManagementSystemRouter.delete(
         secure: true,
         sameSite: "none",
       });
-      console.log(`Delete Account Successful : ${email} ---> id : ${id}`);
+      res.send(isDeleteAccount);
+      console.log(`Delete Account Successful : ${email}`);
     } else {
-      console.log(`Delete Account Failed : ${email} ---> id : ${id}`);
-      res.send(false);
+      console.log(`Delete Account Failed : ${email}`);
+      res.send(isDeleteAccount);
     }
   }
 );

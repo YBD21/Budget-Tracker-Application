@@ -10,7 +10,7 @@ const DeleteAccount = ({ onChild }) => {
   const clearUserData = () => {
     dispatch({
       type: "SET_USER",
-      userData: {},
+      userData: [],
     });
   };
 
