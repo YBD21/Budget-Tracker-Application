@@ -6,7 +6,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
 import { useStateValue } from "../context/StateProvider";
 
-const DeleteBudgetPopup = ({ onChild, deteteData }) => {
+const DeleteBudgetPopup = ({ onChild, deteteData, fetchFromChild }) => {
   const [{ isViewPage }, dispatch] = useStateValue();
   // Type , Amount , Title , Reoccure , Date
 
@@ -29,6 +29,10 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
     onChild(false);
   };
 
+  const fetchEntryDataOnParent = () => {
+    fetchFromChild(true);
+  };
+
   const fetchBudgetSummary = () => {
     axiosWithBaseURL
       .get("/budget-system/get-budget-summary", {
@@ -45,7 +49,11 @@ const DeleteBudgetPopup = ({ onChild, deteteData }) => {
             userData: data,
           });
         }
+        fetchEntryDataOnParent();
         close();
+      })
+      .catch(function (error) {
+        // console.log(error.message);
       });
   };
 

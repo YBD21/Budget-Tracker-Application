@@ -29,6 +29,8 @@ const ViewBudget = () => {
   const [isDelete, setDelete] = useState(false);
   const [currentDeleteData, setCurrentDeleteData] = useState({});
 
+  const [fetchDataStatus, setFetchDataStatus] = useState(false);
+
   const itemsPerPage = 5;
 
   const setEntryDataList = (data) => {
@@ -58,7 +60,13 @@ const ViewBudget = () => {
     // Fetch entry data when orderByDate changes
     fetchEntryData();
     setPage(1);
-  }, [orderByDate, isDelete]);
+  }, [orderByDate]);
+
+  useEffect(() => {
+    if (fetchDataStatus === true) {
+      fetchEntryData();
+    }
+  }, [fetchDataStatus]);
 
   useEffect(() => {
     setPage(1);
@@ -128,6 +136,10 @@ const ViewBudget = () => {
 
   const handleDeleteFromChild = (data) => {
     setDelete(data);
+  };
+
+  const handleFetchEntryFromChild = (status) => {
+    setFetchDataStatus(status);
   };
 
   for (let i = (page - 1) * itemsPerPage; i < page * itemsPerPage; i++) {
@@ -317,6 +329,7 @@ const ViewBudget = () => {
           <DeleteBudgetPopup
             onChild={handleDeleteFromChild}
             deteteData={currentDeleteData}
+            fetchFromChild={handleFetchEntryFromChild}
           />
         </PopupPortal>
       ) : (
