@@ -6,10 +6,12 @@ import SearchIcon from "@mui/icons-material/Search";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import WestIcon from "@mui/icons-material/West";
 import EastIcon from "@mui/icons-material/East";
-
 import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+
 import PopupPortal from "../../../constants/PopupPortal";
 import DeleteBudgetPopup from "./DeleteBudgetPopup";
+import EditBudgetPopup from "./EditBudgetPopup";
 
 const ViewBudget = () => {
   const [{ entryList }, dispatch] = useStateValue();
@@ -28,6 +30,9 @@ const ViewBudget = () => {
 
   const [isDelete, setDelete] = useState(false);
   const [currentDeleteData, setCurrentDeleteData] = useState({});
+
+  const [isEdit, setEdit] = useState(false);
+  const [currentEditData, setCurrentEditData] = useState({});
 
   const [fetchDataStatus, setFetchDataStatus] = useState(false);
 
@@ -138,7 +143,20 @@ const ViewBudget = () => {
     setDelete(data);
   };
 
-  const handleFetchEntryFromChild = (status) => {
+  const handleFetchEntryFromDeleteChild = (status) => {
+    setFetchDataStatus(status);
+  };
+
+  const handleEdit = (viewData) => {
+    setEdit(true);
+    setCurrentEditData(viewData);
+  };
+
+  const handleEditFromChild = (data) => {
+    setEdit(data);
+  };
+
+  const handleFetchEntryFromEditChild = (status) => {
     setFetchDataStatus(status);
   };
 
@@ -175,13 +193,23 @@ const ViewBudget = () => {
             })}
           </td>
           <td className={`border px-4 py-3.5 font-semibold`}>
-            {/* Delete */}
-            <button
-              className="py-2 px-2.5 bg-red-900 rounded-lg group relative"
-              onClick={() => handleDelete(entry)}
-            >
-              <DeleteIcon className="scale-125 text-white pointer-events-none" />
-            </button>
+            <div className="w-full flex justify-between gap-4">
+              {/* Edit */}
+              <button
+                className="py-2 px-2.5 bg-black rounded-lg group relative"
+                onClick={() => handleEdit(entry)}
+              >
+                <EditIcon className="scale-125 text-white pointer-events-none" />
+              </button>
+
+              {/* Delete */}
+              <button
+                className="py-2 px-2.5 bg-red-900 rounded-lg group relative"
+                onClick={() => handleDelete(entry)}
+              >
+                <DeleteIcon className="scale-125 text-white pointer-events-none" />
+              </button>
+            </div>
           </td>
         </tr>
       );
@@ -323,20 +351,30 @@ const ViewBudget = () => {
         </button>
       </div>
 
-      {/* View Single Budget Popup */}
-      {isDelete ? (
+      {/* Edit Budget Popup */}
+      {isEdit ? (
         <PopupPortal>
-          <DeleteBudgetPopup
-            onChild={handleDeleteFromChild}
-            deteteData={currentDeleteData}
-            fetchFromChild={handleFetchEntryFromChild}
+          <EditBudgetPopup
+            onChild={handleEditFromChild}
+            editData={currentEditData}
+            fetchFromChild={handleFetchEntryFromEditChild}
           />
         </PopupPortal>
       ) : (
         false
       )}
-
       {/* Delete Single Budget Popup*/}
+      {isDelete ? (
+        <PopupPortal>
+          <DeleteBudgetPopup
+            onChild={handleDeleteFromChild}
+            deteteData={currentDeleteData}
+            fetchFromChild={handleFetchEntryFromDeleteChild}
+          />
+        </PopupPortal>
+      ) : (
+        false
+      )}
     </>
   );
 };
