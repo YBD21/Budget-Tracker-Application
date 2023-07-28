@@ -28,8 +28,8 @@ const apiLimiter = rateLimit({
 });
 
 const speedLimiter = slowDown({
-  windowMs: 60 * 60 * 1000, // 60 minutes
-  delayAfter: 50, // allow 50 requests per 60 minutes, then...
+  windowMs: 30 * 60 * 1000, // 30 minutes
+  delayAfter: 200, // allow 200 requests per 30 minutes, then...
   delayMs: 500, // begin adding 5ms of delay per request above 50:
 });
 
