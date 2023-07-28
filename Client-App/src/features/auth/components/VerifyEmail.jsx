@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useSignUpStateValue } from "../context/SignupStateProvider";
 import ErrorMessageText from "../error/ErrorMessageText";
 import axiosWithBaseURL from "../../../constants/axiosRoute";
+import ErrorMessageBoxVerify from "../error/ErrorMessageBoxVerify";
 
 const VerifyEmail = () => {
   // on mount send request to backend to send email with verification code.
@@ -14,6 +15,7 @@ const VerifyEmail = () => {
   const [encOtp, setEncOtp] = useState("");
 
   const [errorOtp, setErrorOtp] = useState({});
+  const [error, setError] = useState(null);
 
   const redirectToLoginPage = () => {
     navigate("/", { replace: true });
@@ -29,7 +31,11 @@ const VerifyEmail = () => {
         setEncOtp(respond.data);
       })
       .catch(function (error) {
-        console.log(error);
+        if (error.response && error.response.statusText) {
+          setError(error.response.statusText);
+        } else {
+          setError(error.message);
+        }
       });
   };
 
@@ -82,7 +88,11 @@ const VerifyEmail = () => {
         }
       })
       .catch(function (error) {
-        console.log(error);
+        if (error.response && error.response.statusText) {
+          setError(error.response.statusText);
+        } else {
+          setError(error.message);
+        }
       });
   };
 
@@ -98,16 +108,23 @@ const VerifyEmail = () => {
         // if true Create Account else wrong Otp
         if (respond.data === true) {
           return createAccount();
+        } else {
+          return setError("Incorrect Data");
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
+        if (error.response && error.response.statusText) {
+          setError(error.response.statusText);
+        } else {
+          setError(error.message);
+        }
       });
   };
 
   const verifyOTP = (e) => {
     e.preventDefault(); // prevent page refresh
-
+    setError(null);
     const isValidStatus = isValidCode();
 
     if (isValidStatus) {
@@ -127,9 +144,7 @@ const VerifyEmail = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-full mb-auto mt-32 p-6 bg-white rounded-md sm:max-w-lg">
-        <h2 className="text-3xl font-semibold text-center text-black">
-          Verify your email !
-        </h2>
+        <h2 className="text-3xl font-semibold text-center text-black">Verify your email !</h2>
         <p className="text-lg text-center text-black mt-3">
           Verification code has been sent to <strong>{Email}</strong>
         </p>
@@ -137,9 +152,7 @@ const VerifyEmail = () => {
         <form className="mt-6">
           {/* Code Box */}
           <div className="mb-2">
-            <label className="block text-sm font-semibold text-gray-800">
-              Verification Code
-            </label>
+            <label className="block text-sm font-semibold text-gray-800">Verification Code</label>
             <div className="flex flex-row cursor-pointer">
               <input
                 type={"text"}
@@ -150,9 +163,7 @@ const VerifyEmail = () => {
             </div>
             {/* Error Message */}
             <div className="px-24">
-              {errorOtp.OtpError && (
-                <ErrorMessageText props={errorOtp.Message} />
-              )}
+              {errorOtp.OtpError && <ErrorMessageText props={errorOtp.Message} />}
             </div>
 
             <div className="flex flex-row justify-between px-2.5 pt-2 pb-2">
@@ -162,14 +173,14 @@ const VerifyEmail = () => {
               >
                 Resend Code
               </button>
-              <button
-                className="text-sm cursor-pointer hover:underline"
-                onClick={cancelVerify}
-              >
+              <button className="text-sm cursor-pointer hover:underline" onClick={cancelVerify}>
                 Go Back
               </button>
             </div>
           </div>
+
+          {/* Display Error Message Box  */}
+          {error && <ErrorMessageBoxVerify Error_message={error} status={true} />}
 
           {/* Verify */}
           <div className="min-w-max mt-2">

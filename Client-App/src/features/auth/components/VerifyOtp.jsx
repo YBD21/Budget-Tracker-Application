@@ -9,6 +9,7 @@ const VerifyOtp = ({ togglePage, Email }) => {
   const [encOtp, setEncOtp] = useState("");
 
   const [errorOtp, setErrorOtp] = useState({});
+  const [error, setError] = useState(null);
 
   const switchToResetPassword = () => {
     togglePage(ForgotPasswordPagesOption[2]);
@@ -24,7 +25,12 @@ const VerifyOtp = ({ togglePage, Email }) => {
         setEncOtp(respond.data);
       })
       .catch(function (error) {
-        console.log(error.message);
+        // console.log(error.message);
+        if (error.response && error.response.statusText) {
+          setError(error.response.statusText);
+        } else {
+          setError(error.message);
+        }
       });
   };
 
@@ -73,15 +79,23 @@ const VerifyOtp = ({ togglePage, Email }) => {
         // if true switchToResetPassword else wrong Otp
         if (respond.data === true) {
           switchToResetPassword();
+        } else {
+          return setError("Incorrect Data");
         }
       })
       .catch(function (error) {
-        console.log(error);
+        // console.log(error);
+        if (error.response && error.response.statusText) {
+          setError(error.response.statusText);
+        } else {
+          setError(error.message);
+        }
       });
   };
 
   const verifyOTP = (e) => {
     e.preventDefault(); // prevent page refresh
+    setError(null);
 
     const isValidStatus = isValidCode();
 
@@ -102,9 +116,7 @@ const VerifyOtp = ({ togglePage, Email }) => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="w-full mb-auto mt-32 p-6 bg-white rounded-md sm:max-w-lg">
-        <h2 className="text-3xl font-semibold text-center text-black">
-          Verify your email !
-        </h2>
+        <h2 className="text-3xl font-semibold text-center text-black">Verify your email !</h2>
         <p className="text-lg text-center text-black mt-3">
           Verification code has been sent to <strong>{Email}</strong>
         </p>
@@ -112,9 +124,7 @@ const VerifyOtp = ({ togglePage, Email }) => {
         <form className="mt-6">
           {/* Code Box */}
           <div className="mb-2">
-            <label className="block text-sm font-semibold text-gray-800">
-              Verification Code
-            </label>
+            <label className="block text-sm font-semibold text-gray-800">Verification Code</label>
             <div className="flex flex-row cursor-pointer">
               <input
                 type={"text"}
@@ -125,9 +135,7 @@ const VerifyOtp = ({ togglePage, Email }) => {
             </div>
             {/* Error Message */}
             <div className="px-24">
-              {errorOtp.OtpError && (
-                <ErrorMessageText props={errorOtp.Message} />
-              )}
+              {errorOtp.OtpError && <ErrorMessageText props={errorOtp.Message} />}
             </div>
 
             <div className="flex flex-row justify-between px-2.5 pt-2 pb-2">
@@ -137,14 +145,14 @@ const VerifyOtp = ({ togglePage, Email }) => {
               >
                 Resend Code
               </button>
-              <button
-                className="text-sm cursor-pointer hover:underline"
-                onClick={cancelVerify}
-              >
+              <button className="text-sm cursor-pointer hover:underline" onClick={cancelVerify}>
                 Go Back
               </button>
             </div>
           </div>
+
+          {/* Display Error Message Box  */}
+          {error && <ErrorMessageBoxVerify Error_message={error} status={true} />}
 
           {/* Verify */}
           <div className="min-w-max mt-2">
