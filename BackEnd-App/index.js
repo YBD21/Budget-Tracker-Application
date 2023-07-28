@@ -23,7 +23,7 @@ const url = process.env.URL || "http://localhost:3000";
 
 const apiLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 10, // limit each IP to 10 requests per windowMs
+  max: 40, // limit each IP to 40 requests per windowMs
   message: "Too many attempts, please try again later",
 });
 
@@ -53,10 +53,10 @@ app.use(cookieParser());
 app.use("/auth-system", apiLimiter, authSystemRouter);
 
 // Mount userRouter middleware at "/budget-system" path
-app.use("/budget-system", apiLimiter, budgetSystemRouter);
+app.use("/budget-system", budgetSystemRouter);
 
 // Mount userRouter middleware at "/budget-system" path
-app.use("/user-management", apiLimiter, userManagementSystemRouter);
+app.use("/user-management", userManagementSystemRouter);
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
