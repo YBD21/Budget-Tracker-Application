@@ -23,7 +23,7 @@ const url = process.env.URL || "http://localhost:3000";
 
 const apiLimiter = rateLimit({
   windowMs: 5 * 60 * 1000, // 5 minutes
-  max: 40, // limit each IP to 40 requests per windowMs
+  max: 30, // limit each IP to 30 requests per windowMs
   message: "Too many attempts, please try again later",
 });
 
