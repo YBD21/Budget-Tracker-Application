@@ -157,7 +157,7 @@ const SignIn = () => {
       setEmail(userEmail);
       setPassword(userPassword);
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }, []);
 
