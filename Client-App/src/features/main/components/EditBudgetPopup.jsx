@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import jwt_decode from "jwt-decode";
 
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 import ErrorMainMessage from "../error/ErrorMainMessage";
 import SuccessMessageBox from "../success/SuccessMessageBox";
@@ -257,7 +258,7 @@ const EditBudgetPopup = ({ onChild, editData, fetchFromChild }) => {
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">
       <div className="fixed inset-0 bg-gray-500 opacity-75"></div>
-      <div className="relative z-10 inline-block w-full p-6 mx-auto bg-white rounded-lg max-w-2xl max-sm:max-w-xs sm:p-5 min-h-[20vh]">
+      <div className="relative z-10 inline-block w-full p-6 mx-auto bg-white rounded-lg max-w-xl max-sm:max-w-xs sm:p-5 min-h-[20vh]">
         {/* Edit Single Budget */}
         <div className="mt-0">
           {/* Title Field */}
@@ -383,23 +384,20 @@ const EditBudgetPopup = ({ onChild, editData, fetchFromChild }) => {
           )}
 
           {/* Submit Button */}
-          <div className="flex justify-between mt-10 gap-2 max-sm:mb-4">
+          <div className="w-full flex justify-center mt-8">
             <button
-              className="px-10 py-2 tracking-wide
-            text-white bg-black font-semibold rounded-lg  text-center mr-2 mb-2
+              className="w-full px-10 py-2 mb-2.5 tracking-wide
+            text-white bg-black font-semibold rounded-lg  text-center
             focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
               onClick={handelSaveChanges}
             >
-              Submit
-            </button>
-            <button
-              className="px-10 py-2 tracking-wide text-white bg-neutral-700 font-semibold rounded-lg  text-center mr-2 mb-2
-            focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
-              onClick={close}
-            >
-              Cancel
+              Save Changes
             </button>
           </div>
+          {/* close */}
+          <button className="absolute top-0 right-0 mr-3 my-2" onClick={close}>
+            <CancelIcon className="scale-150 text-neutral-600" />
+          </button>
         </div>
       </div>
     </div>
