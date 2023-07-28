@@ -7,6 +7,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import ErrorMainMessage from "../error/ErrorMainMessage";
 import SuccessMessageBox from "../success/SuccessMessageBox";
 import ErrorMainMessageBox from "../error/ErrorMainMessageBox";
+
 import axiosWithBaseURL from "../../../constants/axiosRoute";
 import { useStateValue } from "../context/StateProvider";
 
@@ -213,24 +214,6 @@ const EditBudgetPopup = ({ onChild, editData, fetchFromChild }) => {
     return changeCount >= 1 ? true : false;
   };
 
-  const requestToEditBudget = () => {
-    // once edit close popUp
-    console.log("Request To Backend !");
-    close();
-  };
-
-  const handelSaveChanges = () => {
-    // validate input field
-    const isInputFieldValid = checkInputFields();
-    const isSelectFieldValid = checkSelectFields();
-    const isChange = isValueChanged();
-    console.log(isChange);
-    if (isInputFieldValid && isSelectFieldValid & isChange) {
-      // disable button
-      requestToEditBudget();
-    }
-  };
-
   const fetchBudgetSummary = () => {
     axiosWithBaseURL
       .get("/budget-system/get-budget-summary", {
@@ -254,6 +237,79 @@ const EditBudgetPopup = ({ onChild, editData, fetchFromChild }) => {
         // console.log(error.message);
       });
   };
+
+  const requestToEditBudget = () => {
+    axiosWithBaseURL
+      .patch(
+        "/budget-system/edit-budget-data",
+        {
+          PreviousBudgetData: editData,
+          Title: title,
+          Amount: amount,
+          Date: date,
+          Type: type,
+          Reoccure: reoccure,
+        },
+        {
+          withCredentials: true, // enable sending and receiving cookies
+        }
+      )
+      .then((respond) => {
+        if (respond.data === true) {
+          setSuccess("Success");
+          fetchBudgetSummary();
+          // once edit close popUp
+          close();
+        } else {
+          setErrorRespond("Holy Smoke");
+        }
+      })
+      .catch((error) => {
+        // console.log(error.message);
+        setErrorRespond(error.message);
+      });
+  };
+
+  const handelSaveChanges = () => {
+    // any change on input field reset message
+    setSuccess(null);
+    setErrorRespond(null);
+    // validate input field
+    const isInputFieldValid = checkInputFields();
+    const isSelectFieldValid = checkSelectFields();
+    const isChange = isValueChanged();
+
+    if (isInputFieldValid && isSelectFieldValid & isChange) {
+      // disable button
+      requestToEditBudget();
+    }
+  };
+
+  useEffect(() => {
+    setErrorAmount(null);
+  }, [amount]);
+
+  useEffect(() => {
+    setErrorTitle(null);
+  }, [title]);
+
+  useEffect(() => {
+    setErrorDate(null);
+  }, [date]);
+
+  useEffect(() => {
+    setErrorType(null);
+  }, [type]);
+
+  useEffect(() => {
+    setErrorReoccure(null);
+  }, [reoccure]);
+
+  // any change on input field reset message
+  useEffect(() => {
+    setSuccess(null);
+    setErrorRespond(null);
+  }, [amount, title, date, type, reoccure]);
 
   return (
     <div className="fixed inset-0 flex justify-center items-center z-50">

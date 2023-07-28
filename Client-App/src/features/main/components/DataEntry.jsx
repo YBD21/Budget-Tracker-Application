@@ -1,11 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import jwt_decode from "jwt-decode";
+
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useStateValue } from "../context/StateProvider";
+
 import ErrorMainMessage from "../error/ErrorMainMessage";
-import axiosWithBaseURL from "../../../constants/axiosRoute";
 import SuccessMessageBox from "../success/SuccessMessageBox";
 import ErrorMainMessageBox from "../error/ErrorMainMessageBox";
+
+import axiosWithBaseURL from "../../../constants/axiosRoute";
+import { useStateValue } from "../context/StateProvider";
 
 const DataEntry = () => {
   const [{ isViewPage }, dispatch] = useStateValue();
@@ -231,6 +234,9 @@ const DataEntry = () => {
   };
 
   const submit = () => {
+    // any change on input field reset message
+    setSuccess(null);
+    setErrorRespond(null);
     // validate input field
     const isInputFieldValid = checkInputFields();
     const isSelectFieldValid = checkSelectFields();
