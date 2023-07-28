@@ -239,16 +239,20 @@ const EditBudgetPopup = ({ onChild, editData, fetchFromChild }) => {
   };
 
   const requestToEditBudget = () => {
+    const CurrentBudgetData = {
+      Title: title,
+      Amount: amount,
+      Date: date,
+      Type: type,
+      Reoccure: reoccure,
+    };
+
     axiosWithBaseURL
       .patch(
         "/budget-system/edit-budget-data",
         {
           PreviousBudgetData: editData,
-          Title: title,
-          Amount: amount,
-          Date: date,
-          Type: type,
-          Reoccure: reoccure,
+          CurrentBudgetData,
         },
         {
           withCredentials: true, // enable sending and receiving cookies

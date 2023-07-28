@@ -3,11 +3,9 @@ const { generateToken } = require("../Systems/authSystem/login");
 const {
   createNewBudgetAndUpdateSummary,
   deleteBudgetEntryAndUpdateSummary,
+  editBudgetDataAndUpdateSummary,
 } = require("../Systems/budgetSystem/budgetOperation");
-const {
-  getBudgetSummary,
-  getBudgetEntryData,
-} = require("../Systems/budgetSystem/readBudget");
+const { getBudgetSummary, getBudgetEntryData } = require("../Systems/budgetSystem/readBudget");
 
 const { authMiddleware } = require("../ middleware/authMiddleware");
 
@@ -23,41 +21,35 @@ budgetSystemRouter.post("/create-budget", authMiddleware, async (req, res) => {
   res.send(respond);
 });
 
-budgetSystemRouter.get(
-  "/get-budget-summary",
-  authMiddleware,
-  async (req, res) => {
-    const userData = req.userData;
-    const { firstName, lastName, role, id, email } = userData;
-    //  get budget-summary
-    const { totalIncome, totalExpense, totalBalance } = await getBudgetSummary(
-      id
-    );
+budgetSystemRouter.get("/get-budget-summary", authMiddleware, async (req, res) => {
+  const userData = req.userData;
+  const { firstName, lastName, role, id, email } = userData;
+  //  get budget-summary
+  const { totalIncome, totalExpense, totalBalance } = await getBudgetSummary(id);
 
-    // console.log(totalIncome, totalExpense, totalBalance);
+  // console.log(totalIncome, totalExpense, totalBalance);
 
-    // set HTTP Only cookies copy userData except budgetsummary
-    const newAccessToken = generateToken(
-      firstName,
-      lastName,
-      role,
-      id,
-      email,
-      totalIncome,
-      totalExpense,
-      totalBalance
-    );
+  // set HTTP Only cookies copy userData except budgetsummary
+  const newAccessToken = generateToken(
+    firstName,
+    lastName,
+    role,
+    id,
+    email,
+    totalIncome,
+    totalExpense,
+    totalBalance
+  );
 
-    // set cookies
-    res.cookie("userData", newAccessToken, {
-      secure: true, // set to true to enable sending the cookie only over HTTPS
-      httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
-      sameSite: "none",
-    });
+  // set cookies
+  res.cookie("userData", newAccessToken, {
+    secure: true, // set to true to enable sending the cookie only over HTTPS
+    httpOnly: true, // set to true to prevent client-side scripts from accessing the cookie
+    sameSite: "none",
+  });
 
-    res.send(newAccessToken);
-  }
-);
+  res.send(newAccessToken);
+});
 
 budgetSystemRouter.get("/get-entry-data", authMiddleware, async (req, res) => {
   const userData = req.userData;
@@ -71,17 +63,23 @@ budgetSystemRouter.get("/get-entry-data", authMiddleware, async (req, res) => {
   res.status(200).send(userEntryData);
 });
 
-budgetSystemRouter.delete(
-  "/delete-budget-data",
-  authMiddleware,
-  async (req, res) => {
-    const userData = req.userData;
-    const { id: userId } = userData;
-    const data = req.query;
-    console.log(`User requested to Delete BudgetEntry Data`);
-    const respond = await deleteBudgetEntryAndUpdateSummary(userId, data);
-    res.status(200).send(respond);
-  }
-);
+budgetSystemRouter.patch("/edit-budget-data", authMiddleware, async (req, res) => {
+  const userData = req.userData;
+  const { id } = userData;
+  const { PreviousBudgetData, CurrentBudgetData } = req.body;
+  // editBudgetDataAndUpdateSummary
+  const respond = await editBudgetDataAndUpdateSummary(id, PreviousBudgetData, CurrentBudgetData);
+
+  res.send(respond);
+});
+
+budgetSystemRouter.delete("/delete-budget-data", authMiddleware, async (req, res) => {
+  const userData = req.userData;
+  const { id: userId } = userData;
+  const data = req.query;
+  console.log(`User requested to Delete BudgetEntry Data`);
+  const respond = await deleteBudgetEntryAndUpdateSummary(userId, data);
+  res.status(200).send(respond);
+});
 
 module.exports = budgetSystemRouter;

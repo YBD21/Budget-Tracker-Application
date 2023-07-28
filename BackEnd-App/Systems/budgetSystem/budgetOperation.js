@@ -1,9 +1,6 @@
 const { createBudget } = require("./createBudget");
 const { deleteSingleBudgetEntryData } = require("./deleteBudget");
-const {
-  updateBudgetSummary,
-  subtractBudgetSummary,
-} = require("./updateBudget");
+const { updateBudgetSummary, subtractBudgetSummary, updateBudget } = require("./updateBudget");
 
 const createNewBudgetAndUpdateSummary = async (userData, formData) => {
   // formData -- Title, Amount, Date, Type, Reoccure
@@ -44,7 +41,38 @@ const deleteBudgetEntryAndUpdateSummary = async (userId, dataToDelete) => {
   return sendData;
 };
 
+const editBudgetDataAndUpdateSummary = async (userId, PreviousBudgetData, CurrentBudgetData) => {
+  let sendData = false;
+
+  const prevBudgetId = PreviousBudgetData?.id;
+  const previousBudgetData = PreviousBudgetData?.data;
+  const prevAmount = previousBudgetData?.Amount;
+  const prevType = previousBudgetData?.Type;
+
+  const currentAmount = CurrentBudgetData?.Amount;
+  const currentType = CurrentBudgetData?.Type;
+
+  // subtractBudgetSummary
+  const removeSummaryStatus = await subtractBudgetSummary(userId, prevAmount, prevType);
+
+  // delete BudgetEntryData
+  // const isBudgetDeleted = await deleteSingleBudgetEntryData(userId, preBudgetId);
+
+  //addNewBudgetSummary
+  const addSummaryStatus = await updateBudgetSummary(userId, currentAmount, currentType);
+
+  // createBudget with same BudgetEntryData id
+  const isBudgetUpdate = await updateBudget(userId, prevBudgetId, CurrentBudgetData);
+
+  if (removeSummaryStatus && addSummaryStatus & isBudgetUpdate) {
+    sendData = true;
+  }
+
+  return sendData;
+};
+
 module.exports = {
   createNewBudgetAndUpdateSummary,
   deleteBudgetEntryAndUpdateSummary,
+  editBudgetDataAndUpdateSummary,
 };
