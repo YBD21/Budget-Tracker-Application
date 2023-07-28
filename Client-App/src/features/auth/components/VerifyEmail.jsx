@@ -183,7 +183,7 @@ const VerifyEmail = () => {
           {error && <ErrorMessageBoxVerify Error_message={error} status={true} />}
 
           {/* Verify */}
-          <div className="min-w-max mt-2">
+          <div className="min-w-max mt-4">
             <button
               className="w-full px-5 py-2.5 bg-black rounded-lg text-center mr-3 mb-2 focus:outline-none focus:ring-2 focus:ring-black focus:ring-opacity-50 active:ring-4 active:ring-black active:ring-opacity-50"
               onClick={verifyOTP}
