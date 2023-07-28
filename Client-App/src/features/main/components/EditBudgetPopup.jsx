@@ -11,14 +11,21 @@ import { useStateValue } from "../context/StateProvider";
 
 const EditBudgetPopup = ({ onChild, editData, fetchFromChild }) => {
   const [{ isViewPage }, dispatch] = useStateValue();
+  // data , id
+  const prevEditData = editData.data;
+  const prevAmount = prevEditData.Amount;
+  const prevDate = prevEditData.Date;
+  const prevReoccure = prevEditData.Reoccure;
+  const prevTitle = prevEditData.Title;
+  const prevType = prevEditData.Type;
 
   const inputDateRef = useRef(null);
 
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
-  const [type, setType] = useState("");
-  const [reoccure, setReoccure] = useState("");
+  const [title, setTitle] = useState(prevTitle);
+  const [amount, setAmount] = useState(prevAmount);
+  const [date, setDate] = useState(prevDate);
+  const [type, setType] = useState(prevType);
+  const [reoccure, setReoccure] = useState(prevReoccure);
 
   const [success, setSuccess] = useState(null);
 
@@ -184,16 +191,41 @@ const EditBudgetPopup = ({ onChild, editData, fetchFromChild }) => {
     return validStatus;
   };
 
+  const isValueChanged = () => {
+    let changeCount = 0;
+    if (prevTitle !== title) {
+      changeCount++;
+    }
+
+    if (prevAmount !== amount.toString()) {
+      changeCount++;
+    }
+
+    if (prevReoccure !== reoccure) {
+      changeCount++;
+    }
+
+    if (prevType !== type) {
+      changeCount++;
+    }
+
+    return changeCount >= 1 ? true : false;
+  };
+
   const requestToEditBudget = () => {
-    //
+    // once edit close popUp
+    console.log("Request To Backend !");
+    close();
   };
 
   const handelSaveChanges = () => {
     // validate input field
-    // check if editData === inputfield data if true no changes
     const isInputFieldValid = checkInputFields();
     const isSelectFieldValid = checkSelectFields();
-    if (isInputFieldValid && isSelectFieldValid) {
+    const isChange = isValueChanged();
+    console.log(isChange);
+    if (isInputFieldValid && isSelectFieldValid & isChange) {
+      // disable button
       requestToEditBudget();
     }
   };

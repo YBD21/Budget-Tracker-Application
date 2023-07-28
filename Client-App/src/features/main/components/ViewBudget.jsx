@@ -196,7 +196,7 @@ const ViewBudget = () => {
             <div className="w-full flex justify-between gap-4">
               {/* Edit */}
               <button
-                className="py-2 px-2.5 bg-black rounded-lg group relative"
+                className="py-2 px-3 bg-black rounded-lg group relative"
                 onClick={() => handleEdit(entry)}
               >
                 <EditIcon className="scale-125 text-white pointer-events-none" />
@@ -204,7 +204,7 @@ const ViewBudget = () => {
 
               {/* Delete */}
               <button
-                className="py-2 px-2.5 bg-red-900 rounded-lg group relative"
+                className="py-2 px-3 bg-red-900 rounded-lg group relative"
                 onClick={() => handleDelete(entry)}
               >
                 <DeleteIcon className="scale-125 text-white pointer-events-none" />
