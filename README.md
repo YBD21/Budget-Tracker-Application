@@ -3,13 +3,7 @@
 ## Wireframe
 ![Budget Tracker Wireframe](https://github.com/YBD21/Budget-Tracker-Application/assets/85655933/dc2099d1-e7e2-4daa-b354-1dfa13ec392e)
 
-## Screenshots
-
-### Login
-![Login](https://firebasestorage.googleapis.com/v0/b/budgettracker-7bd72.appspot.com/o/Login.PNG?alt=media&token=856eed89-1f7c-45a0-a20c-a8c8e76a2469)
-
-### Create Account 
-![Create Account](https://firebasestorage.googleapis.com/v0/b/budgettracker-7bd72.appspot.com/o/Create%20Account.PNG?alt=media&token=0485273f-205c-4471-bca9-d19f458d2632)
+## Screenshot
 
 ### Home Page
 ![Home Page](https://firebasestorage.googleapis.com/v0/b/budgettracker-7bd72.appspot.com/o/Home%20Page.PNG?alt=media&token=feb31bb7-a7e8-4b2d-9af6-9b54498200c8)
